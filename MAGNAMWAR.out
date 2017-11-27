@@ -1,0 +1,79 @@
+* using log directory ‘/ssd/tomas/QA/R-73707/check/MAGNAMWAR.Rcheck’
+* using R Under development (unstable) (2017-11-10 r73707)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘MAGNAMWAR/DESCRIPTION’ ... OK
+* this is package ‘MAGNAMWAR’ version ‘2.0.0’
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘MAGNAMWAR’ can be installed ... OK
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... ERROR
+Running examples in ‘MAGNAMWAR-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: FormatMCLFastas
+> ### Title: Format all raw GenBank fastas to single OrthoMCL compatible
+> ###   fasta file
+> ### Aliases: FormatMCLFastas
+> 
+> ### ** Examples
+> 
+> 
+> dir <- system.file('extdata', 'fasta_dir', package='MAGNAMWAR')
+> dir <- paste(dir,'/',sep='')
+> formatted_file <- FormatMCLFastas(dir)
+Warning in file.remove(outfile) :
+  cannot remove file '/var/scratchro/tomas/QA/R-73707/lib/MAGNAMWAR/extdata/fasta_dir/MCLformatted_all.fasta', reason 'Read-only file system'
+Writing out to /var/scratchro/tomas/QA/R-73707/lib/MAGNAMWAR/extdata/fasta_dir/MCLformatted_all.fasta 
+Warning in file(description = file.out, open = open) :
+  cannot open file '/var/scratchro/tomas/QA/R-73707/lib/MAGNAMWAR/extdata/fasta_dir/MCLformatted_all.fasta': Read-only file system
+Error in file(description = file.out, open = open) : 
+  cannot open the connection
+Calls: FormatMCLFastas -> <Anonymous> -> file
+Execution halted
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+* checking re-building of vignette outputs ... OK
+* checking PDF version of manual ... OK
+* DONE
+Status: 1 ERROR

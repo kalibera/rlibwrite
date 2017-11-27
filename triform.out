@@ -1,0 +1,256 @@
+* using log directory ‘/ssd/tomas/QA/R-73707/check/triform.Rcheck’
+* using R Under development (unstable) (2017-11-10 r73707)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘triform/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘triform’ version ‘1.21.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘triform’ can be installed ... OK
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... NOTE
+Packages listed in more than one of Depends, Imports, Suggests, Enhances:
+  ‘IRanges’ ‘yaml’
+A package should be listed in only one of these fields.
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... NOTE
+Namespace in Imports field not imported from: ‘BiocGenerics’
+  All declared Imports should be used.
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+findForms1Replicate: no visible binding for global variable ‘CVG.NAMES’
+findForms1Replicate: no visible binding for global variable ‘CVG’
+findForms1Replicate: no visible binding for global variable
+  ‘IS.CONTROL’
+findForms1Replicate: no visible binding for global variable ‘IS.CENTER’
+findForms1Replicate: no visible binding for global variable ‘IS.REP1’
+findForms1Replicate: no visible binding for global variable ‘IS.LEFT’
+findForms1Replicate: no visible binding for global variable ‘IS.RIGHT’
+findForms1Replicate: no visible binding for '<<-' assignment to
+  ‘CENTER.CVG’
+findForms1Replicate: no visible binding for global variable
+  ‘CENTER.CVG’
+findForms1Replicate: no visible global function definition for ‘as’
+findForms1Replicate: no visible binding for global variable ‘SIZES’
+findForms2Replicates: no visible binding for global variable
+  ‘CVG.NAMES’
+findForms2Replicates: no visible binding for global variable ‘CVG’
+findForms2Replicates: no visible binding for global variable
+  ‘IS.CONTROL’
+findForms2Replicates: no visible binding for global variable
+  ‘IS.CENTER’
+findForms2Replicates: no visible binding for global variable ‘IS.LEFT’
+findForms2Replicates: no visible binding for global variable ‘IS.REP1’
+findForms2Replicates: no visible binding for global variable ‘IS.RIGHT’
+findForms2Replicates: no visible binding for global variable ‘IS.REP2’
+findForms2Replicates: no visible binding for '<<-' assignment to
+  ‘CENTER.CVG’
+findForms2Replicates: no visible binding for global variable
+  ‘CENTER.CVG’
+findForms2Replicates: no visible global function definition for ‘as’
+findForms2Replicates: no visible binding for global variable ‘SIZES’
+makeChromosomeCoverFiles: no visible binding for global variable ‘rd’
+makeRangedData: no visible global function definition for ‘read.delim’
+makeRangedData: no visible global function definition for ‘as’
+mergeChromosomeCoverFiles: no visible binding for global variable
+  ‘covers’
+test.chr: no visible binding for global variable ‘MIN.Z’
+test.chr: no visible binding for global variable ‘MIN.SHIFT’
+test.chr: no visible binding for global variable ‘MIN.WIDTH’
+test.chr: no visible binding for '<<-' assignment to ‘PEAKS’
+test.chr: no visible binding for '<<-' assignment to ‘PEAK.INFO’
+test.chr: no visible binding for '<<-' assignment to ‘CENTER.CVG’
+test.chr: no visible binding for '<<-' assignment to ‘N.PEAKS’
+test.chr: no visible binding for global variable ‘TARGET.NAMES’
+test.chr: no visible binding for global variable ‘PEAKS’
+test.chr: no visible binding for global variable ‘PEAK.INFO’
+test.chr: no visible binding for global variable ‘CENTER.CVG’
+test.chr: no visible binding for global variable ‘CVG.NAMES’
+test.chr: no visible binding for global variable ‘DIRECTIONS’
+test.chr: no visible binding for global variable ‘IS.REP2’
+test.chr: no visible global function definition for ‘pnorm’
+test.chr: no visible binding for '<<-' assignment to ‘min.er’
+test.chr: no visible binding for global variable ‘MIN.QUANT’
+test.chr: no visible binding for global variable ‘min.er’
+test.chr: no visible binding for global variable ‘FLANK.DELTA’
+test.chr : <anonymous>: no visible global function definition for ‘ccf’
+test.chr : <anonymous>: no visible binding for global variable ‘lag’
+test.chr : <anonymous>: no visible binding for global variable ‘acf’
+test.chr: no visible binding for '<<-' assignment to ‘type.delta’
+test.chr: no visible binding for global variable ‘CHR’
+test.chr: no visible binding for global variable ‘PEAK.START’
+test.chr: no visible binding for global variable ‘PEAK.END’
+test.chr: no visible binding for global variable ‘PEAK.FORM’
+test.chr: no visible binding for global variable ‘N.PEAKS’
+test.genome: no visible binding for global variable ‘MIN.Z’
+test.genome: no visible binding for global variable ‘MIN.SHIFT’
+test.genome: no visible binding for global variable ‘MIN.WIDTH’
+test.genome: no visible binding for global variable ‘CHRS’
+test.genome: no visible binding for '<<-' assignment to ‘INFO’
+test.genome: no visible global function definition for ‘flush.console’
+test.genome: no visible binding for global variable ‘INFO’
+test.genome: no visible binding for global variable ‘N.PEAKS’
+test.genome: no visible global function definition for ‘write.table’
+test.init: no visible binding for '<<-' assignment to ‘CHR’
+test.init: no visible binding for global variable ‘CHR’
+test.init: no visible binding for '<<-' assignment to ‘CVG’
+test.init: no visible binding for '<<-' assignment to ‘SIZES’
+test.init: no visible binding for global variable ‘N.TYPES’
+test.init: no visible binding for global variable ‘SUMCVG.NAMES’
+test.init: no visible binding for global variable ‘SIZES’
+test.init: no visible binding for global variable ‘chrcovers’
+test.init: no visible binding for global variable ‘N.LOCS’
+test.init: no visible binding for global variable ‘N.DIRLOCS’
+test.init: no visible binding for global variable ‘IS.CONTROL’
+test.init: no visible binding for global variable ‘IS.CENTER’
+test.init: no visible binding for global variable ‘CVG’
+test.init: no visible binding for global variable ‘FLANK.DELTA.PAD’
+test.init: no visible binding for global variable ‘FLANK.DELTA’
+test.init: no visible binding for global variable ‘CVG.NAMES’
+test.init : <anonymous>: no visible global function definition for
+  ‘Rle’
+triform: no visible binding for '<<-' assignment to ‘SUMCVG.NAMES’
+triform: no visible binding for '<<-' assignment to ‘TARGET.NAMES’
+triform: no visible binding for '<<-' assignment to ‘MIN.Z’
+triform: no visible global function definition for ‘qnorm’
+triform: no visible binding for global variable ‘MAX.P’
+triform: no visible binding for '<<-' assignment to ‘FLANK.DELTA.PAD’
+triform: no visible global function definition for ‘Rle’
+triform: no visible binding for global variable ‘FLANK.DELTA’
+triform: no visible binding for '<<-' assignment to ‘N.TYPES’
+triform: no visible binding for global variable ‘SUMCVG.NAMES’
+triform: no visible binding for '<<-' assignment to ‘TYPES’
+triform: no visible binding for global variable ‘N.TYPES’
+triform: no visible binding for '<<-' assignment to ‘DIRECTIONS’
+triform: no visible binding for '<<-' assignment to ‘N.DIRS’
+triform: no visible binding for global variable ‘DIRECTIONS’
+triform: no visible binding for '<<-' assignment to ‘LOCATIONS’
+triform: no visible binding for '<<-' assignment to ‘N.LOCS’
+triform: no visible binding for global variable ‘LOCATIONS’
+triform: no visible binding for '<<-' assignment to ‘N.DIRLOCS’
+triform: no visible binding for global variable ‘N.DIRS’
+triform: no visible binding for global variable ‘N.LOCS’
+triform: no visible binding for '<<-' assignment to ‘DIRECTION’
+triform: no visible binding for '<<-' assignment to ‘LOCATION’
+triform: no visible binding for '<<-' assignment to ‘TYPE’
+triform: no visible binding for global variable ‘TYPES’
+triform: no visible binding for global variable ‘N.DIRLOCS’
+triform: no visible binding for '<<-' assignment to ‘CVG.NAMES’
+triform: no visible binding for global variable ‘TYPE’
+triform: no visible binding for global variable ‘DIRECTION’
+triform: no visible binding for global variable ‘LOCATION’
+triform: no visible binding for '<<-' assignment to ‘IS.LEFT’
+triform: no visible binding for global variable ‘CVG.NAMES’
+triform: no visible binding for '<<-' assignment to ‘IS.RIGHT’
+triform: no visible binding for '<<-' assignment to ‘IS.CENTER’
+triform: no visible binding for '<<-' assignment to ‘IS.REP1’
+triform: no visible binding for '<<-' assignment to ‘IS.REP2’
+triform: no visible binding for '<<-' assignment to ‘IS.CONTROL’
+triform: no visible binding for global variable ‘TARGET.NAMES’
+triform : <anonymous>: no visible binding for global variable
+  ‘CVG.NAMES’
+triform: no visible binding for global variable ‘MIN.Z’
+triform: no visible binding for global variable ‘MIN.SHIFT’
+triform: no visible binding for global variable ‘MIN.WIDTH’
+triform: no visible binding for global variable ‘CHRS’
+triform: no visible binding for global variable ‘COVER.PATH’
+triform: no visible binding for global variable ‘OUTPUT.PATH’
+Undefined global functions or variables:
+  CENTER.CVG CHR CHRS COVER.PATH CVG CVG.NAMES DIRECTION DIRECTIONS
+  FLANK.DELTA FLANK.DELTA.PAD INFO IS.CENTER IS.CONTROL IS.LEFT IS.REP1
+  IS.REP2 IS.RIGHT LOCATION LOCATIONS MAX.P MIN.QUANT MIN.SHIFT
+  MIN.WIDTH MIN.Z N.DIRLOCS N.DIRS N.LOCS N.PEAKS N.TYPES OUTPUT.PATH
+  PEAK.END PEAK.FORM PEAK.INFO PEAK.START PEAKS Rle SIZES SUMCVG.NAMES
+  TARGET.NAMES TYPE TYPES acf as ccf chrcovers covers flush.console lag
+  min.er pnorm qnorm rd read.delim write.table
+Consider adding
+  importFrom("methods", "as")
+  importFrom("stats", "acf", "ccf", "lag", "pnorm", "qnorm")
+  importFrom("utils", "flush.console", "read.delim", "write.table")
+to your NAMESPACE file (and ensure that your DESCRIPTION Imports field
+contains 'methods').
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘runTests.R’
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... ERROR
+Errors in running code in vignettes:
+when running code in ‘triform.Rnw’
+  ...
+> preprocess(config.file.path, params = list(READ.PATH = data.file.path, 
++     COVER.PATH = data.file.path))
+Using config file /var/scratchro/tomas/QA/R-73707/lib/triform/extdata/config.yml
+Converting BED to RangedData for file /var/scratchro/tomas/QA/R-73707/lib/triform/extdata/backgr_huds_Gm12878_rep1.bed
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-73707/lib/triform/extdata/backgr_huds_Gm12878_rep1.RData', probable reason 'Read-only file system'
+
+  When sourcing ‘triform.R’:
+Error: cannot open the connection
+Execution halted
+
+* checking re-building of vignette outputs ... NOTE
+Error in re-building vignettes:
+  ...
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, lengths, mapply, match, mget, order, paste, pmax, pmax.int,
+    pmin, pmin.int, rank, rbind, rowMeans, rowSums, rownames, sapply,
+    setdiff, sort, table, tapply, union, unique, unsplit, which,
+    which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: yaml
+Using config file /var/scratchro/tomas/QA/R-73707/lib/triform/extdata/config.yml
+Converting BED to RangedData for file /var/scratchro/tomas/QA/R-73707/lib/triform/extdata/backgr_huds_Gm12878_rep1.bed
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-73707/lib/triform/extdata/backgr_huds_Gm12878_rep1.RData', probable reason 'Read-only file system'
+
+Error: processing vignette 'triform.Rnw' failed with diagnostics:
+ chunk 2 (label = Preprocessing BED files using configuration file) 
+Error in gzfile(file, "wb") : cannot open the connection
+Execution halted
+
+* checking PDF version of manual ... OK
+* DONE
+Status: 1 ERROR, 4 NOTEs

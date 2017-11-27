@@ -1,0 +1,94 @@
+* using log directory ‘/ssd/tomas/QA/R-73707/check/proFIA.Rcheck’
+* using R Under development (unstable) (2017-11-10 r73707)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘proFIA/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘proFIA’ version ‘1.5.0’
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... NOTE
+Found the following hidden files and directories:
+  .BBSoptions
+These were most likely included in error. See section ‘Package
+structure’ in the ‘Writing R Extensions’ manual.
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘proFIA’ can be installed ... OK
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... WARNING
+Invalid citation information in ‘inst/CITATION’:
+  Error in tools:::.parse_CITATION_file(file, meta$Encoding): non-ASCII input in a CITATION file without a declared encoding
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking line endings in C/C++/Fortran sources/headers ... OK
+* checking compiled code ... NOTE
+Note: information on .o files is not available
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘runTests.R’
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+* checking re-building of vignette outputs ... WARNING
+Error in re-building vignettes:
+  ...
+    smooth
+
+The following object is masked from 'package:base':
+
+    trimws
+
+
+This is xcms version 3.1.0 
+
+
+Attaching package: 'xcms'
+
+The following object is masked from 'package:stats':
+
+    sigma
+
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-73707/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Quitting from lines 68-71 (proFIA-vignette.Rmd) 
+Error: processing vignette 'proFIA-vignette.Rmd' failed with diagnostics:
+package or namespace load failed for 'plasFIA':
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+Execution halted
+
+* checking PDF version of manual ... OK
+* DONE
+Status: 2 WARNINGs, 2 NOTEs

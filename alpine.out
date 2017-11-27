@@ -1,0 +1,227 @@
+* using log directory ‘/ssd/tomas/QA/R-73707/check/alpine.Rcheck’
+* using R Under development (unstable) (2017-11-10 r73707)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘alpine/DESCRIPTION’ ... OK
+* this is package ‘alpine’ version ‘1.5.0’
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘alpine’ can be installed ... OK
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... ERROR
+Running examples in ‘alpine-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: estimateAbundance
+> ### Title: Estimate bias-corrected transcript abundances (FPKM)
+> ### Aliases: estimateAbundance
+> 
+> ### ** Examples
+> 
+> 
+> # see vignette for a more realistic example
+> 
+> # these next lines just write out a BAM file from R
+> # typically you would already have a BAM file
+> library(alpineData)
+Loading required package: ExperimentHub
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, cbind, colMeans, colSums, colnames, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, lengths, mapply, match, mget, order, paste, pmax, pmax.int,
+    pmin, pmin.int, rank, rbind, rowMeans, rowSums, rownames, sapply,
+    setdiff, sort, table, tapply, union, unique, unsplit, which,
+    which.max, which.min
+
+Loading required package: AnnotationHub
+> library(GenomicAlignments)
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: SummarizedExperiment
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:ExperimentHub’:
+
+    cache
+
+The following object is masked from ‘package:AnnotationHub’:
+
+    cache
+
+Loading required package: DelayedArray
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following objects are masked from ‘package:Biobase’:
+
+    anyMissing, rowMedians
+
+
+Attaching package: ‘DelayedArray’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges
+
+The following object is masked from ‘package:base’:
+
+    apply
+
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:DelayedArray’:
+
+    type
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: Rsamtools
+> library(rtracklayer)
+> gap <- ERR188088()
+snapshotDate(): 2017-10-30
+see ?alpineData and browseVignettes('alpineData') for documentation
+downloading 0 resources
+loading from cache 
+    ‘/home/tomas//.ExperimentHub/167’
+> dir <- system.file(package="alpineData", "extdata")
+> bam.file <- c("ERR188088" = file.path(dir,"ERR188088.bam"))
+> export(gap, con=bam.file)
+Warning in file(sam_path, "w") :
+  cannot open file '/var/scratchro/tomas/QA/R-73707/lib/alpineData/extdata/ERR188088.sam': Read-only file system
+Error in file(sam_path, "w") : cannot open the connection
+Calls: export ... export -> export -> export -> export -> .local -> file
+Execution halted
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... ERROR
+  Running ‘testthat.R’
+Running the tests in ‘tests/testthat.R’ failed.
+Last 13 lines of output:
+  1: export(gap, con = bam.file) at testthat/test_alpine.R:9
+  2: export(gap, con = bam.file)
+  3: export(object, FileForFormat(con), ...)
+  4: export(object, FileForFormat(con), ...)
+  5: export(ga, con, ...)
+  6: export(ga, con, ...)
+  7: .local(object, con, format, ...)
+  8: file(sam_path, "w")
+  
+  testthat results ================================================================
+  OK: 1 SKIPPED: 0 FAILED: 1
+  1. Error: alpine works (@test_alpine.R#9) 
+  
+  Error: testthat unit tests failed
+  Execution halted
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+* checking re-building of vignette outputs ... WARNING
+Error in re-building vignettes:
+  ...
+Attaching package: 'Biostrings'
+
+The following object is masked from 'package:DelayedArray':
+
+    type
+
+The following object is masked from 'package:base':
+
+    strsplit
+
+Loading required package: Rsamtools
+snapshotDate(): 2017-10-30
+see ?alpineData and browseVignettes('alpineData') for documentation
+downloading 0 resources
+loading from cache 
+    '/home/tomas//.ExperimentHub/166'
+snapshotDate(): 2017-10-30
+see ?alpineData and browseVignettes('alpineData') for documentation
+downloading 0 resources
+loading from cache 
+    '/home/tomas//.ExperimentHub/166'
+Quitting from lines 44-58 (alpine.Rmd) 
+Error: processing vignette 'alpine.Rmd' failed with diagnostics:
+cannot open the connection
+Execution halted
+
+* checking PDF version of manual ... OK
+* DONE
+Status: 2 ERRORs, 1 WARNING

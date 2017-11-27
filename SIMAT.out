@@ -1,0 +1,94 @@
+* using log directory ‘/ssd/tomas/QA/R-73707/check/SIMAT.Rcheck’
+* using R Under development (unstable) (2017-11-10 r73707)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘SIMAT/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘SIMAT’ version ‘1.11.0’
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘SIMAT’ can be installed ... OK
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+getRIStandard: no visible global function definition for ‘read.csv’
+plotEIC: no visible global function definition for ‘stack’
+plotEIC: no visible global function definition for ‘dnorm’
+plotEIC: no visible global function definition for ‘dev.copy’
+plotEIC: no visible binding for global variable ‘pdf’
+plotEIC: no visible global function definition for ‘dev.off’
+plotTIC: no visible binding for global variable ‘rt’
+Undefined global functions or variables:
+  dev.copy dev.off dnorm pdf read.csv rt stack
+Consider adding
+  importFrom("grDevices", "dev.copy", "dev.off", "pdf")
+  importFrom("stats", "dnorm", "rt")
+  importFrom("utils", "read.csv", "stack")
+to your NAMESPACE file.
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... ERROR
+Running examples in ‘SIMAT-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: writeMSL
+> ### Title: Write targets information into a file with mass spectral library
+> ###   (MSL) format.
+> ### Aliases: writeMSL
+> 
+> ### ** Examples
+> 
+>     # load targets information
+>     data(Targets)
+>                                                 
+>     # write the targets into a file with MSL format
+>     writeMSL(Targets = Targets, target.file.name = "myTargets.MSL")
+Warning in file(con, "w") :
+  cannot open file 'myTargets.MSL': Read-only file system
+Error in file(con, "w") : cannot open the connection
+Calls: writeMSL -> writeLines -> file
+Execution halted
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... OK
+  Running ‘runTests.R’
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* checking PDF version of manual ... OK
+* DONE
+Status: 1 ERROR, 1 NOTE
