@@ -1,0 +1,115 @@
+* using log directory ‘/ssd/tomas/QA/R-74238/check/SRGnet.Rcheck’
+* using R Under development (unstable) (2018-02-08 r74238)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘SRGnet/DESCRIPTION’ ... OK
+* this is package ‘SRGnet’ version ‘1.5.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... NOTE
+Depends: includes the non-default packages:
+  ‘EBcoexpress’ ‘MASS’ ‘igraph’ ‘pvclust’ ‘gbm’ ‘limma’ ‘DMwR’
+  ‘matrixStats’ ‘Hmisc’
+Adding so many packages to the search path is excessive and importing
+selectively is preferable.
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘SRGnet’ can be installed ... OK
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+SRGnet: no visible binding for global variable
+  ‘Differentially_expressed_genes’
+SRGnet: no visible binding for global variable ‘Transcriptomics’
+SRGnet: no visible binding for global variable ‘PLCRG’
+SRGnet: no visible global function definition for ‘ebPatterns’
+SRGnet: no visible global function definition for ‘par’
+SRGnet: no visible global function definition for ‘boxplot’
+SRGnet: no visible global function definition for ‘plot’
+SRGnet: no visible global function definition for ‘predict’
+SRGnet: no visible global function definition for ‘terrain.colors’
+SRGnet: no visible global function definition for ‘na.omit’
+SRGnet: no visible global function definition for ‘write.table’
+Undefined global functions or variables:
+  Differentially_expressed_genes PLCRG Transcriptomics boxplot
+  ebPatterns na.omit par plot predict terrain.colors write.table
+Consider adding
+  importFrom("grDevices", "terrain.colors")
+  importFrom("graphics", "boxplot", "par", "plot")
+  importFrom("stats", "na.omit", "predict")
+  importFrom("utils", "write.table")
+to your NAMESPACE file.
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... ERROR
+Running examples in ‘SRGnet-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: SRGnet
+> ### Title: Synergistic response to gene mutations specific network
+> ### Aliases: SRGnet
+> 
+> ### ** Examples
+> 
+> {
++ data(Differentially_expressed_genes)
++ data(Transcriptomics)
++ data(PLCRG)
++ SRGnet("F") #Fast run  
++ }
+Zero-Stepper Time: 37.709 
+[1] "Number of differential coexpressed pairs of genes: "
+[1] 2383    2
+[1] "Number of molecules"
+[1] 119
+[1] "Number of interactions"
+[1] 407   3
+[1] "Type of interactions (+: activators, -: inhibitors): "
+
+  +   - 
+229 178 
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/SRGnet/Topology_of_integrated_network.txt': Read-only file system
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: SRGnet -> write.table -> file
+Execution halted
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+* checking re-building of vignette outputs ... OK
+* checking PDF version of manual ... OK
+* DONE
+Status: 1 ERROR, 2 NOTEs

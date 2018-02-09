@@ -1,0 +1,81 @@
+Bioconductor version 3.7 (BiocInstaller 1.29.4), ?biocLite for help
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: limma
+
+Attaching package: ‘limma’
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    plotMA
+
+Loading required package: gdata
+gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+
+gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+
+Attaching package: ‘gdata’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:stats’:
+
+    nobs
+
+The following object is masked from ‘package:utils’:
+
+    object.size
+
+The following object is masked from ‘package:base’:
+
+    startsWith
+
+[1] "Feb 09, 2018"
+[1] "Feb 09, 2018"
+[1] 324
+[1] 324
+[1] 648
+Warning in dir.create(myTmpDirEtabm115) :
+  cannot create dir '/var/scratchro/tomas/QA/R-74238/lib/mammaPrintData/extdata/ETABM115/tmp', reason 'Read-only file system'
+
+Error: processing vignette 'mammaPrintData.Rnw' failed with diagnostics:
+ chunk 9 (label = ETAB115rglist) 
+Error in unzip(dir(etabm155filesLoc, full.names = TRUE, pattern = "E-TABM-115.raw.1.zip"),  : 
+  'exdir' does not exist
+Execution halted

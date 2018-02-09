@@ -1,0 +1,232 @@
+
+> options(width = 75)
+
+> options(continue = " ")
+
+> rm(list = ls())
+
+> myDate <- format(Sys.Date(), "%b %d, %Y")
+
+> installedPckgs <- installed.packages()[, "Package"]
+
+> pckgListBIOC <- c("Biobase", "limma", "gdata")
+
+> source("http://bioconductor.org/biocLite.R")
+Bioconductor version 3.7 (BiocInstaller 1.29.4), ?biocLite for help
+
+> for (pckg in pckgListBIOC) {
++     if (!pckg %in% installedPckgs) 
++         biocLite(pckg)
++     require(pckg, character.only = TRUE)
++ }
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table,
+    tapply, union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: limma
+
+Attaching package: ‘limma’
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    plotMA
+
+Loading required package: gdata
+gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+
+gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+
+Attaching package: ‘gdata’
+
+The following object is masked from ‘package:Biobase’:
+
+    combine
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    combine
+
+The following object is masked from ‘package:stats’:
+
+    nobs
+
+The following object is masked from ‘package:utils’:
+
+    object.size
+
+The following object is masked from ‘package:base’:
+
+    startsWith
+
+
+> require(gdata)
+
+> myFile <- system.file("extdata/seventyGene", "415530a-s9.xls", 
++     package = "mammaPrintData")
+
+> gns231 <- read.xls(myFile, skip = 0, header = TRUE, 
++     stringsAsFactors = FALSE)
+
+> colnames(gns231) <- gsub("\\.\\.", "", colnames(gns231))
+
+> gns231 <- gns231[, -grep("sp_xref_keyword_list", colnames(gns231))]
+
+> str(gns231)
+'data.frame':	231 obs. of  4 variables:
+ $ accession  : chr  "NM_003748" "NM_003862" "Contig32125_RC" "U82987" ...
+ $ correlation: num  0.421 0.411 0.409 0.407 0.402 ...
+ $ gene.name  : chr  "ALDH4" "FGF18" "" "BBC3" ...
+ $ description: chr  "aldehyde dehydrogenase 4 (glutamate gamma-semialdehyde dehydrogenase; pyrroline-5-carboxylate dehydrogenase)" "fibroblast growth factor 18" "ESTs" "Bcl-2 binding component 3" ...
+
+> gns231 <- gns231[order(abs(gns231$correlation), decreasing = TRUE), 
++     ]
+
+> gns70 <- gns231[1:70, ]
+
+> progSig <- list(gns231acc = unique(gns231$accession), 
++     gns231name = unique(gns231$gene.name), gns231any = unique(c(gns231$accession, 
++        .... [TRUNCATED] 
+
+> progSig <- lapply(progSig, function(x) x[x != ""])
+
+> gns231Cors <- data.frame(stringsAsFactors = FALSE, 
++     ID = c(gns231$gene.name[gns231$gene.name %in% progSig$gns231any], 
++         gns231$access .... [TRUNCATED] 
+
+> progSig$gns231Cors <- gns231Cors[!duplicated(gns231Cors$ID), 
++     ]
+
+> progSig$gns231Cors <- gns231Cors[gns231Cors$ID != 
++     "", ]
+
+> str(progSig)
+List of 7
+ $ gns231acc : chr [1:231] "AL080059" "Contig63649_RC" "Contig46218_RC" "NM_016359" ...
+ $ gns231name: chr [1:161] "LOC51203" "ALDH4" "FGF18" "BBC3" ...
+ $ gns231any : chr [1:392] "AL080059" "Contig63649_RC" "Contig46218_RC" "NM_016359" ...
+ $ gns70acc  : chr [1:70] "AL080059" "Contig63649_RC" "Contig46218_RC" "NM_016359" ...
+ $ gns70name : chr [1:50] "LOC51203" "ALDH4" "FGF18" "BBC3" ...
+ $ gns70any  : chr [1:120] "AL080059" "Contig63649_RC" "Contig46218_RC" "NM_016359" ...
+ $ gns231Cors:'data.frame':	394 obs. of  2 variables:
+  ..$ ID        : chr [1:394] "LOC51203" "ALDH4" "FGF18" "BBC3" ...
+  ..$ gns231Cors: num [1:394] -0.425 0.421 0.411 0.407 0.402 ...
+
+> require(Biobase)
+
+> etabm155filesLoc <- system.file("extdata/ETABM115", 
++     package = "mammaPrintData")
+
+> dir(etabm155filesLoc)
+[1] "A-MEXP-318.adf.txt"   "E-TABM-115.raw.1.zip" "E-TABM-115.sdrf.txt" 
+
+> targets <- read.table(dir(etabm155filesLoc, full.names = TRUE, 
++     pattern = "E-TABM-115.sdrf.txt"), comment.char = "", sep = "\t", 
++     header .... [TRUNCATED] 
+
+> targets <- targets[, apply(targets, 2, function(x) length(unique(x)) != 
++     1)]
+
+> targets <- targets[order(targets$Array.Data.File, 
++     decreasing = TRUE), ]
+
+> colnames(targets) <- gsub("\\.$", "", gsub("\\.\\.", 
++     ".", colnames(targets)))
+
+> str(targets)
+'data.frame':	324 obs. of  16 variables:
+ $ Source.Name                                                   : chr  "MRP" "9671397" "MRP" "9531366" ...
+ $ Characteristics.EventDistantMetastases                        : int  NA 1 NA 0 NA 0 NA NA 0 0 ...
+ $ Characteristics.EventDeath                                    : int  NA 1 NA 0 NA 0 NA NA 0 0 ...
+ $ Characteristics.PeriodTillDevelopmentOfDistantMetastases.years: num  NA 4.77 NA NaN NA NaN NA NA NaN NaN ...
+ $ Characteristics.OverallSurvival                               : chr  "  " "8.77 years" "  " "17.15 years" ...
+ $ Sample.Name                                                   : chr  "MRP" "9671397" "MRP" "9531366" ...
+ $ Extract.Name                                                  : chr  "MRP_e1" "9671397_e1" "MRP_e1" "9531366_e1" ...
+ $ Labeled.Extract.Name                                          : chr  "MRP_e1_l1" "9671397_e1_l1" "MRP_e1_l1" "9531366_e1_l1" ...
+ $ Label                                                         : chr  "Cy3" "Cy5" "Cy3" "Cy5" ...
+ $ Hybridization.Name                                            : chr  "agendia.com; ebi.co.uk:Tab2MAGE:E-TABM-115.1831.Hybridization" "agendia.com; ebi.co.uk:Tab2MAGE:E-TABM-115.1826.Hybridization" "agendia.com; ebi.co.uk:Tab2MAGE:E-TABM-115.1821.Hybridization" "agendia.com; ebi.co.uk:Tab2MAGE:E-TABM-115.1815.Hybridization" ...
+ $ Factor.Value.overall_survival                                 : chr  "reference pool" "8.77 years" "reference pool" "17.15 years" ...
+ $ Factor.Value.Event_Death                                      : chr  "reference pool" "1" "reference pool" "0" ...
+ $ Factor.Value.Event_distant_metastases                         : chr  "reference pool" "1" "reference pool" "0" ...
+ $ Factor.Value.Time_to_development_of_distant_metastases        : chr  "reference pool" "4.77 years" "reference pool" "n/a" ...
+ $ Scan.Name                                                     : chr  "US22502555_967_2_397" "US22502555_967_1_397" "US22502555_953_2_366" "US22502555_953_1_366" ...
+ $ Array.Data.File                                               : chr  "US22502555_967_2_397.txt" "US22502555_967_1_397.txt" "US22502555_953_2_366.txt" "US22502555_953_1_366.txt" ...
+
+> dim(targets)
+[1] 324  16
+
+> length(unique(targets$Array.Data.File))
+[1] 324
+
+> table(CHANNEL = targets$Label)
+CHANNEL
+Cy3 Cy5 
+162 162 
+
+> table(CHANNEL = targets$Label, REFERENCE = targets$Sample.Name == 
++     "MRP")
+       REFERENCE
+CHANNEL FALSE TRUE
+    Cy3     0  162
+    Cy5   162    0
+
+> sum(REFERENCE = targets$Sample.Name != "MRP")
+[1] 162
+
+> table(METASTASES = targets$Characteristics.EventDistantMetastases)
+METASTASES
+  0   1 
+106  56 
+
+> table(MISSING = is.na(targets$Characteristics.EventDistantMetastases))
+MISSING
+FALSE  TRUE 
+  162   162 
+
+> table(MISSING = is.na(targets$Characteristics.EventDistantMetastases), 
++     REFERENCE = targets$Sample.Name != "MRP")
+       REFERENCE
+MISSING FALSE TRUE
+  FALSE     0  162
+  TRUE    162    0
+
+> myTmpDirEtabm115 <- paste(etabm155filesLoc, "/tmp", 
++     sep = "")
+
+> dir.create(myTmpDirEtabm115)
+Warning in dir.create(myTmpDirEtabm115) :
+  cannot create dir '/var/scratchro/tomas/QA/R-74238/lib/mammaPrintData/extdata/ETABM115/tmp', reason 'Read-only file system'
+
+> unzip(dir(etabm155filesLoc, full.names = TRUE, pattern = "E-TABM-115.raw.1.zip"), 
++     exdir = myTmpDirEtabm115)
+
+  When sourcing ‘mammaPrintData.R’:
+Error: 'exdir' does not exist
+Execution halted

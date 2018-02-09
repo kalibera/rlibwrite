@@ -1,0 +1,8 @@
+Warning in engine$weave(file, quiet = quiet, encoding = enc) :
+  Pandoc (>= 1.12.3) and/or pandoc-citeproc not available. Falling back to R Markdown v1.
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/Bchron/data/intcal09.rda', probable reason 'Read-only file system'
+Quitting from lines 279-283 (Bchron.Rmd) 
+Error: processing vignette 'Bchron.Rmd' failed with diagnostics:
+cannot open the connection
+Execution halted

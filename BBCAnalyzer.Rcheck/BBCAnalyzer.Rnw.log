@@ -1,0 +1,112 @@
+
+> options(width = 100)
+
+> library(BBCAnalyzer)
+
+> sample_file <- system.file("extdata", "SampleNames.txt", 
++     package = "BBCAnalyzer")
+
+> samples <- read.table(sample_file)
+
+> samples
+                  V1
+1 Example_IonTorrent
+2        Example_454
+
+> target_file <- system.file("extdata", "targetRegions.txt", 
++     package = "BBCAnalyzer")
+
+> targetRegions <- read.table(target_file)
+
+> targetRegions
+  V1        V2
+1  4 106157698
+2 20  31024054
+3 21  36206893
+4  2  25469913
+5 21  44514970
+6  7 148543694
+7  7 148543695
+
+> vcf_file <- system.file("extdata", "Example_IonTorrent.vcf", 
++     package = "BBCAnalyzer")
+
+> vcf_IT <- read.table(vcf_file)
+
+> vcf_IT
+  V1       V2 V3 V4  V5      V6   V7
+1 21 44514969  .  A ATG 1961.73 PASS
+                                                                                                                                                                                                                                                                                                           V8
+1 AC=1;AF=0.500;AN=2;BaseQRankSum=-1.103;ClippingRankSum=-0.061;DP=190;EFF=INTRAGENIC(MODIFIER|||||MX2||CODING|||1),INTRON(MODIFIER||||240|U2AF1|protein_coding|CODING|ENST00000380276|5|1);FS=2.704;MLEAC=1;MLEAF=0.500;MQ=86.81;MQ0=0;MQRankSum=-6.387;QD=10.32;ReadPosRankSum=-1.203;SOR=0.519;set=variant
+              V9                          V10
+1 GT:AD:DP:GQ:PL 0/1:84,92:176:99:1999,0,1942
+
+> library("BSgenome.Hsapiens.UCSC.hg19")
+Loading required package: BSgenome
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ, clusterExport, clusterMap,
+    parApply, parCapply, parLapply, parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append, as.data.frame, basename,
+    cbind, colMeans, colSums, colnames, dirname, do.call, duplicated, eval, evalq, get,
+    grep, grepl, intersect, is.unsorted, lapply, lengths, mapply, match, mget, order,
+    paste, pmax, pmax.int, pmin, pmin.int, rank, rbind, rowMeans, rowSums, rownames,
+    sapply, setdiff, sort, table, tapply, union, unique, unsplit, which, which.max,
+    which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: rtracklayer
+
+> ref_genome <- BSgenome.Hsapiens.UCSC.hg19
+
+> output1 <- analyzeBases(sample_names = sample_file, 
++     bam_input = system.file("extdata", package = "BBCAnalyzer"), 
++     target_regions = targ .... [TRUNCATED] 
+Determine Target
+Analyze Reads
+Sample 1 out of 2
+Position 1 out of 7
+Position 2 out of 7
+Position 3 out of 7
+Position 4 out of 7
+Position 5 out of 7
+Position 6 out of 7
+Position 7 out of 7
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/BBCAnalyzer/extdata/Example_IonTorrent.bases.txt': Read-only file system
+
+  When sourcing ‘BBCAnalyzer.R’:
+Error: cannot open the connection
+Execution halted

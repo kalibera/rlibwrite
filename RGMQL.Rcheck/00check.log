@@ -1,0 +1,165 @@
+* using log directory ‘/ssd/tomas/QA/R-74238/check/RGMQL.Rcheck’
+* using R Under development (unstable) (2018-02-08 r74238)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘RGMQL/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘RGMQL’ version ‘0.99.42’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘RGMQL’ can be installed ... OK
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+File ‘RGMQL/R/onLoad.R’:
+  .onLoad calls:
+    packageStartupMessage("Check if GMQL credentials are expired... \n")
+
+See section ‘Good practice’ in '?.onAttach'.
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... ERROR
+Running examples in ‘RGMQL-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: export_gmql
+> ### Title: Create GMQL dataset from GRangesList
+> ### Aliases: export_gmql
+> 
+> ### ** Examples
+> 
+> 
+> ## Load and attach add-on GenomicRanges package
+> library(GenomicRanges)
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+> 
+> ## These statemens create two GRanges with the region attributes: seqnames, 
+> ## ranges (region coordinates) and strand, plus two column elements:  
+> ## score and GC
+> 
+> gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(3, 6), strand = "+", 
++ score = 5L, GC = 0.45)
+> gr2 <- GRanges(seqnames = c("chr1", "chr1"),
++ ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), 
++ score = 3:4, GC = c(0.3, 0.5))
+> 
+> ## This statement creates a GRangesList using the previous GRanges 
+> 
+> grl = GRangesList(gr1, gr2)
+> 
+> ## This statement defines the path to the subdirectory "example" of the 
+> ## package "RGMQL" and exports the GRangesList as GMQL datasets using the 
+> ## last name of 'dir_out' path as dataset name
+> 
+> test_out_path <- system.file("example", package = "RGMQL")
+> export_gmql(grl, test_out_path, TRUE)
+Warning in dir.create(files_sub_dir) :
+  cannot create dir '/var/scratchro/tomas/QA/R-74238/lib/RGMQL/example/files', reason 'Read-only file system'
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/RGMQL/example/files/S_1.gtf': No such file or directory
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: export_gmql ... <Anonymous> -> export -> export -> .local -> cat -> file
+Execution halted
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+* checking re-building of vignette outputs ... WARNING
+Error in re-building vignettes:
+  ...
+18/02/09 08:10:59 INFO DAGScheduler: waiting: Set(ResultStage 69)
+18/02/09 08:10:59 INFO DAGScheduler: failed: Set()
+18/02/09 08:10:59 INFO DAGScheduler: Submitting ResultStage 69 (MapPartitionsRDD[87] at flatMap at GMQLSparkExecutor.scala:71), which has no missing parents
+18/02/09 08:10:59 INFO MemoryStore: Block broadcast_33 stored as values in memory (estimated size 6.0 KB, free 72.0 MB)
+18/02/09 08:10:59 INFO MemoryStore: Block broadcast_33_piece0 stored as bytes in memory (estimated size 3.0 KB, free 72.0 MB)
+18/02/09 08:10:59 INFO BlockManagerInfo: Added broadcast_33_piece0 in memory on 10.200.111.91:35149 (size: 3.0 KB, free: 72.6 MB)
+18/02/09 08:10:59 INFO SparkContext: Created broadcast 33 from broadcast at DAGScheduler.scala:1006
+18/02/09 08:10:59 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 69 (MapPartitionsRDD[87] at flatMap at GMQLSparkExecutor.scala:71) (first 15 tasks are for partitions Vector(0))
+18/02/09 08:10:59 INFO TaskSchedulerImpl: Adding task set 69.0 with 1 tasks
+18/02/09 08:10:59 INFO TaskSetManager: Starting task 0.0 in stage 69.0 (TID 1161, localhost, executor driver, partition 0, PROCESS_LOCAL, 4621 bytes)
+18/02/09 08:10:59 INFO Executor: Running task 0.0 in stage 69.0 (TID 1161)
+18/02/09 08:10:59 INFO ShuffleBlockFetcherIterator: Getting 0 non-empty blocks out of 1 blocks
+18/02/09 08:10:59 INFO ShuffleBlockFetcherIterator: Started 0 remote fetches in 0 ms
+18/02/09 08:10:59 INFO Executor: Finished task 0.0 in stage 69.0 (TID 1161). 1054 bytes result sent to driver
+18/02/09 08:10:59 INFO TaskSetManager: Finished task 0.0 in stage 69.0 (TID 1161) in 6 ms on localhost (executor driver) (1/1)
+18/02/09 08:10:59 INFO TaskSchedulerImpl: Removed TaskSet 69.0, whose tasks have all completed, from pool 
+18/02/09 08:10:59 INFO DAGScheduler: ResultStage 69 (collect at GMQLSparkExecutor.scala:71) finished in 0.001 s
+18/02/09 08:10:59 INFO DAGScheduler: Job 9 finished: collect at GMQLSparkExecutor.scala:71, took 1.730323 s
+18/02/09 08:11:01 WARN SparkContext: Using an existing SparkContext; some configuration may not take effect.
+GMQL Server is up
+Read 5 items
+Quitting from lines 656-665 (RGMQL-vignette.Rmd) 
+Error: processing vignette 'RGMQL-vignette.Rmd' failed with diagnostics:
+cannot open the connection
+Execution halted
+
+* checking PDF version of manual ... OK
+* DONE
+Status: 1 ERROR, 1 WARNING, 1 NOTE

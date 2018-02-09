@@ -1,0 +1,148 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # From http://rwiki.sciviews.org/doku.php?id=developers:runit
+> ## unit tests will not be done if RUnit is not available
+> 
+> if(require("RUnit", quietly=TRUE)) {
++  
++   ## --- Setup ---
++  
++   pkg <- "tawny.types" # <-- Change to name!
++   if(Sys.getenv("RCMDCHECK") == "FALSE") {
++     ## Path to unit tests for standalone running under Makefile (not R CMD check)
++     ## PKG/tests/../inst/unitTests
++     path <- file.path(getwd(), "..", "inst", "unitTests")
++   } else {
++     ## Path to unit tests for R CMD check
++     ## PKG.Rcheck/tests/../PKG/unitTests
++     path <- system.file(package=pkg, "unitTests")
++   }
++   cat("\nRunning unit tests\n")
++   print(list(pkg=pkg, getwd=getwd(), pathToUnitTests=path))
++  
++   library(package=pkg, character.only=TRUE)
++   print(search())
++  
++   ## If desired, load the name space to allow testing of private functions
++   ## if (is.element(pkg, loadedNamespaces()))
++   ##     attach(loadNamespace(pkg), name=paste("namespace", pkg, sep=":"), pos=3)
++   ##
++   ## or simply call PKG:::myPrivateFunction() in tests
++  
++   ## --- Testing ---
++  
++   ## Define tests
++   testSuite <- defineTestSuite(name=paste(pkg, "unit testing"),
++                                           dirs=path)
++   ## Run
++   tests <- runTestSuite(testSuite)
++  
++   ## Default report name
++   pathReport <- file.path(path, "report")
++  
++   ## Report to stdout and text files
++   cat("------------------- UNIT TEST SUMMARY ---------------------\n\n")
++   printTextProtocol(tests, showDetails=FALSE)
++   printTextProtocol(tests, showDetails=FALSE,
++                     fileName=paste(pathReport, "Summary.txt", sep=""))
++   printTextProtocol(tests, showDetails=TRUE,
++                     fileName=paste(pathReport, ".txt", sep=""))
++  
++   ## Report to HTML file
++   printHTMLProtocol(tests, fileName=paste(pathReport, ".html", sep=""))
++  
++   ## Return stop() to cause R CMD check stop in case of
++   ##  - failures i.e. FALSE to unit tests or
++   ##  - errors i.e. R errors
++   tmp <- getErrors(tests)
++   if(tmp$nFail > 0 | tmp$nErr > 0) {
++     stop(paste("\n\nunit testing failed (#test failures: ", tmp$nFail,
++                ", #R errors: ",  tmp$nErr, ")\n\n", sep=""))
++   }
++ } else {
++   warning("cannot run unit tests -- package RUnit is not available")
++ }
+
+Running unit tests
+$pkg
+[1] "tawny.types"
+
+$getwd
+[1] "/ssd/tomas/QA/R-74238/check/tawny.types.Rcheck/tests"
+
+$pathToUnitTests
+[1] "/var/scratchro/tomas/QA/R-74238/lib/tawny.types/unitTests"
+
+ [1] ".GlobalEnv"          "package:tawny.types" "package:RUnit"      
+ [4] "package:stats"       "package:graphics"    "package:grDevices"  
+ [7] "package:utils"       "package:datasets"    "package:methods"    
+[10] "Autoloads"           "package:base"       
+Loading required package: futile.any
+Loading required package: lambda.r
+Loading required package: xts
+Loading required package: zoo
+
+Attaching package: 'zoo'
+
+The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric
+
+
+
+Executing test function test.end.TawnyPortfolio  ...  done successfully.
+
+
+
+Executing test function test.rollapply.TawnyPortfolio  ... 
+out:
+                     A          B          C         D
+2011-01-16 -2.43358167 -0.6112610  7.1013271 -1.486004
+2011-01-17  0.03239754 -1.8324688  3.5250843 -1.987834
+2011-01-18  0.87837283 -1.2692420  2.3324225 -3.301550
+2011-01-19  3.97617134 -0.5927845  1.5222277 -2.917947
+2011-01-20  7.85913473  0.1968797  0.3361779 -3.498581
+2011-01-21  5.02547118  1.7380806 -2.2909667 -3.506052
+ done successfully.
+
+
+
+Executing test function test.start.TawnyPortfolio  ...  done successfully.
+
+
+
+Executing test function test.window_at.portfolio  ...  done successfully.
+
+------------------- UNIT TEST SUMMARY ---------------------
+
+RUNIT TEST PROTOCOL -- Fri Feb  9 09:53:29 2018 
+*********************************************** 
+Number of test functions: 4 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+tawny.types unit testing - 4 test functions, 0 errors, 0 failures
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: printTextProtocol -> cat -> file
+In addition: Warning message:
+In file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/tawny.types/unitTests/reportSummary.txt': Read-only file system
+Execution halted

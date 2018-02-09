@@ -1,0 +1,103 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> if( require( "RUnit", quietly=TRUE ) ) {
++   pkg <- "xmapbridge"
++ 
++   if( Sys.getenv( "RCMDCHECK" ) == "FALSE" ) {
++     path <- file.path( getwd(), "..", "inst", "unitTests" )
++   }
++   else {
++     path <- system.file( package=pkg, "unitTests" )
++   }
++ 
++   cat( "\nRunning unit tests\n" )
++   print( list( pkg=pkg, getwd=getwd(), pathToUnitTests=path ) )
++   library( package=pkg, character.only=TRUE )
++  
++   testSuite <- defineTestSuite( name=paste( pkg, "unit testing" ), dirs=path )
++   tests <- runTestSuite( testSuite )
++  
++   pathReport <- file.path( path, "report" )
++  
++   cat( "------------------- UNIT TEST SUMMARY ---------------------\n\n" )
++   printTextProtocol( tests, showDetails=FALSE )
++   printTextProtocol( tests, showDetails=FALSE, fileName=paste( pathReport, "Summary.txt", sep="" ) )
++   printTextProtocol( tests, showDetails=TRUE,  fileName=paste( pathReport, ".txt", sep="" ) )
++  
++   printHTMLProtocol( tests, fileName=paste( pathReport, ".html", sep="" ) )
++  
++   tmp <- getErrors( tests )
++   if( tmp$nFail > 0 | tmp$nErr > 0 ) {
++     stop( paste( "\n\nunit testing failed (#test failures: ", tmp$nFail, ", #R errors: ",  tmp$nErr, ")\n\n", sep="" ) )
++   }
++ } else {
++   warning( "cannot run unit tests -- package RUnit is not available" )
++ }
+
+Running unit tests
+$pkg
+[1] "xmapbridge"
+
+$getwd
+[1] "/ssd/tomas/QA/R-74238/check/xmapbridge.Rcheck/tests"
+
+$pathToUnitTests
+[1] "/var/scratchro/tomas/QA/R-74238/lib/xmapbridge/unitTests"
+
+
+
+Executing test function test.get.xmap.cache.dir  ...  done successfully.
+
+
+
+Executing test function test.graph  ...  done successfully.
+
+
+
+Executing test function test.plots  ...  done successfully.
+
+
+
+Executing test function test.projects  ...  done successfully.
+
+
+
+Executing test function test.utils  ...  done successfully.
+
+
+
+Executing test function test.validate.x.and.y  ...  done successfully.
+
+------------------- UNIT TEST SUMMARY ---------------------
+
+RUNIT TEST PROTOCOL -- Fri Feb  9 10:45:29 2018 
+*********************************************** 
+Number of test functions: 6 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+xmapbridge unit testing - 6 test functions, 0 errors, 0 failures
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: printTextProtocol -> cat -> file
+In addition: Warning message:
+In file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/xmapbridge/unitTests/reportSummary.txt': Read-only file system
+Execution halted

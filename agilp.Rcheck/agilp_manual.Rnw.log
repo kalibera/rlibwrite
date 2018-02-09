@@ -1,0 +1,21 @@
+
+> options(width = 60)
+
+> file.path(system.file(package = "agilp"))
+[1] "/var/scratchro/tomas/QA/R-74238/lib/agilp"
+
+> library(agilp)
+
+> inputdir <- file.path(system.file(package = "agilp"), 
++     "extdata", "scanner/", "", fsep = .Platform$file.sep)
+
+> outputdir <- file.path(system.file(package = "agilp"), 
++     "output/", "", fsep = .Platform$file.sep)
+
+> AAProcess(input = inputdir, output = outputdir, s = 9)
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/agilp/output//gRaw_scanner_file_1.txt': Read-only file system
+
+  When sourcing ‘agilp_manual.R’:
+Error: cannot open the connection
+Execution halted

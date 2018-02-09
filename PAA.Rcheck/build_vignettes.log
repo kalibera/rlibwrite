@@ -1,0 +1,8 @@
+Loading required package: Rcpp
+Warning in xzfile(file, "wb", compression = 9) :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/DummyData.RData', probable reason 'Read-only file system'
+
+Error: processing vignette 'PAA_vignette.Rnw' failed with diagnostics:
+ chunk 5 (label = loadGPR) 
+Error in xzfile(file, "wb", compression = 9) : cannot open the connection
+Execution halted

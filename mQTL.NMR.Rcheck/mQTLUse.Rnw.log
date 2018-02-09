@@ -1,0 +1,117 @@
+
+> BiocStyle::latex()
+\RequirePackage[]{/var/scratchro/tomas/QA/R-74238/lib/BiocStyle/resources/tex/Bioconductor}
+\AtBeginDocument{\bibliographystyle{/var/scratchro/tomas/QA/R-74238/lib/BiocStyle/resources/tex/unsrturl}}
+\usepackage[noae, nogin]{Sweave}
+> library(mQTL.NMR)
+
+> load_datafiles()
+
+> format_mQTL(phenofile, genofile, physiodat, cleandat, 
++     cleangen)
+[1] "Start formatting the datafile /var/scratchro/tomas/QA/R-74238/lib/mQTL.NMR/extdata/phenofile.txt and the genotype file /var/scratchro/tomas/QA/R-74238/lib/mQTL.NMR/extdata/genofile.txt into the csvs files: met.clean.txt gen.clean.txt"
+
+> nmeth <- "CS"
+
+> normalise_mQTL(cleandat, CSnorm, nmeth)
+[1] "Start constant sum normalisation:"
+
+> align_mQTL(CSnorm, aligdat)
+[1] "...Automatic selection of a reference spectrum..."
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+Warning in apply(t(X[, istart:iend]), 2, mean) * rep(1, seglength) :
+  longer object length is not a multiple of shorter object length
+[1] ""
+[1] "...Returning aligned spectra..."
+
+> met = "rectangle"
+
+> pre_mQTL(aligdat, reducedF, RedMet = "SRV", met, corrT = 0.9)
+[1] "Processing a 168 x 1454 matrix with minsize of 10  and a correlation Threshold of 0.9 using the rectangle"
+[1] "length of events: 66"
+[1] "Xcluster" "168"      "66"       "66"      
+[1] "balise length:" "3"             
+[1] "Found 64  clusters"
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/mQTL.NMR/extdata/reducedF.txt': Read-only file system
+
+  When sourcing ‘mQTLUse.R’:
+Error: cannot open the connection
+Execution halted

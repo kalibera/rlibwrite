@@ -1,0 +1,340 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## from xmapcore package
+> if( require( "RUnit", quietly=TRUE ) ) {
++ 	pkg <- "VanillaICE"
++ 
++ 	if( Sys.getenv( "RCMDCHECK" ) == "FALSE" ) {
++ 		path <- file.path( getwd(), "..", "inst", "unitTests" )
++ 	} else {
++ 		path <- system.file( package=pkg, "unitTests" )
++ 	}
++ 
++ 	cat( "\nRunning unit tests\n" )
++ 	print( list( pkg=pkg, getwd=getwd(), pathToUnitTests=path ) )
++ 	library( package=pkg, character.only=TRUE )
++ 
++ 	##xmap.clear.cache()
++ 
++ 	##Fail on warnings
++ 	options( warn=2 )
++ 
++ 	## Get the pattern (if there is one?)
++ 	patt <- Sys.getenv( "RUNITFILEPATTERN" )
++ 	if( is.null( patt ) || nchar( patt ) == 0 ) {
++ 		testSuite <- defineTestSuite(name=paste( pkg, "unit testing" ),
++ 					     dirs=path,
++ 					     testFileRegexp=paste( "^test.+", patt, "\\.[rR]$", sep="" ))
++ 	} else {
++ 		##testSuite <- defineTestSuite( name=paste( pkg, "unit testing" ), testFileRegexp=paste( "^runit\\.", patt, "\\.[rR]$", sep="" ), dirs=path )
++ 		testSuite <- defineTestSuite(name=paste( pkg, "unit testing" ),
++ 					     testFileRegexp=paste( "^test.+", patt, "\\.[rR]$", sep="" ),
++ 					     dirs=path )
++ 	}
++ 	tests <- runTestSuite( testSuite )
++ 
++ 	pathReport <- file.path( path, "report" )
++ 
++ 	cat( "------------------- UNIT TEST SUMMARY ---------------------\n\n" )
++ 	printTextProtocol( tests, showDetails=FALSE )
++ 	printTextProtocol( tests, showDetails=FALSE, fileName=paste( pathReport, "Summary.txt", sep="" ) )
++ 	printTextProtocol( tests, showDetails=TRUE,  fileName=paste( pathReport, ".txt", sep="" ) )
++ 
++ 	printHTMLProtocol( tests, fileName=paste( pathReport, ".html", sep="" ) )
++ 
++ 	tmp <- getErrors( tests )
++ 	if( tmp$nFail > 0 | tmp$nErr > 0 ){
++ 		stop( paste( "\n\nunit testing failed (#test failures: ", tmp$nFail, ", #R errors: ",  tmp$nErr, ")\n\n", sep=""))
++ 	}
++ } else {
++ 	warning( "cannot run unit tests -- package RUnit is not available" )
++ }
+
+Running unit tests
+$pkg
+[1] "VanillaICE"
+
+$getwd
+[1] "/ssd/tomas/QA/R-74238/check/VanillaICE.Rcheck/tests"
+
+$pathToUnitTests
+[1] "/var/scratchro/tomas/QA/R-74238/lib/VanillaICE/unitTests"
+
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: 'BiocGenerics'
+
+The following objects are masked from 'package:parallel':
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from 'package:base':
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: S4Vectors
+
+Attaching package: 'S4Vectors'
+
+The following object is masked from 'package:base':
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: SummarizedExperiment
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: DelayedArray
+Loading required package: matrixStats
+
+Attaching package: 'matrixStats'
+
+The following objects are masked from 'package:Biobase':
+
+    anyMissing, rowMedians
+
+Loading required package: BiocParallel
+
+Attaching package: 'DelayedArray'
+
+The following objects are masked from 'package:matrixStats':
+
+    colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges
+
+The following objects are masked from 'package:base':
+
+    aperm, apply
+
+Welcome to VanillaICE version 1.41.1
+Loading required package: BSgenome.Hsapiens.UCSC.hg18
+Loading required package: BSgenome
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: 'Biostrings'
+
+The following object is masked from 'package:VanillaICE':
+
+    deletion
+
+The following object is masked from 'package:DelayedArray':
+
+    type
+
+The following object is masked from 'package:base':
+
+    strsplit
+
+Loading required package: rtracklayer
+Loading required package: data.table
+
+Attaching package: 'data.table'
+
+The following object is masked from 'package:SummarizedExperiment':
+
+    shift
+
+The following object is masked from 'package:GenomicRanges':
+
+    shift
+
+The following object is masked from 'package:IRanges':
+
+    shift
+
+The following objects are masked from 'package:S4Vectors':
+
+    first, second
+
+Loading required package: foreach
+Loading required package: oligoClasses
+Welcome to oligoClasses version 1.41.0
+
+Attaching package: 'oligoClasses'
+
+The following object is masked from 'package:IRanges':
+
+    coverage2
+
+
+
+Executing test function test_ArrayViews  ...  done successfully.
+
+
+
+Executing test function test_columnSubset  ... Writing parsed files to /var/scratch/tomas/tmp/Rtmp9L7eWG
+ done successfully.
+
+
+
+Executing test function test_FilterParam  ...  done successfully.
+
+
+
+Executing test function test_EmissionParam  ...  done successfully.
+
+
+
+Executing test function test_SnpArrayExperiment  ... Error in (function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function 'SnpDataFrame' for signature '"numeric"'
+In addition: Warning messages:
+1: multiple methods tables found for 'coverage2' 
+2: replacing previous import 'IRanges::coverage2' by 'oligoClasses::coverage2' when loading 'VanillaICE' 
+Error in VanillaICE:::SnpDataFrame(DataFrame(x = 3)) : 
+  isSnp must be specified
+Error in .local(object, isSnp, ...) : isSnp must be specified
+Error in validObject(.Object) : 
+  invalid class "SummarizedExperiment" object: 
+  nb of rows in 'assay' (5) must equal nb of rows in 'rowData' (0)
+Error in SnpArrayExperiment(x, y, rowRanges = rowranges) : 
+   isSnp must be the same length as rowRanges
+Timing stopped at: 0.496 0 0.991
+Error in validObject(object) : 
+  invalid class "SnpGRanges" object: slots in class definition but not in object: "elementType"
+ done successfully.
+
+
+
+Executing test function test_SnpGRanges  ...  done successfully.
+
+
+
+Executing test function test_acf2  ...  done successfully.
+
+
+
+Executing test function test_hmm_cnset  ... Loading required package: crlmm
+Loading required package: preprocessCore
+Welcome to crlmm version 1.37.0
+
+Attaching package: 'crlmm'
+
+The following object is masked from 'package:VanillaICE':
+
+    genotypes
+
+ done successfully.
+
+
+
+Executing test function test_state4  ...  done successfully.
+
+
+
+Executing test function test_rowMAD  ...  done successfully.
+
+
+
+Executing test function test_scaleBy  ...  done successfully.
+
+
+
+Executing test function test_duplicatedMapLocs  ... Timing stopped at: 0.096 0 0.142
+Error in validObject(object) : 
+  invalid class "SnpGRanges" object: slots in class definition but not in object: "elementType"
+ done successfully.
+
+
+
+Executing test function test_sweepMode.R  ...  done successfully.
+
+
+
+Executing test function test_Viterbi  ...  done successfully.
+
+
+
+Executing test function test_baf_emission  ...  done successfully.
+
+
+
+Executing test function test_cn_NAs  ...  done successfully.
+
+
+
+Executing test function test_emission_for_list  ...  done successfully.
+
+
+
+Executing test function test_emission_update  ...  done successfully.
+
+
+
+Executing test function test_multiple_chromosomes  ... Timing stopped at: 0.364 0 0.788
+Error in validObject(object) : 
+  invalid class "SnpGRanges" object: slots in class definition but not in object: "elementType"
+ done successfully.
+
+
+
+Executing test function test_null_assignment  ...  done successfully.
+
+
+
+Executing test function test_oligoset_comparison  ...  done successfully.
+
+
+
+Executing test function test_summarized_exp  ...  done successfully.
+
+
+
+Executing test function test_updating  ...  done successfully.
+
+------------------- UNIT TEST SUMMARY ---------------------
+
+RUNIT TEST PROTOCOL -- Fri Feb  9 10:41:27 2018 
+*********************************************** 
+Number of test functions: 23 
+Number of errors: 3 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+VanillaICE unit testing - 23 test functions, 3 errors, 0 failures
+ERROR in test_SnpArrayExperiment: Error in validObject(object) : 
+  invalid class "SnpGRanges" object: slots in class definition but not in object: "elementType"
+ERROR in test_duplicatedMapLocs: Error in validObject(object) : 
+  invalid class "SnpGRanges" object: slots in class definition but not in object: "elementType"
+ERROR in test_multiple_chromosomes: Error in validObject(object) : 
+  invalid class "SnpGRanges" object: slots in class definition but not in object: "elementType"
+Error in file(file, ifelse(append, "a", "w")) : 
+  (converted from warning) cannot open file '/var/scratchro/tomas/QA/R-74238/lib/VanillaICE/unitTests/reportSummary.txt': Read-only file system
+Calls: printTextProtocol -> cat -> file
+Execution halted

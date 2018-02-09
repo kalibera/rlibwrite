@@ -1,0 +1,125 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## from xmapcore package
+> if( require( "RUnit", quietly=TRUE ) ) {
++ 	pkg <- "XDE"
++ 
++ 	if( Sys.getenv( "RCMDCHECK" ) == "FALSE" ) {
++ 		path <- file.path( getwd(), "..", "inst", "unitTests" )
++ 	} else {
++ 		path <- system.file( package=pkg, "unitTests" )
++ 	}
++ 
++ 	cat( "\nRunning unit tests\n" )
++ 	print( list( pkg=pkg, getwd=getwd(), pathToUnitTests=path ) )
++ 	library( package=pkg, character.only=TRUE )
++ 
++ 	##xmap.clear.cache()
++ 
++ 	##Fail on warnings
++ 	options( warn=2 )
++ 
++ 	## Get the pattern (if there is one?)
++ 	patt <- Sys.getenv( "RUNITFILEPATTERN" )
++ 	if( is.null( patt ) || nchar( patt ) == 0 ) {
++ 		testSuite <- defineTestSuite(name=paste( pkg, "unit testing" ),
++ 					     dirs=path,
++ 					     testFileRegexp=paste( "^test.+", patt, "\\.[rR]$", sep="" ))
++ 	} else {
++ 		##testSuite <- defineTestSuite( name=paste( pkg, "unit testing" ), testFileRegexp=paste( "^runit\\.", patt, "\\.[rR]$", sep="" ), dirs=path )
++ 		testSuite <- defineTestSuite(name=paste( pkg, "unit testing" ),
++ 					     testFileRegexp=paste( "^test.+", patt, "\\.[rR]$", sep="" ),
++ 					     dirs=path )
++ 	}
++ 	tests <- runTestSuite( testSuite )
++ 
++ 	pathReport <- file.path( path, "report" )
++ 
++ 	cat( "------------------- UNIT TEST SUMMARY ---------------------\n\n" )
++ 	printTextProtocol( tests, showDetails=FALSE )
++ 	printTextProtocol( tests, showDetails=FALSE, fileName=paste( pathReport, "Summary.txt", sep="" ) )
++ 	printTextProtocol( tests, showDetails=TRUE,  fileName=paste( pathReport, ".txt", sep="" ) )
++ 
++ 	printHTMLProtocol( tests, fileName=paste( pathReport, ".html", sep="" ) )
++ 
++ 	tmp <- getErrors( tests )
++ 	if( tmp$nFail > 0 | tmp$nErr > 0 ){
++ 		stop( paste( "\n\nunit testing failed (#test failures: ", tmp$nFail, ", #R errors: ",  tmp$nErr, ")\n\n", sep=""))
++ 	}
++ } else {
++ 	warning( "cannot run unit tests -- package RUnit is not available" )
++ }
+
+Running unit tests
+$pkg
+[1] "XDE"
+
+$getwd
+[1] "/ssd/tomas/QA/R-74238/check/XDE.Rcheck/tests"
+
+$pathToUnitTests
+[1] "/var/scratchro/tomas/QA/R-74238/lib/XDE/unitTests"
+
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: 'BiocGenerics'
+
+The following objects are masked from 'package:parallel':
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from 'package:base':
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Welcome to XDE version 2.25.0
+------------------- UNIT TEST SUMMARY ---------------------
+
+RUNIT TEST PROTOCOL -- Fri Feb  9 10:49:50 2018 
+*********************************************** 
+Number of test functions: 0 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+XDE unit testing - 0 test functions, 0 errors, 0 failures
+Error in file(file, ifelse(append, "a", "w")) : 
+  (converted from warning) cannot open file '/var/scratchro/tomas/QA/R-74238/lib/XDE/unitTests/reportSummary.txt': Read-only file system
+Calls: printTextProtocol -> cat -> file
+Execution halted

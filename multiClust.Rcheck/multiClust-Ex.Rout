@@ -1,0 +1,87 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "multiClust"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('multiClust')
+Loading required package: amap
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("WriteMatrixToFile")
+> ### * WriteMatrixToFile
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: WriteMatrixToFile
+> ### Title: Function to write a data matrix to a text file.
+> ### Aliases: WriteMatrixToFile
+> 
+> ### ** Examples
+> 
+> 
+> #Load sample dataset
+> data(iris)
+> # View sample matrix
+> iris[1:4, 1:4]
+  Sepal.Length Sepal.Width Petal.Length Petal.Width
+1          5.1         3.5          1.4         0.2
+2          4.9         3.0          1.4         0.2
+3          4.7         3.2          1.3         0.2
+4          4.6         3.1          1.5         0.2
+> # Write sample matrix to text file
+> WriteMatrixToFile(tmpMatrix=iris, tmpFileName="iris.sample.matrix.txt",
++ blnRowNames=TRUE, blnColNames=TRUE)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("avg_probe_exp")
+> ### * avg_probe_exp
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: avg_probe_exp
+> ### Title: Function to produce a matrix containing the average expression
+> ###   of each gene probe within each sample cluster.
+> ### Aliases: avg_probe_exp
+> 
+> ### ** Examples
+> 
+> # Produce matrix of average expression of each probe in each cluster
+> # Load in a data file
+> data_file <- system.file("extdata", "GSE2034.normalized.expression.txt",
++     package="multiClust")
+> data <- input_file(input=data_file)
+[1] "The gene expression matrix has been loaded"
+> # Choose 300 genes to select for
+> gene_num <- number_probes(input=data_file, data.exp=data, Fixed=300,
++    Percent=NULL, Adaptive=NULL)
+[1] "The fixed gene probe number is: 300"
+> # Choose the "CV_Rank" Method for gene ranking
+> sel.data <- probe_ranking(input=data_file, probe_number=300,
++     probe_num_selection="Fixed_Probe_Num", data.exp=data, method="CV_Rank")
+Warning in file(tmpFileName, "at") :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/multiClust/extdata/GSE2034.normalized.expression.txt.Fixed_Probe_Num.CV_Rank_Selected_Gene_Exp.txt': Read-only file system
+Error in file(tmpFileName, "at") : cannot open the connection
+Calls: probe_ranking -> WriteMatrixToFile -> file
+Execution halted

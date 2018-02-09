@@ -1,0 +1,116 @@
+* using log directory ‘/ssd/tomas/QA/R-74238/check/oligoClasses.Rcheck’
+* using R Under development (unstable) (2018-02-08 r74238)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘oligoClasses/DESCRIPTION’ ... OK
+* this is package ‘oligoClasses’ version ‘1.41.0’
+* checking package namespace information ... OK
+* checking package dependencies ... NOTE
+Package which this enhances but not available for checking: ‘doMPI’
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘oligoClasses’ can be installed ... WARNING
+Found the following significant warnings:
+  Warning: multiple methods tables found for ‘coverage2’
+See ‘/ssd/tomas/QA/R-74238/check/oligoClasses.Rcheck/00install.out’ for details.
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... NOTE
+Warning: multiple methods tables found for ‘coverage2’
+
+A namespace must be able to be loaded with just the base namespace
+loaded: otherwise if the namespace gets loaded by a saved object, the
+session will be unable to start.
+
+Probably some imports need to be declared in the NAMESPACE file.
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... NOTE
+Namespace in Imports field not imported from: ‘RSQLite’
+  All declared Imports should be used.
+Unexported object imported by a ':::' call: ‘Biobase:::assayDataEnvLock’
+  See the note in ?`:::` about the use of this operator.
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+getSequenceLengths: no visible binding for global variable ‘seqlengths’
+pdPkgFromBioC: no visible binding for global variable ‘contrib.url’
+pdPkgFromBioC: no visible global function definition for
+  ‘available.packages’
+pdPkgFromBioC: no visible global function definition for
+  ‘install.packages’
+chromosome,gSetList: no visible global function definition for
+  ‘chromosomeList’
+coerce,CNSet-CopyNumberSet: no visible global function definition for
+  ‘totalCopynumber’
+geometry,FeatureSet: no visible global function definition for ‘getPD’
+Undefined global functions or variables:
+  available.packages chromosomeList contrib.url getPD install.packages
+  seqlengths totalCopynumber
+Consider adding
+  importFrom("utils", "available.packages", "contrib.url",
+             "install.packages")
+to your NAMESPACE file.
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... WARNING
+Undocumented S4 methods:
+  generic '[' and siglist 'CNSet,ANY,ANY,ANY'
+  generic '[' and siglist 'gSetList,ANY,ANY,ANY'
+All user-level objects in a package (including S4 classes and methods)
+should have documentation entries.
+See chapter ‘Writing R documentation files’ in the ‘Writing R
+Extensions’ manual.
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking line endings in Makefiles ... OK
+* checking for GNU extensions in Makefiles ... OK
+* checking include directives in Makefiles ... OK
+* checking files in ‘vignettes’ ... WARNING
+Files in the 'vignettes' directory but no files in 'inst/doc':
+  ‘scriptsForExampleData/CreateExampleData.R’
+Package has no Sweave vignette sources and no VignetteBuilder field.
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... ERROR
+  Running ‘doRUnit.R’
+Running the tests in ‘tests/doRUnit.R’ failed.
+Last 13 lines of output:
+  Number of test functions: 12 
+  Number of errors: 0 
+  Number of failures: 0 
+  
+   
+  1 Test Suite : 
+  oligoClasses unit testing - 12 test functions, 0 errors, 0 failures
+  Error in file(file, ifelse(append, "a", "w")) : 
+    cannot open the connection
+  Calls: printTextProtocol -> cat -> file
+  In addition: Warning messages:
+  1: multiple methods tables found for 'coverage2' 
+  2: In file(file, ifelse(append, "a", "w")) :
+    cannot open file '/var/scratchro/tomas/QA/R-74238/lib/oligoClasses/unitTests/reportSummary.txt': Read-only file system
+  Execution halted
+* checking PDF version of manual ... OK
+* DONE
+Status: 1 ERROR, 3 WARNINGs, 4 NOTEs

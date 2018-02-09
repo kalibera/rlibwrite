@@ -1,0 +1,45 @@
+
+> BiocStyle::latex()
+\RequirePackage[]{/var/scratchro/tomas/QA/R-74238/lib/BiocStyle/resources/tex/Bioconductor}
+\AtBeginDocument{\bibliographystyle{/var/scratchro/tomas/QA/R-74238/lib/BiocStyle/resources/tex/unsrturl}}
+\usepackage[noae, nogin]{Sweave}
+> library(PAA)
+Loading required package: Rcpp
+
+> targets <- read.table(file = list.files(system.file("extdata", 
++     package = "PAA"), pattern = "^targets", full.names = TRUE), 
++     header = TR .... [TRUNCATED] 
+
+> print(targets[1:3, ])
+  ArrayID                    FileName Group  Batch       Date Array SerumID
+1     AD1 GSM734833_PA41992_-_AD1.gpr    AD Batch1 10.11.2010 41992     AD1
+2     AD2 GSM734834_PA41994_-_AD2.gpr    AD Batch2 10.11.2010 41994     AD2
+3     AD3  GSM734835_PA42006_-AD3.gpr    AD Batch1 12.11.2010 42006     AD3
+
+> gpr <- system.file("extdata", package = "PAA")
+
+> targets <- list.files(system.file("extdata", package = "PAA"), 
++     pattern = "dummy_targets", full.names = TRUE)
+
+> dummy.elist <- loadGPR(gpr.path = gpr, targets.path = targets, 
++     array.type = "ProtoArray")
+Read /var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/dummy_GSM734833_PA41992_-_AD1.gpr 
+Read /var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/dummy_GSM734834_PA41994_-_AD2.gpr 
+Read /var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/dummy_GSM734835_PA42006_-AD3.gpr 
+Read /var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/dummy_GSM734836_PA42005_-_AD4.gpr 
+Read /var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/dummy_GSM734837_PA41957_-_AD5.gpr 
+Read /var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/dummy_GSM735203_PA42023_-_CO13.gpr 
+Read /var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/dummy_GSM735204_PA42025_-_CO14.gpr 
+Read /var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/dummy_GSM735205_PA42026_-_CO15.gpr 
+Read /var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/dummy_GSM735206_PA42028_-_CO16.gpr 
+Read /var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/dummy_GSM735207_PA42029_-_CO17.gpr 
+No aggregation performed.
+
+> save(dummy.elist, file = paste(gpr, "/DummyData.RData", 
++     sep = ""), compress = "xz")
+Warning in xzfile(file, "wb", compression = 9) :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/PAA/extdata/DummyData.RData', probable reason 'Read-only file system'
+
+  When sourcing ‘PAA_vignette.R’:
+Error: cannot open the connection
+Execution halted

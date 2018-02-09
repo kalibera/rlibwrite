@@ -1,0 +1,1037 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "coMET"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('coMET')
+Loading required package: grid
+Loading required package: biomaRt
+Loading required package: Gviz
+Loading required package: S4Vectors
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomicRanges
+Loading required package: GenomeInfoDb
+Loading required package: psych
+
+Attaching package: 'psych'
+
+The following object is masked from 'package:IRanges':
+
+    reflect
+
+Loading required package: ggbio
+Loading required package: ggplot2
+
+Attaching package: 'ggplot2'
+
+The following objects are masked from 'package:psych':
+
+    %+%, alpha
+
+Need specific help about ggbio? try mailing 
+ the maintainer or visit http://tengfei.github.com/ggbio/
+
+Attaching package: 'ggbio'
+
+The following objects are masked from 'package:ggplot2':
+
+    geom_bar, geom_rect, geom_segment, ggsave, stat_bin, stat_identity,
+    xlim
+
+The following object is masked from 'package:psych':
+
+    rescale
+
+Loading required package: trackViewer
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("COSMIC_UCSC")
+> ### * COSMIC_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: COSMIC_UCSC
+> ### Title: Create one track of the genomic positions of variants from
+> ###   COSMIC
+> ### Aliases: COSMIC_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> chrom <- "chr2"
+> start <- 38290160
+> end <- 38303219
+> gen <- "hg19"
+> if(interactive()){
++     cosmicVariant<-COSMIC_UCSC(gen,chrom,start,end)
++     plotTracks(cosmicVariant, from = start, to =end)
++ }else {
++     data(cosmicVarianttrack)
++     plotTracks(cosmicVariant, from = start, to =end)
++ }
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ChIPTF_ENCODE")
+> ### * ChIPTF_ENCODE
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ChIPTF_ENCODE
+> ### Title: Creates a TF motif track from ENCODE
+> ### Aliases: ChIPTF_ENCODE
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> gen <- "hg19"
+> chr<-"chr1"
+> start <- 1000
+> end <- 329000
+> 
+> 
+> if(interactive()){
++     extdata <- system.file("extdata", package="coMET",mustWork=TRUE)
++     bedFilePath <- file.path(extdata, "ENCODE/motifs1000_matches_ENCODE.txt")
++     motif_color <- file.path(extdata, "ENCODE/TFmotifs_colors.csv")
++     chipTFtrack <- ChIPTF_ENCODE(gen,chr,start, end, bedFilePath, featureDisplay=c("AHR::ARNT::HIF1A_1","AIRE_1","AIRE_2","AHR::ARNT_1"), motif_color,type_stacking="squish",showId=TRUE)
++     plotTracks(chipTFtrack, from = start, to = end)
++ } else {
++     data(chipTFtrack)
++     plotTracks(chipTFtrack, from = start, to = end)
++ }
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ClinVarCnv_UCSC")
+> ### * ClinVarCnv_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ClinVarCnv_UCSC
+> ### Title: Create one track of the genomic positions of variants from the
+> ###   ClinVar database (CNV only)
+> ### Aliases: ClinVarCnv_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> chrom <- "chr2"
+> start <- 38290160
+> end <- 38303219
+> gen <- "hg38"
+> if(interactive()){
++     clinCNV<-ClinVarCnv_UCSC(gen,chrom,start,end)
++     plotTracks(clinCNV, from = start, to =end)
++ }else {
++     data(ClinVarCnvTrack)
++     plotTracks(clinCNV, from = start, to =end)
++ }
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ClinVarMain_UCSC")
+> ### * ClinVarMain_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ClinVarMain_UCSC
+> ### Title: Create one track of the genomic positions of variants from the
+> ###   ClinVar database (variants only)
+> ### Aliases: ClinVarMain_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> gen <- "hg38"
+> chrom <- "chr2"
+> start <- 100000
+> end <- 10000000
+> 
+> if(interactive()) {
++     clinVariant<-ClinVarMain_UCSC(gen,chrom,start,end)
++     plotTracks(clinVariant, from = start, to =end)
++ }else{
++     data(clinVarMaintrack)
++     plotTracks(clinVariant, from = start, to =end)
++ }
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("CoreillCNV_UCSC")
+> ### * CoreillCNV_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: CoreillCNV_UCSC
+> ### Title: Create one track of the genomic positions of CNV in chromosomal
+> ###   aberration and inherited disorders from the NIGMS Human Genetic Cell
+> ###   Repository data
+> ### Aliases: CoreillCNV_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> gen <- "hg19"
+> chrom <- "chr2"
+> start <- 38290160
+> end <- 38303219
+> 
+> if(interactive()){
++     coreilVariant<-CoreillCNV_UCSC(gen,chrom,start,end)
++     plotTracks(coreilVariant, from = start, to =end)
++ } else {
++      data(coreilVarianttrack)
++     plotTracks(coreilVariant, from = start, to =end)
++ }
+> 
+> 
+> 
+> cleanEx()
+> nameEx("DNAse_UCSC")
+> ### * DNAse_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: DNAse_UCSC
+> ### Title: Creation of an UCSC's DNase clusters track
+> ### Aliases: DNAse_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> library("rtracklayer")
+> 
+> gen <- "hg19"
+> chr <- "chr7"
+> start <- 38290160
+> end <- 38303219
+> if(interactive()){
++   BROWSER.SESSION="UCSC"
++   mySession <- browserSession(BROWSER.SESSION)
++   genome(mySession) <- gen
++   track.name="Broad ChromHMM"
++   tablestrack<-tableNames(ucscTableQuery(mySession, track=track.name))
++   table.name<-tablestrack[1]
++   dnasetrack<-DNAse_UCSC(gen,chr,start,end,mySession)
++   plotTracks(dnasetrack, from = start, to =end)
++ }else {
++     data(dnasetrack)
++    plotTracks(dnasetrack, from = start, to =end)
++ }
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:rtracklayer'
+
+> nameEx("DNaseI_FANTOM")
+> ### * DNaseI_FANTOM
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: DNaseI_FANTOM
+> ### Title: Creates a enhancer/promoter track from FANTOM
+> ### Aliases: DNaseI_FANTOM
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> gen <- "hg19"
+> chr<- "chr1"
+> start <- 6000000
+> end <- 6500000
+> 
+> extdata <- system.file("extdata", package="coMET",mustWork=TRUE)
+> enhFantomFile <- file.path(extdata, "/FANTOM/human_permissive_enhancers_phase_1_and_2.bed")
+> 
+> if(interactive()){
++  enhFANTOMtrack <- DNaseI_FANTOM(gen,chr,start, end, enhFantomFile, featureDisplay='enhancer')
++   plotTracks(enhFANTOMtrack, from = start, to = end)
++ } else {
++   data(enhFANTOMtrack)
++   plotTracks(enhFANTOMtrack, from = start, to = end)
++ }
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("DNaseI_RoadMap")
+> ### * DNaseI_RoadMap
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: DNaseI_RoadMap
+> ### Title: Creates a promoter/enhancer regions track from a file of RoadMap
+> ### Aliases: DNaseI_RoadMap
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> chr <- "chr1"
+> start <- 707612
+> end <- 722151
+> gen="hg19"
+> 
+> extdata <- system.file("extdata", package="coMET",mustWork=TRUE)
+> bedFilePath <- file.path(extdata, "RoadMap/regions_prom_E063.bed")
+> 
+> if(interactive()){
++   DNaseI_RoadMapSingle <- DNaseI_RoadMap(gen,chr,start, end, bedFilePath, featureDisplay='promotor'  )
++   plotTracks(DNaseI_RoadMapSingle, from = start, to = end)
++ } else {
++   data(DNaseI_RoadMapSingle)
++   plotTracks(DNaseI_RoadMapSingle, from = start, to = end)
++ }
+> 
+> 
+> 
+> cleanEx()
+> nameEx("GAD_UCSC")
+> ### * GAD_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: GAD_UCSC
+> ### Title: Create one track of the genomic positions of variants from the
+> ###   Genetic Association Database (GAD)
+> ### Aliases: GAD_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> gen2 <- "hg19"
+> chrom2 <- "chr2"
+> start2 <- 38290160
+> end2 <- 38303219
+> 
+> if(interactive()) {
++   gadtrack<-GAD_UCSC(gen=gen2 ,chr=chrom2 ,start=start2 ,end=end2)
++   plotTracks(gadtrack, from = start2, to =end2)
++ } else {
++   data(gadtrack)
++    plotTracks(gadtrack, from = start2, to =end2)
++ }
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("GWAScatalog_UCSC")
+> ### * GWAScatalog_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: GWAScatalog_UCSC
+> ### Title: Create one track of the genomic positions of variants from the
+> ###   GWAS catalog
+> ### Aliases: GWAScatalog_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> gen <- "hg38"
+> chrom <- "chr2"
+> start <- 10000
+> end <- 100000
+> 
+> if(interactive()) {
++   gwastrack <-GWAScatalog_UCSC(gen,chrom,start,end)
++   plotTracks(gwastrack, from = start, to =end)
++ } else {
++   data(GWASTrack)
++   plotTracks(gwastrack, from = start, to =end)
++ }
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("GeneReviews_UCSC")
+> ### * GeneReviews_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: GeneReviews_UCSC
+> ### Title: Create one track of the genomic positions of variants from
+> ###   GeneReviews
+> ### Aliases: GeneReviews_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> gen <- "hg38"
+> chrom <- "chr2"
+> start <- 10000000
+> end <- 100000000
+> if(interactive()){
++   geneRtrack <-GeneReviews_UCSC(gen,chrom,start,end,showId=TRUE)
++   plotTracks(geneRtrack, from = start, to = end)
++ } else {
++   data(GeneReviewTrack)
++   plotTracks(geneRtrack, from = start, to = end)
++ }
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("HiCdata2matrix")
+> ### * HiCdata2matrix
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: HiCdata2matrix
+> ### Title: Creates a HiC matrix from a file (Rao et al., 2014)
+> ### Aliases: HiCdata2matrix
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("corrplot")
+corrplot 0.84 loaded
+> gen <- "hg19"
+> chr<-"chr1"
+> start <- 5000000
+> end <- 9000000
+> 
+> extdata <- system.file("extdata", package="coMET",mustWork=TRUE)
+> bedFilePath <- file.path(extdata, "HiC/chr1_1mb.RAWobserved")
+> 
+> if(interactive()){
++   matrix_HiC_Rao <- HiCdata2matrix(chr,start, end, bedFilePath)
++ cor_matrix_HiC <- cor(matrix_HiC_Rao)
++ diag(cor_matrix_HiC)<-1
++ corrplot(cor_matrix_HiC, method = "circle")
++ } else {
++   data(matrix_HiC_Rao)
++   cor_matrix_HiC <- cor(matrix_HiC_Rao)
++ diag(cor_matrix_HiC)<-1
++ corrplot(cor_matrix_HiC, method = "circle")
++ }
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:corrplot'
+
+> nameEx("HistoneAll_UCSC")
+> ### * HistoneAll_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: HistoneAll_UCSC
+> ### Title: Create multiple tracks of histone modifications from the UCSC
+> ###   genome browser
+> ### Aliases: HistoneAll_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> library("rtracklayer")
+> gen <- "hg19"
+> chr <- "chr2"
+> start <- 38290160
+> end <- 38313219
+> 
+> if(interactive()){
++   BROWSER.SESSION="UCSC"
++   mySession <- browserSession(BROWSER.SESSION)
++   genome(mySession) <- gen
++   pattern1 <- "GM12878"
++ 
++   histonalltrack<-HistoneAll_UCSC(gen,chr,start,end,mySession, pattern=pattern1,track.name="Broad Histone")
++   plotTracks(histonalltrack, from = start, to =end)
++ } else {
++   data(histonalltrack)
++   plotTracks(histonalltrack, from = start, to =end)
++ }
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:rtracklayer'
+
+> nameEx("HistoneOne_UCSC")
+> ### * HistoneOne_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: HistoneOne_UCSC
+> ### Title: Create one track of one histone modification profile from the
+> ###   UCSC genome browser
+> ### Aliases: HistoneOne_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> library("rtracklayer")
+> gen <- "hg19"
+> chr <- "chr2"
+> start <- 38290160
+> end <- 38303219
+> 
+> if(interactive()) {
++   BROWSER.SESSION="UCSC"
++   mySession <- browserSession(BROWSER.SESSION)
++   genome(mySession) <- gen
++   histoneonetrack<-HistoneOne_UCSC(gen,chr,start,end,mySession)
++   plotTracks(histoneonetrack, from = start, to =end)
++ } else {
++   data(histoneonetrack)
++   plotTracks(histoneonetrack, from = start, to =end)
++ }
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:rtracklayer'
+
+> nameEx("ISCA_UCSC")
+> ### * ISCA_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ISCA_UCSC
+> ### Title: Create one track of the genomic positions of variants from ISCA
+> ###   (obselete database)
+> ### Aliases: ISCA_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> 
+> # Oboselet function 
+> 
+> #library("Gviz")
+> #library("rtracklayer")
+> #gen <- "hg19"
+> #chr <- "chr2"
+> #start <- 38292433
+> #end <- 38305492
+> 
+> #if(interactive()){
+> #  BROWSER.SESSION="UCSC"
+> #  mySession <- browserSession(BROWSER.SESSION)
+> #  genome(mySession) <- gen
+> #  iscatrack <-ISCA_UCSC(gen,chrom,start,end,mySession, table="iscaPathogenic")
+> #  plotTracks(iscatrack, from = start, to =end)
+> #} else {
+> #  data(ISCAtrack_Grch38)
+> #  plotTracks(iscatrack, from = start, to =end)
+> #}
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("TFBS_FANTOM")
+> ### * TFBS_FANTOM
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: TFBS_FANTOM
+> ### Title: Creates a TFBS motif track from FANTOM
+> ### Aliases: TFBS_FANTOM
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> gen <- "hg19"
+> chr<- "chr1"
+> start <- 6000000
+> end <- 6500000
+> 
+> extdata <- system.file("extdata", package="coMET",mustWork=TRUE)
+> AP1FantomFile <- file.path(extdata, "/FANTOM/Fantom_hg19.AP1_MA0099.2.sites.txt")
+> 
+> if(interactive()){
++   tfbsFANTOMtrack <- TFBS_FANTOM(gen,chr,start, end, AP1FantomFile)
++   plotTracks(tfbsFANTOMtrack, from = start, to = end)
++ } else {
++   data(tfbsFANTOMtrack)
++   plotTracks(tfbsFANTOMtrack, from = start, to = end)
++ }
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bindingMotifsBiomart_ENSEMBL")
+> ### * bindingMotifsBiomart_ENSEMBL
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bindingMotifsBiomart_ENSEMBL
+> ### Title: Creates a binding motif track from ENSEMBL
+> ### Aliases: bindingMotifsBiomart_ENSEMBL
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> gen <- "hg38"
+> chr <- "chr1"
+> start <- 10000
+> end <- 50000
+> featureDisplay <- "CTCF"
+> 
+> if(interactive()){
++  bindMotifsBiomartTrackSingle<-bindingMotifsBiomart_ENSEMBL(gen,chr,start,end,featureDisplay)
++   plotTracks(bindMotifsBiomartTrackSingle, from = start, to = end)
++ } else {
++   data(bindMotifsBiomartTrackSingle)
++   plotTracks(bindMotifsBiomartTrackSingle, from = start, to = end)
++ }
+> 
+> ######
+> 
+> library("Gviz")
+> gen <- "hg38"
+> chr <- "chr1"
+> start <- 10000
+> end <- 50000
+> featureDisplay <- c("CTCF","Egr1")
+> 
+> if(interactive()){
++  bindMotifsBiomartTrackMultiple<-bindingMotifsBiomart_ENSEMBL(gen,chr,start,end,featureDisplay)
++   plotTracks(bindMotifsBiomartTrackMultiple, from = start, to = end)
++ } else {
++   data(bindMotifsBiomartTrackMultiple)
++   plotTracks(bindMotifsBiomartTrackMultiple, from = start, to = end)
++ }
+> 
+> ######
+> 
+> library("Gviz")
+> gen <- "hg38"
+> chr <- "chr1"
+> start <- 10000
+> end <- 50000
+> featureDisplay <- "all"
+> 
+> if(interactive()){
++  bindMotifsBiomartTrackAll<-bindingMotifsBiomart_ENSEMBL(gen,chr,start,end,featureDisplay)
++   plotTracks(bindMotifsBiomartTrackAll, from = start, to = end)
++ } else {
++   data(bindMotifsBiomartTrackAll)
++   plotTracks(bindMotifsBiomartTrackAll, from = start, to = end)
++ }
+> 
+> 
+> 
+> cleanEx()
+> nameEx("chrUCSC2ENSEMBL")
+> ### * chrUCSC2ENSEMBL
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: chrUCSC2ENSEMBL
+> ### Title: Removing "chr" to the chromosome number from UCSC to transform
+> ###   it to ENSEMBL chromosome format
+> ### Aliases: chrUCSC2ENSEMBL
+> ### Keywords: dplot
+> 
+> ### ** Examples
+> 
+>     chr<-"chr7"
+>     chrUCSC2ENSEMBL(chr)
+[1] "7"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("chromHMM_RoadMap")
+> ### * chromHMM_RoadMap
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: chromHMM_RoadMap
+> ### Title: Creates a ChromHMM track from a file of RoadMap
+> ### Aliases: chromHMM_RoadMap
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> library("Gviz")
+> chr <- "chr1"
+> start <- 4500000
+> end <- 4600000
+> featureDisplay <- "7_Enh"
+> 
+> extdata <- system.file("extdata", package="coMET",mustWork=TRUE)
+> bedFilePath <- file.path(extdata, "RoadMap/E063_15_coreMarks_mnemonics.bed")
+> 
+> if(interactive()){
++   chromHMM_RoadMapSingle <- chromHMM_RoadMap(gen="hg19",chr,start, end, bedFilePath, featureDisplay = featureDisplay, colorcase='roadmap15' )
++   plotTracks(chromHMM_RoadMapSingle, from = start, to = end)
++ } else {
++   data(chromHMM_RoadMapSingle)
++   plotTracks(chromHMM_RoadMapSingle, from = start, to = end)
++ }
+> 
+> ######
+> 
+> library("Gviz")
+> chr <- "chr1"
+> start <- 4500000
+> end <- 4600000
+> featureDisplay <- c("7_Enh","13_ReprPC")
+> 
+> extdata <- system.file("extdata", package="coMET",mustWork=TRUE)
+> bedFilePath <- file.path(extdata, "RoadMap/E063_15_coreMarks_mnemonics.bed")
+> 
+> if(interactive()){
++   chromHMM_RoadMapMultiple <- chromHMM_RoadMap(gen="hg19",chr,start, end, bedFilePath, featureDisplay = featureDisplay, colorcase='roadmap15' )
++   plotTracks(chromHMM_RoadMapMultiple, from = start, to = end)
++ } else {
++   data(chromHMM_RoadMapMultiple)
++   plotTracks(chromHMM_RoadMapMultiple, from = start, to = end)
++ }
+> 
+> #####
+> 
+> library("Gviz")
+> chr <- "chr1"
+> start <- 4500000
+> end <- 4600000
+> featureDisplay <- "all"
+> 
+> extdata <- system.file("extdata", package="coMET",mustWork=TRUE)
+> bedFilePath <- file.path(extdata, "RoadMap/E063_15_coreMarks_mnemonics.bed")
+> 
+> if(interactive()){
++   chromHMM_RoadMapAll <- chromHMM_RoadMap(gen="hg19",chr,start, end, bedFilePath, featureDisplay = featureDisplay, colorcase='roadmap15' )
++   plotTracks(chromHMM_RoadMapAll, from = start, to = end)
++ } else {
++   data(chromHMM_RoadMapAll)
++   plotTracks(chromHMM_RoadMapAll, from = start, to = end)
++ }
+> 
+> 
+> 
+> cleanEx()
+> nameEx("chromatinHMMAll_UCSC")
+> ### * chromatinHMMAll_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: chromatinHMMAll_UCSC
+> ### Title: Creating multiple chromHMM tracks from the UCSC genome browser
+> ### Aliases: chromatinHMMAll_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+>     library("Gviz")
+>     library(rtracklayer)
+>     gen <- "hg19"
+>     chr <- "chr2"
+>     start <- 38290160
+>     end <- 38313219
+>     if(interactive()){
++         BROWSER.SESSION="UCSC"
++         mySession <- browserSession(BROWSER.SESSION)
++         genome(mySession) <- gen
++         track.name="Broad ChromHMM"
++         tablestrack<-tableNames(ucscTableQuery(mySession, track=track.name))
++         table.name<-tablestrack[1]
++         PATTERN.REGULATION<-"GM12878"
++         
++         chromhmmPattern<-chromatinHMMAll_UCSC(gen,chr,start,end,mySession,color='coMET',PATTERN.REGULATION)
++         plotTracks(chromhmmPattern, from = start, to =end)
++ 
++         chromhmmNoPattern<-chromatinHMMAll_UCSC(gen,chr,start,end,mySession,color='coMET')
++         plotTracks(chromhmmNoPattern, from = start, to =end)
++     } else {
++ 
++         data(chromhmmPattern)
++         plotTracks(chromhmmPattern, from = start, to =end)
++ 
++         data(chromhmmNoPattern)
++         plotTracks(chromhmmNoPattern, from = start, to =end)
++     }
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:rtracklayer'
+
+> nameEx("chromatinHMMOne_UCSC")
+> ### * chromatinHMMOne_UCSC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: chromatinHMMOne_UCSC
+> ### Title: Creating one chromHMM track from the UCSC genome browser
+> ### Aliases: chromatinHMMOne_UCSC
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+>     library("Gviz")
+>     library("rtracklayer")
+>     gen <- "hg19"
+>     chr <- "chr2"
+>     start <- 38290160
+>     end <- 38303219
+>     color <- "coMET"
+> 
+>     if(interactive()) {
++         BROWSER.SESSION="UCSC"
++         mySession <- browserSession(BROWSER.SESSION)
++         genome(mySession) <- gen
++         track.name="Broad ChromHMM"
++         tablestrack<-tableNames(ucscTableQuery(mySession, track=track.name))
++         table.name<-tablestrack[1]
++         chromhmmtrackone<-chromatinHMMOne_UCSC(gen,chr,start,end,mySession,color="coMET",table.name)
++         plotTracks(chromhmmtrackone, from = start, to =end)
++     }else {
++         data(chromhmmtrackone)
++         plotTracks(chromhmmtrackone, from = start, to =end)
++     }
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:rtracklayer'
+
+> nameEx("coMET-package")
+> ### * coMET-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: coMET-package
+> ### Title: visualisation of regional epigenome-wide association scan (EWAS)
+> ###   results and DNA co-methylation patterns (and also for other omic-WAS)
+> ### Aliases: coMET-package coMET
+> ### Keywords: package
+> 
+> ### ** Examples
+> 
+> 
+> extdata <- system.file("extdata", package="coMET",mustWork=TRUE)
+> configfile <- file.path(extdata, "config_cyp1b1_zoom_4comet.txt")
+> myinfofile <- file.path(extdata, "cyp1b1_infofile.txt")
+> myexpressfile <- file.path(extdata, "cyp1b1_infofile_exprGene_region.txt")
+> mycorrelation <- file.path(extdata, "cyp1b1_res37_rawMatrix.txt")
+> 
+> chrom <- "chr2"
+> start <- 38290160
+> end <- 38303219
+> gen <- "hg38"
+> 
+> if(interactive()){
++     genetrack <-genesENSEMBL(gen,chrom,start,end,showId=TRUE)
++     snptrack <- snpBiomart(chrom, start, end,
++                     dataset="hsapiens_snp_som",showId=FALSE)
++     strutrack <- structureBiomart(chrom, start, end,
++                     strand, dataset="hsapiens_structvar_som")
++     clinVariant<-ClinVarMainTrack(gen,chrom,start,end)
++     clinCNV<-ClinVarCnvTrack(gen,chrom,start,end)
++     gwastrack <-GWASTrack(gen,chrom,start,end)
++     geneRtrack <-GeneReviewsTrack(gen,chrom,start,end)
++ 
++     listgviz <- list(genetrack,snptrack,strutrack,clinVariant,
++                     clinCNV,gwastrack,geneRtrack)
++ 
++     comet(config.file=configfile, mydata.file=myinfofile,  mydata.type="listfile",
++          cormatrix.file=mycorrelation, cormatrix.type="listfile",
++          mydata.file=myexpressfile, mydata.large.type="listfile",
++          tracks.gviz=listgviz,
++          verbose=FALSE, print.image=FALSE,disp.pvalueplot=TRUE)
++ } else {
++     data(geneENSEMBLtrack)
++     data(snpBiomarttrack)
++     data(ISCAtrack)
++     data(strucBiomarttrack)
++     data(ClinVarCnvTrack)
++     data(clinVarMaintrack)
++     data(GWASTrack)
++     data(GeneReviewTrack)
++ 
++     listgviz <- list(genetrack,snptrack,strutrack,clinVariant,
++                     clinCNV,gwastrack,geneRtrack)
++     comet(config.file=configfile, mydata.file=myinfofile, mydata.type="listfile",
++         cormatrix.file=mycorrelation, cormatrix.type="listfile",
++         mydata.large.file=myexpressfile, mydata.large.type="listfile",
++         tracks.gviz=listgviz,
++         verbose=FALSE, print.image=FALSE,disp.pvalueplot=TRUE)
++ }
+> 
+> 
+> 
+> cleanEx()
+> nameEx("comet")
+> ### * comet
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: comet
+> ### Title: Visualize EWAS results in a genomic region of interest
+> ### Aliases: comet
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> extdata <- system.file("extdata", package="coMET",mustWork=TRUE)
+> configfile <- file.path(extdata, "config_cyp1b1_zoom_4comet.txt")
+> myinfofile <- file.path(extdata, "cyp1b1_infofile.txt")
+> myexpressfile <- file.path(extdata, "cyp1b1_infofile_exprGene_region.txt")
+> mycorrelation <- file.path(extdata, "cyp1b1_res37_rawMatrix.txt")
+> 
+> chrom <- "chr2"
+> start <- 38290160
+> end <- 38303219
+> gen <- "hg38"
+> 
+> if(interactive()){
++     cat("interactive")
++     genetrack <-genesENSEMBL(gen,chrom,start,end,showId=TRUE)
++     snptrack <- snpBiomart(chrom, start, end,
++                 dataset="hsapiens_snp_som",showId=FALSE)
++     strutrack <- structureBiomart(chrom, start, end,
++                 strand, dataset="hsapiens_structvar_som")
++     clinVariant<-ClinVarMainTrack(gen,chrom,start,end)
++     clinCNV<-ClinVarCnvTrack(gen,chrom,start,end)
++     gwastrack <-GWASTrack(gen,chrom,start,end)
++     geneRtrack <-GeneReviewsTrack(gen,chrom,start,end)
++     listgviz <- list(genetrack,snptrack,strutrack,clinVariant,
++                  clinCNV,gwastrack,geneRtrack)
++     comet(config.file=configfile, mydata.file=myinfofile, mydata.type="file",
++       cormatrix.file=mycorrelation, cormatrix.type="listfile",
++       mydata.large.file=myexpressfile, mydata.large.type="listfile",
++       tracks.gviz=listgviz, verbose=FALSE, print.image=FALSE,disp.pvalueplot=FALSE)
++ } else {
++     cat("Non interactive")
++     data(geneENSEMBLtrack)
++     data(snpBiomarttrack)
++     data(ISCAtrack)
++     data(strucBiomarttrack)
++     data(ClinVarCnvTrack)
++     data(clinVarMaintrack)
++     data(GWASTrack)
++     data(GeneReviewTrack)
++     listgviz <- list(genetrack,snptrack,strutrack,clinVariant,
++                 clinCNV,gwastrack,geneRtrack)
++     comet(config.file=configfile, mydata.file=myinfofile, mydata.type="file",
++        cormatrix.file=mycorrelation, cormatrix.type="listfile",
++         mydata.large.file=myexpressfile,  mydata.large.type="listfile",
++         tracks.gviz=listgviz, verbose=FALSE, print.image=FALSE,disp.pvalueplot=FALSE)
++ }
+Non interactive> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("comet.list")
+> ### * comet.list
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: comet.list
+> ### Title: List the correlations between omic features
+> ### Aliases: comet.list
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> extdata <- system.file("extdata", package="coMET",mustWork=TRUE)
+> mycorrelation <- file.path(extdata, "cyp1b1_res37_rawMatrix.txt")
+> myoutput <- file.path(extdata, "cyp1b1_res37_cormatrix_list_BH05.txt")
+> 
+> 
+> comet.list(cormatrix.file=mycorrelation,cormatrix.method = "spearman",
++            cormatrix.format= "raw", cormatrix.conf.level=0.05,
++            cormatrix.sig.level= 0.05, cormatrix.adjust="BH",
++            cormatrix.type = "listfile", cormatrix.output=myoutput,
++            verbose=FALSE)
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/coMET/extdata/cyp1b1_res37_cormatrix_list_BH05.txt': Read-only file system
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: comet.list -> write.comet.list -> write.table -> file
+Execution halted

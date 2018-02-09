@@ -1,0 +1,37 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(metScanR)
+Welcome to metScanR! This package takes a few extra seconds to load because it refreshes the local database from an external database upon startup.  Thank you for your patience.
+Warning messages:
+1: In utils::download.file(extDB, destfile = localDB, quiet = T) :
+  URL https://github.com/cflagg/metScanR/raw/master/data/metScanR_DB.rda: cannot open destfile '/var/scratchro/tomas/QA/R-74238/lib/metScanR/data/metScanR_DB.rda', reason 'Read-only file system'
+2: In utils::download.file(extDB, destfile = localDB, quiet = T) :
+  download had nonzero exit status
+3: In utils::download.file(extTermsDB, destfile = localTermsDB, quiet = T) :
+  URL https://github.com/cflagg/metScanR/raw/master/data/metScanR_terms.rda: cannot open destfile '/var/scratchro/tomas/QA/R-74238/lib/metScanR/data/metScanR_terms.rda', reason 'Read-only file system'
+4: In utils::download.file(extTermsDB, destfile = localTermsDB, quiet = T) :
+  download had nonzero exit status
+> 
+> test_check("metScanR")
+══ testthat results  ═══════════════════════════════════════════════════════════
+OK: 0 SKIPPED: 1 FAILED: 0
+> 
+> proc.time()
+   user  system elapsed 
+ 20.032   0.560  39.053 

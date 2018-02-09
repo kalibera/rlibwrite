@@ -1,0 +1,139 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## from xmapcore package
+> if( require( "RUnit", quietly=TRUE ) ) {
++ 	pkg <- "crlmm"
++ 
++ 	if( Sys.getenv( "RCMDCHECK" ) == "FALSE" ) {
++ 		path <- file.path( getwd(), "..", "inst", "unitTests" )
++ 	} else {
++ 		path <- system.file( package=pkg, "unitTests" )
++ 	}
++ 
++ 	cat( "\nRunning unit tests\n" )
++ 	print( list( pkg=pkg, getwd=getwd(), pathToUnitTests=path ) )
++ 	library( package=pkg, character.only=TRUE )
++ 
++ 	##xmap.clear.cache()
++ 
++ 	## do not fail on warnings (needed for crlmm() test)
++ 	options(warn=0)
++ 
++ 	## Get the pattern (if there is one?)
++ 	patt <- Sys.getenv( "RUNITFILEPATTERN" )
++ 	if( is.null( patt ) || nchar( patt ) == 0 ) {
++ 		testSuite <- defineTestSuite(name=paste( pkg, "unit testing" ),
++ 					     dirs=path,
++ 					     testFileRegexp=paste( "^test.+", patt, "\\.[rR]$", sep="" ))
++ 	} else {
++ 		##testSuite <- defineTestSuite( name=paste( pkg, "unit testing" ), testFileRegexp=paste( "^runit\\.", patt, "\\.[rR]$", sep="" ), dirs=path )
++ 		testSuite <- defineTestSuite(name=paste( pkg, "unit testing" ),
++ 					     testFileRegexp=paste( "^test.+", patt, "\\.[rR]$", sep="" ),
++ 					     dirs=path )
++ 	}
++ 	tests <- runTestSuite( testSuite )
++ 
++ 	pathReport <- file.path( path, "report" )
++ 
++ 	cat( "------------------- UNIT TEST SUMMARY ---------------------\n\n" )
++ 	printTextProtocol( tests, showDetails=FALSE )
++ 	printTextProtocol( tests, showDetails=FALSE, fileName=paste( pathReport, "Summary.txt", sep="" ) )
++ 	printTextProtocol( tests, showDetails=TRUE,  fileName=paste( pathReport, ".txt", sep="" ) )
++ 
++ 	printHTMLProtocol( tests, fileName=paste( pathReport, ".html", sep="" ) )
++ 
++ 	tmp <- getErrors( tests )
++ 	if( tmp$nFail > 0 | tmp$nErr > 0 ){
++ 		stop( paste( "\n\nunit testing failed (#test failures: ", tmp$nFail, ", #R errors: ",  tmp$nErr, ")\n\n", sep=""))
++ 	}
++ } else {
++ 	warning( "cannot run unit tests -- package RUnit is not available" )
++ }
+
+Running unit tests
+$pkg
+[1] "crlmm"
+
+$getwd
+[1] "/ssd/tomas/QA/R-74238/check/crlmm.Rcheck/tests"
+
+$pathToUnitTests
+[1] "/var/scratchro/tomas/QA/R-74238/lib/crlmm/unitTests"
+
+Loading required package: oligoClasses
+Welcome to oligoClasses version 1.41.0
+Loading required package: preprocessCore
+Welcome to crlmm version 1.37.0
+
+
+Executing test function test_crlmm  ... Loading required package: genomewidesnp6Crlmm
+Annotation for genomewidesnp6Crlmm version 1.0.7 supports UCSC builds hg18 and hg19.
+Loading required package: hapmapsnp6
+/-------------------------------------------\
+|         SAMPLE HAPMAP SNP 6.0             |
+|-------------------------------------------|
+| Data obtained from http://www.hapmap.org  |
+| This package is meant to be used only for |
+| demonstration of BioConductor packages.   |
+| Access http://www.hapmap.org for details. |
+|-------------------------------------------|
+| The contents of this package are provided |
+| in good faith and the maintainer does not |
+| warrant their accuracy.                   |
+\-------------------------------------------/
+Loading annotations and mixture model parameters.
+Processing 3 files.
+  |                                                                              |                                                                      |   0%  |                                                                              |=======================                                               |  33%  |                                                                              |===============================================                       |  67%  |                                                                              |======================================================================| 100%
+Loading annotations.
+Determining gender.
+Calling 906600 SNPs for recalibration... Done.
+Estimating recalibration parameters.
+Calling 906600 SNPs... Done.
+ done successfully.
+
+
+
+Executing test function test_duplicates  ... Error in crlmm(cels[c(1, 1, 2)]) : sample identifiers are not unique
+In addition: Warning messages:
+1: multiple methods tables found for 'coverage2' 
+2: In crlmmGT(res[["A"]], res[["B"]], res[["SNR"]], res[["mixtureParams"]],  :
+  Recalibration not possible. Possible cause: small sample size.
+ done successfully.
+
+
+
+Executing test function test_dataExamples  ...  done successfully.
+
+------------------- UNIT TEST SUMMARY ---------------------
+
+RUNIT TEST PROTOCOL -- Fri Feb  9 01:00:33 2018 
+*********************************************** 
+Number of test functions: 3 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+crlmm unit testing - 3 test functions, 0 errors, 0 failures
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: printTextProtocol -> cat -> file
+In addition: Warning message:
+In file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/crlmm/unitTests/reportSummary.txt': Read-only file system
+Execution halted

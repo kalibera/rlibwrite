@@ -1,0 +1,365 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> if( require( "RUnit", quietly=TRUE ) ) {
++   pkg <- "annmap"
++  
++   if( Sys.getenv( "RCMDCHECK" ) == "FALSE" ) {
++     path <- file.path( getwd(), "..", "inst", "unitTests" )
++   }
++   else {
++     path <- system.file( package=pkg, "unitTests" )
++   }
++ 
++   cat( "\nRunning unit tests\n" )
++   print( list( pkg=pkg, getwd=getwd(), pathToUnitTests=path ) )
++   library( package=pkg, character.only=TRUE )
++ 
++   annmapClearCache()
++ 
++   # Run the old style RangedData for tim...
++   #annmapSetParam( oldstylekey='P0fSpS' )
++   annmapSetParam( spacefn=if( annmap:::.usegranges() ) seqnames else space )
++   annmapSetParam( defaultclass=if( annmap:::.usegranges() ) 'GRanges' else 'RangedData' )
++ 
++   #Fail on warnings
++   options( warn=2 )
++ 
++   # Get the pattern (if there is one?)
++   patt = Sys.getenv( "RUNITFILEPATTERN" )
++   func = Sys.getenv( 'RUNITFUNCPATTERN' )
++   if( is.null( patt ) || nchar( patt ) == 0 ) {
++     patt = "^runit.+\\.[rR]$"
++   }
++   else {
++     patt = paste( "^runit\\.", patt, "\\.[rR]$", sep="" )
++   }
++   if( is.null( func ) || nchar( func ) == 0 ) {
++     func = "^test.+"
++   }
++   else {
++     func = paste( "^test\\.", func, ".+", sep="" )
++   }
++   testSuite <- defineTestSuite( name=paste( pkg, "unit testing" ), testFileRegexp=patt, testFuncRegexp=func, dirs=path )
++   tests <- runTestSuite( testSuite )
++  
++   pathReport <- file.path( path, "report" )
++  
++   cat( "------------------- UNIT TEST SUMMARY ---------------------\n\n" )
++   printTextProtocol( tests, showDetails=FALSE )
++   printTextProtocol( tests, showDetails=FALSE, fileName=paste( pathReport, "Summary.txt", sep="" ) )
++   printTextProtocol( tests, showDetails=TRUE,  fileName=paste( pathReport, ".txt", sep="" ) )
++  
++   printHTMLProtocol( tests, fileName=paste( pathReport, ".html", sep="" ) )
++  
++   tmp <- getErrors( tests )
++   if( tmp$nFail > 0 | tmp$nErr > 0 ) {
++     stop( paste( "\n\nunit testing failed (#test failures: ", tmp$nFail, ", #R errors: ",  tmp$nErr, ")\n\n", sep="" ) )
++   }
++ } else {
++   warning( "cannot run unit tests -- package RUnit is not available" )
++ }
+
+Running unit tests
+$pkg
+[1] "annmap"
+
+$getwd
+[1] "/ssd/tomas/QA/R-74238/check/annmap.Rcheck/tests"
+
+$pathToUnitTests
+[1] "/var/scratchro/tomas/QA/R-74238/lib/annmap/unitTests"
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: 'BiocGenerics'
+
+The following objects are masked from 'package:parallel':
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from 'package:base':
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: 'S4Vectors'
+
+The following object is masked from 'package:base':
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Using /home/tomas/.annmap as our configuration directory.
+
+
+Executing test function test.template  ...  done successfully.
+
+
+
+Executing test function test.all.queries  ... [1] "\nSkipping allXXX tests, as not on a PICR machine"
+ done successfully.
+
+
+
+Executing test function test.gotsomefunctions  ...  done successfully.
+
+
+
+Executing test function test.cache  ...  done successfully.
+
+
+
+Executing test function test.ANNMAP112  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.huisun.ANNMAP48  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.chaining  ... [1] "Cannot find datasource 'hs-test' so skipping this test."
+ done successfully.
+
+
+
+Executing test function test.addConnection  ... Using /home/tomas/.annmap as our configuration directory.
+[1] "Got conf.dir /home/tomas/.annmap"
+Connection a added. 
+Connection b added. 
+Connection a updated. 
+[1] "Resetting conf.dir to /home/tomas/.annmap"
+ done successfully.
+
+
+
+Executing test function test.buildsql  ... Using /home/tomas/.annmap as our configuration directory.
+[1] "Got conf.dir /home/tomas/.annmap"
+[1] "Resetting conf.dir to /home/tomas/.annmap"
+ done successfully.
+
+
+
+Executing test function test.connection  ... Using /home/tomas/.annmap as our configuration directory.
+[1] "Got conf.dir /home/tomas/.annmap"
+[1] "Cannot find datasource 'hs-test', so skipping these tests."
+[1] "Resetting conf.dir to /home/tomas/.annmap"
+ done successfully.
+
+
+
+Executing test function test.databases.txt  ... Using /home/tomas/.annmap as our configuration directory.
+[1] "Got conf.dir /home/tomas/.annmap"
+[1] "Mocking annmapConnect()"
+[1] "setting conf.dir to /var/scratchro/tomas/QA/R-74238/lib/annmap/unitTests/tabConfig"
+[1] "setting conf.dir to /var/scratchro/tomas/QA/R-74238/lib/annmap/unitTests/commaConfig"
+[1] "restoring connect method"
+[1] "Resetting conf.dir to /home/tomas/.annmap"
+ done successfully.
+
+
+
+Executing test function test.details.queries  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+[1] "Cannot find datasource 'mm-test', so skipping these tests."
+[1] "Cannot find datasource 'rn-test', so skipping these tests."
+[1] "Cannot find datasource 'pb-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.gotsomefunctions  ...  done successfully.
+
+
+
+Executing test function test.filters  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.bug.ACBBUTIL33  ... [1] "Cannot find datasource 'mm-test', so skipping this test."
+ done successfully.
+
+
+
+Executing test function test.bug.ANNMAP40  ... [1] "Cannot find datasource 'hs-test', so skipping this test."
+ done successfully.
+
+
+
+Executing test function test.bug.ANNMAP44  ... [1] "Cannot find datasource 'hs-test', so skipping this test."
+ done successfully.
+
+
+
+Executing test function test.gotsomefunctions  ...  done successfully.
+
+
+
+Executing test function test.multi.queries  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.range.queries  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+[1] "Cannot find datasource 'mm-test', so skipping these tests."
+[1] "Cannot find datasource 'rn-test', so skipping these tests."
+[1] "Cannot find datasource 'pb-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.expr.query  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.gotsomefunctions  ...  done successfully.
+
+
+
+Executing test function test.to.queries  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+[1] "Cannot find datasource 'mm-test', so skipping these tests."
+[1] "Cannot find datasource 'rn-test', so skipping these tests."
+[1] "Cannot find datasource 'pb-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.transcript.to.translatedprobes  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.ANNMAP.109  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.ANNMAP.97  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.ANNMAP.98  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.array.type  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.make.params  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.needs.array  ...  done successfully.
+
+
+
+Executing test function test.rangeapply  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.reality  ...  done successfully.
+
+
+
+Executing test function test.seqnames  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.set.get.params  ...  done successfully.
+
+
+
+Executing test function test.ANNMAP118  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.michal.utr.bug  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.michal.utr.bug.three  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.michal.utr.bug.two  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.utr  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.yaoyong.utr.bug  ... [1] "Cannot find datasource 'hs-test', so skipping these tests."
+ done successfully.
+
+
+
+Executing test function test.ANNMAP33  ... [1] "\nSkipping webservice tests, no route to annmap website"
+ done successfully.
+
+
+
+Executing test function test.connection  ... [1] "\nSkipping webservice tests, no route to annmap website"
+ done successfully.
+
+------------------- UNIT TEST SUMMARY ---------------------
+
+RUNIT TEST PROTOCOL -- Thu Feb  8 23:03:20 2018 
+*********************************************** 
+Number of test functions: 42 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+annmap unit testing - 42 test functions, 0 errors, 0 failures
+Error in file(file, ifelse(append, "a", "w")) : 
+  (converted from warning) cannot open file '/var/scratchro/tomas/QA/R-74238/lib/annmap/unitTests/reportSummary.txt': Read-only file system
+Calls: printTextProtocol -> cat -> file
+Execution halted

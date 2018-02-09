@@ -1,0 +1,275 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## from xmapcore package
+> if( require( "RUnit", quietly=TRUE ) ) {
++         ## loading Biobase below b/c we're simply Import:ing it, rather than Depend:ing on it
++         ## then functions from there are not visible downstream
++         library(Biobase)
++ 	pkg <- "oligoClasses"
++ 
++ 	if( Sys.getenv( "RCMDCHECK" ) == "FALSE" ) {
++ 		path <- file.path( getwd(), "..", "inst", "unitTests" )
++ 	} else {
++ 		path <- system.file( package=pkg, "unitTests" )
++ 	}
++ 
++ 	cat( "\nRunning unit tests\n" )
++ 	print( list( pkg=pkg, getwd=getwd(), pathToUnitTests=path ) )
++ 	library( package=pkg, character.only=TRUE )
++ 
++ 	##xmap.clear.cache()
++ 
++ 	##Fail on warnings
++ 	##options( warn=2 )
++ 	options(warn=0)
++ 
++ 	## Get the pattern (if there is one?)
++ 	patt <- Sys.getenv( "RUNITFILEPATTERN" )
++ 	if( is.null( patt ) || nchar( patt ) == 0 ) {
++ 		testSuite <- defineTestSuite(name=paste( pkg, "unit testing" ),
++ 					     dirs=path,
++ 					     testFileRegexp=paste( "^test.+", patt, "\\.[rR]$", sep="" ))
++ 	} else {
++ 		##testSuite <- defineTestSuite( name=paste( pkg, "unit testing" ), testFileRegexp=paste( "^runit\\.", patt, "\\.[rR]$", sep="" ), dirs=path )
++ 		testSuite <- defineTestSuite(name=paste( pkg, "unit testing" ),
++ 					     testFileRegexp=paste( "^test.+", patt, "\\.[rR]$", sep="" ),
++ 					     dirs=path )
++ 	}
++ 	tests <- runTestSuite( testSuite )
++ 
++ 	pathReport <- file.path( path, "report" )
++ 
++ 	cat( "------------------- UNIT TEST SUMMARY ---------------------\n\n" )
++ 	printTextProtocol( tests, showDetails=FALSE )
++ 	printTextProtocol( tests, showDetails=FALSE, fileName=paste( pathReport, "Summary.txt", sep="" ) )
++ 	printTextProtocol( tests, showDetails=TRUE,  fileName=paste( pathReport, ".txt", sep="" ) )
++ 
++ 	printHTMLProtocol( tests, fileName=paste( pathReport, ".html", sep="" ) )
++ 
++ 	tmp <- getErrors( tests )
++ 	if( tmp$nFail > 0 | tmp$nErr > 0 ){
++ 		stop( paste( "\n\nunit testing failed (#test failures: ", tmp$nFail, ", #R errors: ",  tmp$nErr, ")\n\n", sep=""))
++ 	}
++ } else {
++ 	warning( "cannot run unit tests -- package RUnit is not available" )
++ }
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: 'BiocGenerics'
+
+The following objects are masked from 'package:parallel':
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from 'package:base':
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Running unit tests
+$pkg
+[1] "oligoClasses"
+
+$getwd
+[1] "/ssd/tomas/QA/R-74238/check/oligoClasses.Rcheck/tests"
+
+$pathToUnitTests
+[1] "/var/scratchro/tomas/QA/R-74238/lib/oligoClasses/unitTests"
+
+Welcome to oligoClasses version 1.41.0
+
+
+Executing test function test_annotation  ... Annotation for genomewidesnp6Crlmm version 1.0.7 supports UCSC builds hg18 and hg19.
+Build  requested, but only build hg18 is available.
+ done successfully.
+
+
+
+Executing test function test_BafLrrSetList  ...  done successfully.
+
+
+
+Executing test function test_BeadStudioSet  ...  done successfully.
+
+
+
+Executing test function test_CNSet_construction  ...  done successfully.
+
+
+
+Executing test function test_CopyNumberSet_construction  ... Loading required package: pd.mapping50k.hind240
+Loading required package: Biostrings
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: 'S4Vectors'
+
+The following object is masked from 'package:base':
+
+    expand.grid
+
+Loading required package: IRanges
+
+Attaching package: 'IRanges'
+
+The following object is masked from 'package:oligoClasses':
+
+    coverage2
+
+Loading required package: XVector
+
+Attaching package: 'Biostrings'
+
+The following object is masked from 'package:base':
+
+    strsplit
+
+Loading required package: RSQLite
+Loading required package: oligo
+================================================================================
+Welcome to oligo version 1.43.0
+================================================================================
+Loading required package: DBI
+Loading required package: pd.mapping50k.xba240
+ done successfully.
+
+
+
+Executing test function test_GenomeAnnotatedDataFrameWithFF  ... Loading required package: ff
+Loading required package: bit
+Attaching package bit
+package:bit (c) 2008-2012 Jens Oehlschlaegel (GPL-2)
+creators: bit bitwhich
+coercion: as.logical as.integer as.bit as.bitwhich which
+operator: ! & | xor != ==
+querying: print length any all min max range sum summary
+bit access: length<- [ [<- [[ [[<-
+for more help type ?bit
+
+Attaching package: 'bit'
+
+The following object is masked from 'package:base':
+
+    xor
+
+Attaching package ff
+- getOption("fftempdir")=="/var/scratch/tomas/tmp/RtmpsXI5sj"
+
+- getOption("ffextension")=="ff"
+
+- getOption("ffdrop")==TRUE
+
+- getOption("fffinonexit")==TRUE
+
+- getOption("ffpagesize")==65536
+
+- getOption("ffcaching")=="mmnoflush"  -- consider "ffeachflush" if your system stalls on large writes
+
+- getOption("ffbatchbytes")==16777216 -- consider a different value for tuning your system
+
+- getOption("ffmaxbytes")==536870912 -- consider a different value for tuning your system
+
+================================================================================
+Large dataset support for 'oligo/crlmm': Enabled
+    - Probesets: 20,000
+    - Samples..: 100
+    - Path.....: /ssd/tomas/QA/R-74238/check/oligoClasses.Rcheck/tests
+================================================================================
+
+Attaching package: 'ff'
+
+The following objects are masked from 'package:bit':
+
+    clone, clone.default, clone.list
+
+The following objects are masked from 'package:Biostrings':
+
+    mismatch, pattern
+
+The following objects are masked from 'package:utils':
+
+    write.csv, write.csv2
+
+The following objects are masked from 'package:base':
+
+    is.factor, is.ordered
+
+ done successfully.
+
+
+
+Executing test function test_GenomeAnnotatedDataFrame_construction  ...  done successfully.
+
+
+
+Executing test function test_dataExamples  ...  done successfully.
+
+
+
+Executing test function test_oligoSnpSet_construction  ...  done successfully.
+
+
+
+Executing test function test_conversions  ...  done successfully.
+
+
+
+Executing test function test_makeFeatureRanges  ...  done successfully.
+
+
+
+Executing test function test_oligoSnpSet  ...  done successfully.
+
+------------------- UNIT TEST SUMMARY ---------------------
+
+RUNIT TEST PROTOCOL -- Fri Feb  9 06:04:50 2018 
+*********************************************** 
+Number of test functions: 12 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+oligoClasses unit testing - 12 test functions, 0 errors, 0 failures
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: printTextProtocol -> cat -> file
+In addition: Warning messages:
+1: multiple methods tables found for 'coverage2' 
+2: In file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/oligoClasses/unitTests/reportSummary.txt': Read-only file system
+Execution halted

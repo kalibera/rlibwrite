@@ -1,0 +1,123 @@
+* using log directory ‘/ssd/tomas/QA/R-74238/check/VanillaICE.Rcheck’
+* using R Under development (unstable) (2018-02-08 r74238)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘VanillaICE/DESCRIPTION’ ... OK
+* this is package ‘VanillaICE’ version ‘1.41.1’
+* checking package namespace information ... OK
+* checking package dependencies ... NOTE
+Package which this enhances but not available for checking: ‘doMPI’
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘VanillaICE’ can be installed ... WARNING
+Found the following significant warnings:
+  Warning: multiple methods tables found for ‘coverage2’
+  Warning: replacing previous import ‘IRanges::coverage2’ by ‘oligoClasses::coverage2’ when loading ‘VanillaICE’
+See ‘/ssd/tomas/QA/R-74238/check/VanillaICE.Rcheck/00install.out’ for details.
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... NOTE
+Namespace in Imports field not imported from: ‘BSgenome.Hsapiens.UCSC.hg18’
+  All declared Imports should be used.
+Unexported object imported by a ':::' call: ‘SummarizedExperiment:::.ShallowSimpleListAssays0’
+  See the note in ?`:::` about the use of this operator.
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking line endings in C/C++/Fortran sources/headers ... OK
+* checking line endings in Makefiles ... OK
+* checking compilation flags in Makevars ... OK
+* checking for GNU extensions in Makefiles ... OK
+* checking for portable use of $(BLAS_LIBS) and $(LAPACK_LIBS) ... OK
+* checking include directives in Makefiles ... OK
+* checking compiled code ... NOTE
+Note: information on .o files is not available
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... ERROR
+Running examples in ‘VanillaICE-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: SnpArrayExperiment-class
+> ### Title: A RangedSummarizedExperiment-derived class of marker-level SNP
+> ###   array data for copy number inference
+> ### Aliases: SnpArrayExperiment SnpArrayExperiment,matrix-method
+> ###   SnpArrayExperiment,missing-method SnpArrayExperiment-class
+> 
+> ### ** Examples
+> 
+> ## empty container
+> SnpArrayExperiment()
+class: SnpArrayExperiment 
+dim: 0 0 
+metadata(0):
+assays(2): cn baf
+rownames: NULL
+rowData names(1): isSnp
+colnames: NULL
+colData names(0):
+> 
+> data(snp_exp) # example
+> 
+> SnpArrayExperiment(cn=lrr(snp_exp), baf=baf(snp_exp),
++                    rowRanges=rowRanges(snp_exp))
+Error in validObject(rowRanges(object)) : 
+  invalid class “SnpGRanges” object: slots in class definition but not in object: "elementType"
+Calls: SnpArrayExperiment ... validObject -> anyStrings -> validityMethod -> validObject
+Execution halted
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... ERROR
+  Running ‘doRUnit.R’
+Running the tests in ‘tests/doRUnit.R’ failed.
+Last 13 lines of output:
+  Number of failures: 0 
+  
+   
+  1 Test Suite : 
+  VanillaICE unit testing - 23 test functions, 3 errors, 0 failures
+  ERROR in test_SnpArrayExperiment: Error in validObject(object) : 
+    invalid class "SnpGRanges" object: slots in class definition but not in object: "elementType"
+  ERROR in test_duplicatedMapLocs: Error in validObject(object) : 
+    invalid class "SnpGRanges" object: slots in class definition but not in object: "elementType"
+  ERROR in test_multiple_chromosomes: Error in validObject(object) : 
+    invalid class "SnpGRanges" object: slots in class definition but not in object: "elementType"
+  Error in file(file, ifelse(append, "a", "w")) : 
+    (converted from warning) cannot open file '/var/scratchro/tomas/QA/R-74238/lib/VanillaICE/unitTests/reportSummary.txt': Read-only file system
+  Calls: printTextProtocol -> cat -> file
+  Execution halted
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... OK
+* checking re-building of vignette outputs ... OK
+* checking PDF version of manual ... OK
+* DONE
+Status: 2 ERRORs, 1 WARNING, 3 NOTEs

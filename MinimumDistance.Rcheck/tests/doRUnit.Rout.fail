@@ -1,0 +1,284 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## from xmapcore package
+> if( require( "RUnit", quietly=TRUE ) ) {
++   pkg <- "MinimumDistance"
++ 
++   if( Sys.getenv( "RCMDCHECK" ) == "FALSE" ) {
++     path <- file.path( getwd(), "..", "inst", "unitTests" )
++   } else {
++     path <- system.file( package=pkg, "unitTests" )
++   }
++ 
++   cat( "\nRunning unit tests\n" )
++   print( list( pkg=pkg, getwd=getwd(), pathToUnitTests=path ) )
++   library( package=pkg, character.only=TRUE )
++ 
++   ##xmap.clear.cache()
++ 
++   ##Fail on warnings
++   options( warn=1 )
++ 
++   ## Get the pattern (if there is one?)
++   patt <- Sys.getenv( "RUNITFILEPATTERN" )
++   if( is.null( patt ) || nchar( patt ) == 0 ) {
++     testSuite <- defineTestSuite(name=paste( pkg, "unit testing" ),
++                                  dirs=path,
++                                  testFileRegexp=paste( "^test.+", patt, "\\.[rR]$", sep="" ))
++   } else {
++     ##testSuite <- defineTestSuite( name=paste( pkg, "unit testing" ), testFileRegexp=paste( "^runit\\.", patt, "\\.[rR]$", sep="" ), dirs=path )
++     testSuite <- defineTestSuite(name=paste( pkg, "unit testing" ),
++                                  testFileRegexp=paste( "^test.+", patt, "\\.[rR]$", sep="" ),
++                                  dirs=path )
++   }
++   tests <- runTestSuite( testSuite )
++ 
++   pathReport <- file.path( path, "report" )
++ 
++   cat( "------------------- UNIT TEST SUMMARY ---------------------\n\n" )
++   printTextProtocol( tests, showDetails=FALSE )
++   printTextProtocol( tests, showDetails=FALSE, fileName=paste( pathReport, "Summary.txt", sep="" ) )
++   printTextProtocol( tests, showDetails=TRUE,  fileName=paste( pathReport, ".txt", sep="" ) )
++ 
++   printHTMLProtocol( tests, fileName=paste( pathReport, ".html", sep="" ) )
++ 
++   tmp <- getErrors( tests )
++   if( tmp$nFail > 0 | tmp$nErr > 0 ){
++     stop( paste( "\n\nunit testing failed (#test failures: ",
++                 tmp$nFail, ", #R errors: ",
++                 tmp$nErr, ")\n\n", sep=""))
++   }
++ } else {
++   warning( "cannot run unit tests -- package RUnit is not available" )
++ }
+
+Running unit tests
+$pkg
+[1] "MinimumDistance"
+
+$getwd
+[1] "/ssd/tomas/QA/R-74238/check/MinimumDistance.Rcheck/tests"
+
+$pathToUnitTests
+[1] "/var/scratchro/tomas/QA/R-74238/lib/MinimumDistance/unitTests"
+
+Loading required package: VanillaICE
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: 'BiocGenerics'
+
+The following objects are masked from 'package:parallel':
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from 'package:base':
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: S4Vectors
+
+Attaching package: 'S4Vectors'
+
+The following object is masked from 'package:base':
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: SummarizedExperiment
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: DelayedArray
+Loading required package: matrixStats
+
+Attaching package: 'matrixStats'
+
+The following objects are masked from 'package:Biobase':
+
+    anyMissing, rowMedians
+
+Loading required package: BiocParallel
+
+Attaching package: 'DelayedArray'
+
+The following objects are masked from 'package:matrixStats':
+
+    colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges
+
+The following objects are masked from 'package:base':
+
+    aperm, apply
+
+Welcome to VanillaICE version 1.41.1
+Welcome to MinimumDistance version  1.23.0
+
+Attaching package: 'MinimumDistance'
+
+The following object is masked from 'package:VanillaICE':
+
+    acf2
+
+
+
+Executing test function test_MDE  ...  done successfully.
+
+
+
+Executing test function test_Pedigree_construction  ... Welcome to oligoClasses version 1.41.0
+
+Attaching package: 'oligoClasses'
+
+The following object is masked from 'package:IRanges':
+
+    coverage2
+
+ done successfully.
+
+
+
+Executing test function test_subsetPedigree  ... Error in validObject(.Object) : 
+  invalid class "Pedigree" object: fatherNames can not be the same as the offspringNames
+In addition: Warning messages:
+1: multiple methods tables found for 'coverage2' 
+2: replacing previous import 'IRanges::coverage2' by 'oligoClasses::coverage2' when loading 'VanillaICE' 
+3: replacing previous import 'IRanges::coverage2' by 'oligoClasses::coverage2' when loading 'MinimumDistance' 
+ done successfully.
+
+
+
+Executing test function test_TrioSet  ...  done successfully.
+
+
+
+Executing test function test_TrioSetList_construction  ...  done successfully.
+
+
+
+Executing test function test_TrioSetListdataExamples  ...  done successfully.
+
+
+
+Executing test function test_calculateMindist  ... Parallel computing support for 'oligo/crlmm': Disabled
+     - Load 'ff'
+     - Load and register a 'foreach' adaptor
+        Example - Using 'multicore' for 2 cores:
+             library(doMC)
+             registerDoMC(2)
+================================================================================
+ done successfully.
+
+
+
+Executing test function test_callDenovoSegments  ... 
+Attaching package: 'data.table'
+
+The following object is masked from 'package:SummarizedExperiment':
+
+    shift
+
+The following object is masked from 'package:GenomicRanges':
+
+    shift
+
+The following object is masked from 'package:IRanges':
+
+    shift
+
+The following objects are masked from 'package:S4Vectors':
+
+    first, second
+
+Welcome to human610quadv1bCrlmm version 1.0.3
+ done successfully.
+
+
+
+Executing test function test_MAP2  ... Loading required package: BSgenome
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: 'Biostrings'
+
+The following object is masked from 'package:VanillaICE':
+
+    deletion
+
+The following object is masked from 'package:DelayedArray':
+
+    type
+
+The following object is masked from 'package:base':
+
+    strsplit
+
+Loading required package: rtracklayer
+Analyzing: NA12891 
+Analyzing: NA12892 
+Analyzing: NA12878 
+Analyzing: md_NA12878 
+ done successfully.
+
+
+
+Executing test function test_pennParam  ...  done successfully.
+
+
+
+Executing test function test_posteriorCalls  ...  done successfully.
+
+
+
+Executing test function test_cbsSplits  ...  done successfully.
+
+------------------- UNIT TEST SUMMARY ---------------------
+
+RUNIT TEST PROTOCOL -- Fri Feb  9 05:12:05 2018 
+*********************************************** 
+Number of test functions: 12 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+MinimumDistance unit testing - 12 test functions, 0 errors, 0 failures
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/MinimumDistance/unitTests/reportSummary.txt': Read-only file system
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: printTextProtocol -> cat -> file
+Execution halted

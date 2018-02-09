@@ -1,0 +1,2183 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## unit tests will not be done if RUnit is not available
+> if(require("RUnit", quietly=TRUE)) {
++ 
++     ## --- Setup ---
++     
++     pkg <- "xcms" # <-- Change to package name!
++     if(Sys.getenv("RCMDCHECK") == "FALSE") {
++         ## Path to unit tests for standalone running under Makefile (not R CMD check)
++         ## PKG/tests/../inst/unitTests
++         path <- file.path(getwd(), "..", "inst", "unitTests")
++     } else {
++         ## Path to unit tests for R CMD check
++         ## PKG.Rcheck/tests/../PKG/unitTests
++         path <- system.file(package=pkg, "unitTests")
++     }
++     cat("\nRunning unit tests\n")
++     print(list(pkg=pkg, getwd=getwd(), pathToUnitTests=path))
++ 
++     library(package=pkg, character.only=TRUE)
++     library(package="faahKO", character.only=TRUE)
++ 
++     attr(faahko, "filepaths") <- sapply(as.list(basename(attr(faahko, "filepaths"))),
++                                         function(x) system.file("cdf", if (length(grep("ko",x)) > 0) "KO" else  "WT" ,x, package = "faahKO"))
++ 
++     library(BiocParallel)
++     if (.Platform$OS.type == "unix") {
++         prm <- MulticoreParam()
++     } else {
++         prm <- SnowParam()
++     }
++     register(bpstart(prm))
++     
++     ## Create some objects we can re-use in different tests:
++     ## Needed in runit.XCMSnExp.R
++     faahko_3_files <- c(system.file('cdf/KO/ko15.CDF', package = "faahKO"),
++                         system.file('cdf/KO/ko16.CDF', package = "faahKO"),
++                         system.file('cdf/KO/ko18.CDF', package = "faahKO"))
++     
++     ## An xcmsRaw for the first file:
++     faahko_xr_1 <- xcmsRaw(system.file('cdf/KO/ko15.CDF', package = "faahKO"),
++                            profstep = 0)
++     faahko_od <- readMSData(faahko_3_files, mode = "onDisk")
++ 
++     faahko_xod <- findChromPeaks(faahko_od, param = CentWaveParam(noise = 10000,
++                                                                   snthresh = 40))
++     faahko_xs <- xcmsSet(faahko_3_files, profparam = list(step = 0),
++                          method = "centWave", noise = 10000, snthresh = 40)
++ 
++     ## faahko_xod <- findChromPeaks(faahko_od, param = CentWaveParam(noise = 5000))
++     ## faahko_xs <- xcmsSet(faahko_3_files, profparam = list(step = 0),
++     ##                      method = "centWave", noise = 5000)
++     ## Doing also the retention time correction etc
++     od_x <- faahko_od
++     xod_x <- faahko_xod
++     xod_xg <- groupChromPeaks(
++         xod_x, param = PeakDensityParam(
++                    sampleGroups = rep(1, length(fileNames(xod_x)))))
++     xod_xgr <- adjustRtime(xod_xg, param = PeakGroupsParam(span = 0.4))
++     xod_xgrg <- groupChromPeaks(
++         xod_xgr, param = PeakDensityParam(
++                      sampleGroups = rep(1, length(fileNames(xod_x)))))
++ 
++     xod_r <- adjustRtime(as(od_x, "XCMSnExp"), param = ObiwarpParam())
++     
++     faahko_grouped_filled <- fillPeaks(group(faahko))
++     faahko_grouped_retcor_filled <- fillPeaks(group(retcor(group(
++         updateObject(faahko)))))
++     
++     ## microtofq
++     library(msdata)
++     microtofq_fs <- c(system.file("microtofq/MM14.mzML", package = "msdata"),
++                       system.file("microtofq/MM8.mzML", package = "msdata"))
++     microtofq_xr <- xcmsRaw(microtofq_fs[1], profstep = 0)
++     microtofq_od <- readMSData(microtofq_fs, mode = "onDisk")
++ 
++     ## Direct injection data:
++     fticrf <- list.files(system.file("fticr", package = "msdata"),
++                          recursive = TRUE, full.names = TRUE)
++     fticr <- readMSData(fticrf[1:2], msLevel. = 1, mode = "onDisk")
++     fticr_xod <- findChromPeaks(fticr, MSWParam(scales = c(1, 7),
++                                                 peakThr = 80000, ampTh = 0.005,
++                                                 SNR.method = "data.mean",
++                                                 winSize.noise = 500))
++     fticr_xs <- xcmsSet(method="MSW", files=fticrf[1:2], scales=c(1,7),
++                         SNR.method='data.mean' , winSize.noise=500,
++                         peakThr=80000,  amp.Th=0.005)
++     
++     ## microtofq_xod <- findChromPeaks(microtofq_od, param = MSWParam())
++     ## If desired, load the name space to allow testing of private functions
++     ## if (is.element(pkg, loadedNamespaces()))
++     ##     attach(loadNamespace(pkg), name=paste("namespace", pkg, sep=":"), pos=3)
++     ##
++     ## or simply call PKG:::myPrivateFunction() in tests
++ 
++     ## --- Testing ---
++ 
++     ## Define tests
++     testSuite <- defineTestSuite(name=paste(pkg, "unit testing"),
++                                  dirs=path)
++     ## Run
++     tests <- runTestSuite(testSuite)
++ 
++     ## Default report name
++     pathReport <- file.path(path, "report")
++ 
++     ## Report to stdout and text files
++     cat("------------------- UNIT TEST SUMMARY ---------------------\n\n")
++     printTextProtocol(tests, showDetails=FALSE)
++     printTextProtocol(tests, showDetails=FALSE,
++                       fileName=paste(pathReport, "Summary.txt", sep=""))
++     printTextProtocol(tests, showDetails=TRUE,
++                       fileName=paste(pathReport, ".txt", sep=""))
++ 
++     ## Report to HTML file
++     printHTMLProtocol(tests, fileName=paste(pathReport, ".html", sep=""))
++ 
++     ## Return stop() to cause R CMD check stop in case of
++     ##  - failures i.e. FALSE to unit tests or
++     ##  - errors i.e. R errors
++     tmp <- getErrors(tests)
++     if(tmp$nFail > 0 | tmp$nErr > 0) {
++         stop(paste("\n\nunit testing failed (#test failures: ", tmp$nFail,
++                    ", #R errors: ",  tmp$nErr, ")\n\n", sep=""))
++     }
++ } else {
++     warning("cannot run unit tests -- package RUnit is not available")
++ }
+
+Running unit tests
+$pkg
+[1] "xcms"
+
+$getwd
+[1] "/ssd/tomas/QA/R-74238/check/xcms.Rcheck/tests"
+
+$pathToUnitTests
+[1] "/var/scratchro/tomas/QA/R-74238/lib/xcms/unitTests"
+
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: 'BiocGenerics'
+
+The following objects are masked from 'package:parallel':
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from 'package:base':
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: BiocParallel
+Loading required package: MSnbase
+Loading required package: mzR
+Loading required package: Rcpp
+Loading required package: ProtGenerics
+
+This is MSnbase version 2.5.6 
+  Visit https://lgatto.github.io/MSnbase/ to get started.
+
+
+Attaching package: 'MSnbase'
+
+The following object is masked from 'package:stats':
+
+    smooth
+
+The following object is masked from 'package:base':
+
+    trimws
+
+
+This is xcms version 3.1.0 
+
+
+Attaching package: 'xcms'
+
+The following object is masked from 'package:stats':
+
+    sigma
+
+Polarity can not be extracted from netCDF files, please set manually the polarity with the 'polarity' method.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 87 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 1025 regions of interest ... OK: 100 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 919 regions of interest ... OK: 61 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 87 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 1025 regions of interest ... OK: 100 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 919 regions of interest ... OK: 61 found.
+Processing 2572 mz slices ... OK
+Performing retention time correction using 19 peak groups.
+Applying retention time adjustment to the identified chromatographic peaks ... OK
+Processing 2572 mz slices ... OK
+Sample number 2 used as center sample.
+Aligning ko15.CDF against ko16.CDF ... OK
+Aligning ko18.CDF against ko16.CDF ... OK
+Processing 3195 mz slices ... OK
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko15.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt15.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko21.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt22.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt21.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt19.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko19.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko22.CDF 
+method:  bin 
+step:  0.1 
+Processing 3195 mz slices ... OK
+Performing retention time correction using 132 peak groups.
+Processing 3195 mz slices ... OK
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko22.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko19.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt15.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko15.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt19.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt21.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko21.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt22.CDF 
+method:  bin 
+step:  0.1 
+
+
+Executing test function test_BiocParallel  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 781 regions of interest ... OK: 46 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 75 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 75 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 781 regions of interest ... OK: 46 found.
+ done successfully.
+
+
+
+Executing test function test_deprecated_Chromatogram  ...  done successfully.
+
+
+
+Executing test function test_extractChromatograms  ... Reverting retention times of identified peaks to original values ... OK
+ done successfully.
+
+
+
+Executing test function test_CalibrantMassParam  ... Error in validObject(p) : 
+  invalid class "CalibrantMassParam" object: 'method' should be one of 'linear', 'shift' or 'edgeshift'.
+In addition: There were 50 or more warnings (use warnings() to see the first 50)
+Error in validObject(p) : 
+  invalid class "CalibrantMassParam" object: the mz values in 'mz' have to be increasingly ordered
+ done successfully.
+
+
+
+Executing test function test_CentWaveParam  ... Error in validObject(.Object) : 
+  invalid class "CentWaveParam" object: 'ppm' has to be positive numeric of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWaveParam" object: 'prefilter' has to be a numeric of length 2.
+Error in validObject(p) : 
+  invalid class "CentWaveParam" object: 'mzCenterFun' has to be one of 'wMean', 'mean', 'apex', 'wMeanApex3', 'meanApex3'.
+Error in (function (cl, name, valueClass)  : 
+  assignment of an object of class "character" is not valid for @'ppm' in an object of class "CentWaveParam"; is(value, "numeric") is not TRUE
+Error in validObject(object) : 
+  invalid class "CentWaveParam" object: 'peakwidth' has to be a numeric of length 2 with only positive values.
+Error in validObject(object) : 
+  invalid class "CentWaveParam" object: 'prefilter' has to be a numeric of length 2.
+Error in validObject(object) : 
+  invalid class "CentWaveParam" object: 'mzCenterFun' has to be one of 'wMean', 'mean', 'apex', 'wMeanApex3', 'meanApex3'.
+Error in validObject(object) : 
+  invalid class "CentWaveParam" object: 'integrate' has to be either 1 or 2.
+Error in validObject(object) : 
+  invalid class "CentWaveParam" object: 'mzdiff' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "CentWaveParam" object: 'fitgauss' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "CentWaveParam" object: 'noise' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "CentWaveParam" object: 'verboseColumns' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "CentWaveParam" object: 'firstBaselineCheck' has to be a numeric of length 1.
+ done successfully.
+
+
+
+Executing test function test_CentWavePredIsoParam  ... Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'ppm' has to be positive numeric of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'peakwidth' has to be a numeric of length 2 with only positive values.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'snthresh' has to be a positive numeric of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'prefilter' has to be a numeric of length 2.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'mzCenterFun' has to be one of 'wMean', 'mean', 'apex', 'wMeanApex3', 'meanApex3'.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'integrate' has to be either 1 or 2.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'mzdiff' has to be a numeric of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'fitgauss' has to be a numeric of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'noise' has to be a numeric of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'verboseColumns' has to be a numeric of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'firstBaselineCheck' has to be a numeric of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'snthreshIsoROIs' has to be a positive numeric of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'maxCharge' has to be a positive integer of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'maxIso' has to be a positive integer of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'mzIntervalExtension' has to be a logical of length 1.
+Error in validObject(.Object) : 
+  invalid class "CentWavePredIsoParam" object: 'polarity' has to be either 'positive', 'negative' or 'unknown'!
+ done successfully.
+
+
+
+Executing test function test_FillChromPeaksParam  ... Error in validObject(object) : 
+  invalid class "FillChromPeaksParam" object: 'expandMz' has to be > -1 and of length 1
+Error in validObject(object) : 
+  invalid class "FillChromPeaksParam" object: 'expandMz' has to be > -1 and of length 1
+Error in validObject(object) : 
+  invalid class "FillChromPeaksParam" object: 'expandRt' has to be > -1 and of length 1
+Error in validObject(object) : 
+  invalid class "FillChromPeaksParam" object: 'expandRt' has to be > -1 and of length 1
+Error in validObject(object) : 
+  invalid class "FillChromPeaksParam" object: 'ppm' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "FillChromPeaksParam" object: 'ppm' has to be a positive numeric of length 1!
+ done successfully.
+
+
+
+Executing test function test_GenericParam  ... Error in validObject(.Object) : 
+  invalid class "GenericParam" object: No function name specified in '@fun' but got '@args'
+Error in validObject(.Object) : 
+  invalid class "GenericParam" object: '@fun' has to be of length 1
+ done successfully.
+
+
+
+Executing test function test_MSWParam  ... Error in validObject(.Object) : 
+  invalid class "MSWParam" object: 1: 'snthresh' has to be a positive numeric of length 1.
+invalid class "MSWParam" object: 2: 'minNoiseLevel' has to be a positive numeric of length 1.
+Error in validObject(.Object) : 
+  invalid class "MSWParam" object: 'verboseColumns' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MSWParam" object: 'nearbyPeak' has to be a logical of length 1.
+Error in validObject(object) : 
+  invalid class "MSWParam" object: 'peakScaleRange' has to be a positive numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MSWParam" object: 'ampTh' has to be a positive numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MSWParam" object: 'minNoiseLevel' has to be a positive numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MSWParam" object: 'ridgeLength' has to be a positive numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MSWParam" object: 'peakThr' has to be a positive numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MSWParam" object: 'tuneIn' has to be a logical of length 1.
+ done successfully.
+
+
+
+Executing test function test_MassifquantParam  ... Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'ppm' has to be positive numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'peakwidth' has to be a numeric of length 2 with only positive values.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'snthresh' has to be a positive numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'prefilter' has to be a numeric of length 2.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'mzCenterFun' has to be one of 'wMean', 'mean', 'apex', 'wMeanApex3', 'meanApex3'.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'integrate' has to be either 1 or 2.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'mzdiff' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'fitgauss' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'noise' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'verboseColumns' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'criticalValue' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'consecMissedLimit' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'unions' has to be either 0 or 1!
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'checkBack' has to be either 0 or 1!
+Error in validObject(object) : 
+  invalid class "MassifquantParam" object: 'withWave' has to be a numeric of length 1.
+ done successfully.
+
+
+
+Executing test function test_MzClustParam  ... Error in validObject(.Object) : 
+  invalid class "MzClustParam" object: 'ppm' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "MzClustParam" object: 'absMz' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "MzClustParam" object: 'minFraction' has to be a single positive number between 0 and 1!
+Error in validObject(object) : 
+  invalid class "MzClustParam" object: 'minFraction' has to be a single positive number between 0 and 1!
+Error in validObject(object) : 
+  invalid class "MzClustParam" object: 'minFraction' has to be a single positive number between 0 and 1!
+Error in validObject(.Object) : 
+  invalid class "MzClustParam" object: 'minSamples' has to be a positive numeric of length 1!
+ done successfully.
+
+
+
+Executing test function test_NearestPeaksParam  ... Error in validObject(.Object) : 
+  invalid class "NearestPeaksParam" object: 'mzVsRtBalance' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "NearestPeaksParam" object: 'mzVsRtBalance' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "NearestPeaksParam" object: 'absMz' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "NearestPeaksParam" object: 'absMz' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "NearestPeaksParam" object: 'absRt' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "NearestPeaksParam" object: 'absRt' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "NearestPeaksParam" object: 'kNN' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "NearestPeaksParam" object: 'kNN' has to be a positive numeric of length 1!
+ done successfully.
+
+
+
+Executing test function test_ObiwarpParam  ... Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'binSize' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'binSize' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'centerSample' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'centerSample' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'response' has to be a single  integer from 1 to 100!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'response' has to be a single  integer from 1 to 100!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'response' has to be a single  integer from 1 to 100!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'distFun' has to be one of "cor", "cor_opt", "cov", "euc" or "prd"!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'distFun' has to be one of "cor", "cor_opt", "cov", "euc" or "prd"!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'gapInit' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'gapInit' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'gapExtend' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'gapExtend' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'factorDiag' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'factorDiag' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'factorGap' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'factorGap' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'localAlignment' has to be a logical of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'factorGap' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "ObiwarpParam" object: 'factorGap' has to be a positive numeric of length 1!
+ done successfully.
+
+
+
+Executing test function test_PeakDensityParam  ... Error in `sampleGroups<-`(`*tmp*`, value = NULL) : 
+  'sampleGroups' should not contain any NAs and its length has to be >= 1
+Error in `sampleGroups<-`(`*tmp*`, value = c(2, 2, NA)) : 
+  'sampleGroups' should not contain any NAs and its length has to be >= 1
+Error in PeakDensityParam() : 
+  Argument 'sampleGroups' has to be defined. It should not contain 'NA's
+Error in PeakDensityParam(sampleGroups = c(1, 1, NA)) : 
+  Argument 'sampleGroups' has to be defined. It should not contain 'NA's
+Error in validObject(.Object) : 
+  invalid class "PeakDensityParam" object: 'bw' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "PeakDensityParam" object: 'minFraction' has to be a single positive number between 0 and 1!
+Error in validObject(object) : 
+  invalid class "PeakDensityParam" object: 'minFraction' has to be a single positive number between 0 and 1!
+Error in validObject(object) : 
+  invalid class "PeakDensityParam" object: 'minFraction' has to be a single positive number between 0 and 1!
+Error in validObject(.Object) : 
+  invalid class "PeakDensityParam" object: 'minSamples' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "PeakDensityParam" object: 'binSize' has to be a positive numeric of length 1!
+Error in validObject(.Object) : 
+  invalid class "PeakDensityParam" object: 'maxFeatures' has to be a positive numeric of length 1!
+ done successfully.
+
+
+
+Executing test function test_PeakGroupsParam  ... Error in validObject(object) : 
+  invalid class "PeakGroupsParam" object: 'minFraction' has to be a single number between 0 and 1!
+Error in validObject(object) : 
+  invalid class "PeakGroupsParam" object: 'minFraction' has to be a single number between 0 and 1!
+Error in validObject(object) : 
+  invalid class "PeakGroupsParam" object: 'minFraction' has to be a single number between 0 and 1!
+Error in validObject(object) : 
+  invalid class "PeakGroupsParam" object: 'extraPeaks' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "PeakGroupsParam" object: 'extraPeaks' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "PeakGroupsParam" object: 'span' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "PeakGroupsParam" object: 'span' has to be a positive numeric of length 1!
+Error in validObject(object) : 
+  invalid class "PeakGroupsParam" object: 'smooth' has to be either "loess" or "linear"!
+Error in validObject(object) : 
+  invalid class "PeakGroupsParam" object: 'smooth' has to be either "loess" or "linear"!
+Error in validObject(object) : 
+  invalid class "PeakGroupsParam" object: 'family' has to be either "gaussian" or "symmetric"!
+Error in validObject(object) : 
+  invalid class "PeakGroupsParam" object: 'family' has to be either "gaussian" or "symmetric"!
+ done successfully.
+
+
+
+Executing test function test_matchedFilterParam  ... Error in validObject(object) : 
+  invalid class "MatchedFilterParam" object: 'binSize' has to be positive numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MatchedFilterParam" object: Only values 'none', 'lin' and 'linbase' are allowed for'impute'
+Error in validObject(object) : 
+  invalid class "MatchedFilterParam" object: 'baseValue' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MatchedFilterParam" object: 'distance' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MatchedFilterParam" object: 'fwhm' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MatchedFilterParam" object: 'sigma' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MatchedFilterParam" object: 'max' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MatchedFilterParam" object: 'snthresh' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MatchedFilterParam" object: 'steps' has to be a numeric of length 1.
+Error in validObject(object) : 
+  invalid class "MatchedFilterParam" object: 'mzdiff' has to be a numeric of length 1.
+Error in (function (cl, name, valueClass)  : 
+  assignment of an object of class "integer" is not valid for @'index' in an object of class "MatchedFilterParam"; is(value, "logical") is not TRUE
+ done successfully.
+
+Processing 2572 mz slices ... OK
+Performing retention time correction using 44 peak groups.
+Processing 2572 mz slices ... OK
+
+
+Executing test function test_MS1_MS2_data  ... Sample number 2 used as center sample.
+Aligning ko18.CDF against ko16.CDF ... OK
+Aligning ko15.CDF against ko16.CDF ... OK
+Apply retention time correction performed on MS1 to spectra from all MS levels
+Sample number 2 used as center sample.
+Aligning ko15.CDF against ko16.CDF ... OK
+Aligning ko18.CDF against ko16.CDF ... OK
+Sample number 2 used as center sample.
+Aligning ko18.CDF against ko16.CDF ... OK
+Aligning ko15.CDF against ko16.CDF ... OK
+Apply retention time correction performed on MS1 to spectra from all MS levels
+Applying retention time adjustment to the identified chromatographic peaks ... OK
+Sample number 2 used as center sample.
+Aligning ko18.CDF against ko16.CDF ... OK
+Aligning ko15.CDF against ko16.CDF ... OK
+ done successfully.
+
+
+
+Executing test function test_MsFeatureData_class_accessors  ... Loading required package: stats4
+
+Attaching package: 'S4Vectors'
+
+The following object is masked from 'package:base':
+
+    expand.grid
+
+ done successfully.
+
+
+
+Executing test function test_MsFeatureData_class_validation  ...  done successfully.
+
+
+
+Executing test function test_XCMSnExp_class  ... Error in validObject(x) : 
+  invalid class "XCMSnExp" object: Only 'ProcessHistory' objects are allowed in slot .processHistory!
+Error in xod@msFeatureData$chromPeaks <- 3 : 
+  cannot add bindings to a locked environment
+Error in xod@msFeatureData$bla <- 4 : 
+  cannot add bindings to a locked environment
+ done successfully.
+
+
+
+Executing test function test_XCMSnExp_class_accessors  ... Error in validObject(object) : 
+  invalid class "MsFeatureData" object: 'chromPeaks' has to be a matrix or a data.frame!
+Error in validObject(object) : 
+  invalid class "XCMSnExp" object: The number of available samples does not match with the sample assignment of peaks in the 'chromPeaks' element of the msFeatureData slot!
+Error in validObject(object) : 
+  invalid class "XCMSnExp" object: The number of numeric vectors in the 'adjustedRtime' element of the msFeatureData slot does not match the number of samples!
+ done successfully.
+
+
+
+Executing test function test_XCMSnExp_droppers  ... Reverting retention times of identified peaks to original values ... OK
+Reverting retention times of identified peaks to original values ... OK
+ done successfully.
+
+
+
+Executing test function test_XCMSnExp_filterFile  ... Error in tmp@msFeatureData$bla <- 3 : 
+  cannot add bindings to a locked environment
+Error in .local(object, ...) : 
+  'file' has to be within 1 and the number of files in the object!
+Error in .local(object, ...) : 
+  'file' has to be within 1 and the number of files in the object!
+Correspondence results (features) removed.
+Reverting retention times of identified peaks to original values ... OK
+Correspondence results (features) removed.
+Reverting retention times of identified peaks to original values ... OK
+Correspondence results (features) removed.
+ done successfully.
+
+
+
+Executing test function test_XCMSnExp_filterMz  ...  done successfully.
+
+
+
+Executing test function test_XCMSnExp_filterRt  ... Error in res@msFeatureData$bla <- 3 : 
+  cannot add bindings to a locked environment
+ done successfully.
+
+
+
+Executing test function test_XCMSnExp_findChromPeaks  ... Removed previously identified chromatographic peaks.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 87 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 919 regions of interest ... OK: 61 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 1025 regions of interest ... OK: 100 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 919 regions of interest ... OK: 61 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 87 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 1025 regions of interest ... OK: 100 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 87 found.
+Removed feature definitions.
+Removed previously identified chromatographic peaks.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 87 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 919 regions of interest ... OK: 61 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 1025 regions of interest ... OK: 100 found.
+Correspondence results (features) removed.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 919 regions of interest ... OK: 61 found.
+ done successfully.
+
+
+
+Executing test function test_XCMSnExp_inherited_methods  ... Error in xod_r[1, 1] : subsetting by columns ('j') not supported
+Reverting retention times of identified peaks to original values ... OK
+ done successfully.
+
+
+
+Executing test function test_XCMSnExp_intensity  ...  done successfully.
+
+
+
+Executing test function test_XCMSnExp_mz  ...  done successfully.
+
+
+
+Executing test function test_XCMSnExp_processHistory  ... Error in .local(object, ...) : 
+  'fileIndex' has to be within 1 and the number of samples!
+In addition: Warning messages:
+1: In xod_xgrg[idxs] : Removed preprocessing results
+2: In xod_xgrg[idxs, keepAdjusted = TRUE] : Removed preprocessing results
+ done successfully.
+
+
+
+Executing test function test_XCMSnExp_rtime  ...  done successfully.
+
+
+
+Executing test function test_XCMSnExp_spectra  ...  done successfully.
+
+
+
+Executing test function test_adjustRtimePeakGroups  ... Performing retention time correction using 19 peak groups.
+Applying retention time adjustment to the identified chromatographic peaks ... OK
+ done successfully.
+
+
+
+Executing test function test_as_XCMSnExp_xcmsSet  ... Note: you might want to set/adjust the 'sampclass' of the returned xcmSet object before proceeding with the analysis.
+Note: you might want to set/adjust the 'sampclass' of the returned xcmSet object before proceeding with the analysis.
+Processing 2572 mz slices ... OK
+Processing 2572 mz slices ... OK
+Performing retention time correction using 19 peak groups.
+Applying retention time adjustment to the identified chromatographic peaks ... OK
+Note: you might want to set/adjust the 'sampclass' of the returned xcmSet object before proceeding with the analysis.
+Performing retention time correction using 19 peak groups.
+Note: you might want to set/adjust the 'sampclass' of the returned xcmSet object before proceeding with the analysis.
+Note: you might want to set/adjust the 'sampclass' of the returned xcmSet object before proceeding with the analysis.
+Note: you might want to set/adjust the 'sampclass' of the returned xcmSet object before proceeding with the analysis.
+ done successfully.
+
+
+
+Executing test function test_chromatogram  ... Correspondence results (features) removed.
+ done successfully.
+
+
+
+Executing test function test_extractMsData  ... Reverting retention times of identified peaks to original values ... OK
+ done successfully.
+
+
+
+Executing test function test_featureValues  ... Processing 2572 mz slices ... OK
+Processing 2572 mz slices ... OK
+ done successfully.
+
+
+
+Executing test function test_peakIndex  ...  done successfully.
+
+
+
+Executing test function test_processHistory  ...  done successfully.
+
+
+
+Executing test function test_signal_integration  ... Correspondence results (features) removed.
+Reverting retention times of identified peaks to original values ... OK
+ done successfully.
+
+
+
+Executing test function test_spectrapply_spectra  ...  done successfully.
+
+
+
+Executing test function test_split  ...  done successfully.
+
+
+
+Executing test function testPresentAbsentSum  ... Processing 3195 mz slices ... OK
+ done successfully.
+
+
+
+Executing test function testPresentAbsentSumAfterFillPeaks  ...  done successfully.
+
+
+
+Executing test function test_binYonX_multi  ... Error in binYonX(X, X, nBins = 5L, fromIdx = 1, toIdx = c(2, 3)) : 
+  'fromIdx' and 'toIdx' have to have the same length!
+In addition: Warning message:
+In .local(object, ...) : No aligned feature information available.
+ done successfully.
+
+
+
+Executing test function test_binning_NA_handling  ...  done successfully.
+
+
+
+Executing test function test_binning_max  ... 'x' is not sorted, will sort 'x' and 'y'.
+Error in binYonX(X, X, nBins = -4) : 'nBins' must be larger 1!
+Error in binYonX(X, X, nBins = 0) : 'nBins' must be larger 1!
+Error in binYonX(X, X, nBins = 4, fromIdx = 0) : 
+  'fromIdx' and 'toIdx' have to be within 1 and lenght(x)!
+Error in binYonX(X, X, nBins = 4, toIdx = 0) : 
+  'fromIdx' and 'toIdx' have to be >= 0!
+Error in binYonX(X, X, nBins = 4, fromIdx = 7, toIdx = 3) : 
+  'fromIdx' has to be smaller than 'toIdx'!
+Error in binYonX(X, X, nBins = 4, toIdx = 30) : 
+  'fromIdx' and 'toIdx' have to be within 1 and lenght(x)!
+ done successfully.
+
+
+
+Executing test function test_binning_mean  ...  done successfully.
+
+
+
+Executing test function test_binning_min  ...  done successfully.
+
+
+
+Executing test function test_binning_sum  ...  done successfully.
+
+
+
+Executing test function test_breaks  ...  done successfully.
+
+
+
+Executing test function test_imputation_lin  ...  done successfully.
+
+
+
+Executing test function test_imputation_linbin  ...  done successfully.
+
+
+
+Executing test function test_calibrate_XCMSnExp  ... Error in .local(object, ...) : 
+  The calibrate method for 'XCMSnExp' objects requires a 'CalibrantMassParam' object to be passed with argument 'param'
+In addition: Warning message:
+In .local(object, ...) :
+  Sample 1: only a single peak found, falling back to method = 'shift'
+Error in .local(object, ...) : 
+  Number of calibrant mz vectors differs from the number of samples
+ done successfully.
+
+
+
+Executing test function test_createProfileMatrix  ...  done successfully.
+
+
+
+Executing test function test_profMat  ... Error in .local(object, ...) : 
+  Can not calculate a profile matrix with step=0! Either provide a positive number with argument 'step' or use the 'profStep' method to set the step parameter for the xcmsSet.
+Create profile matrix with method 'bin' and step 2 ... OK
+Create profile matrix with method 'bin' and step 2 ... OK
+Create profile matrix with method 'binlinbase' and step 2 ... OK
+Create profile matrix with method 'binlinbase' and step 2 ... OK
+ done successfully.
+
+
+
+Executing test function test_profMat_OnDiskMSnExp  ... Create profile matrix with method 'bin' and step 2 ... OK
+Create profile matrix with method 'bin' and step 2 ... OK
+Create profile matrix with method 'binlin' and step 2 ... OK
+ done successfully.
+
+
+
+Executing test function test_profMethodReplace  ... Create profile matrix with method 'binlin' and step 2 ... OK
+Create profile matrix with method 'binlin' and step 2 ... OK
+Create profile matrix with method 'binlinbase' and step 2 ... OK
+Create profile matrix with method 'binlinbase' and step 2 ... OK
+ done successfully.
+
+
+
+Executing test function test_profStepReplace  ... Create profile matrix with method 'bin' and step 2 ... OK
+ done successfully.
+
+Processing 3195 mz slices ... OK
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko15.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt21.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko19.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko21.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt15.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko22.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt19.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt22.CDF 
+method:  bin 
+step:  0.1 
+
+
+Executing test function testAnova  ...  done successfully.
+
+
+
+Executing test function testDiffreport  ...  done successfully.
+
+
+
+Executing test function testDiffreportMinSamples  ... Too few samples per class, skipping t-test.
+Too few samples per class, skipping t-test.
+ done successfully.
+
+
+
+Executing test function test_adjustRtime_PeakGroups  ... Processing 2572 mz slices ... OK
+Processing 2572 mz slices ... OK
+Performing retention time correction using 19 peak groups.
+Performing retention time correction using 19 peak groups.
+Applying retention time adjustment to the identified chromatographic peaks ... OK
+Performing retention time correction using 19 peak groups.
+Applying retention time adjustment to the identified chromatographic peaks ... OK
+Processing 2572 mz slices ... OK
+Processing 2572 mz slices ... OK
+Performing retention time correction using 19 peak groups.
+Performing retention time correction using 19 peak groups.
+Applying retention time adjustment to the identified chromatographic peaks ... OK
+Performing retention time correction using 19 peak groups.
+Performing retention time correction using 19 peak groups.
+Applying retention time adjustment to the identified chromatographic peaks ... OK
+Performing retention time correction using 19 peak groups.
+Performing retention time correction using 19 peak groups.
+Applying retention time adjustment to the identified chromatographic peaks ... OK
+Reverting retention times of identified peaks to original values ... OK
+ done successfully.
+
+
+
+Executing test function test_applyRtAdjustment  ... Processing 3195 mz slices ... OK
+Performing retention time correction using 132 peak groups.
+ done successfully.
+
+
+
+Executing test function test_do_adjustRtime_peakGroups_implementation  ... Processing 3195 mz slices ... OK
+Performing retention time correction using 132 peak groups.
+Performing retention time correction using 132 peak groups.
+Performing retention time correction using 183 peak groups.
+Performing retention time correction using 183 peak groups.
+Performing retention time correction using 162 peak groups.
+Performing retention time correction using 162 peak groups.
+Performing retention time correction using 162 peak groups.
+Performing retention time correction using 162 peak groups.
+Performing retention time correction using 162 peak groups.
+Performing retention time correction using 162 peak groups.
+Performing retention time correction using 162 peak groups.
+Performing retention time correction using 162 peak groups.
+ done successfully.
+
+
+
+Executing test function test_getPeakGroupsRtMatrix  ...  done successfully.
+
+
+
+Executing test function test_obiwarp  ... center sample:  ko16 
+Processing: ko15  Create profile matrix with method 'bin' and step 1 ... OK
+Create profile matrix with method 'bin' and step 1 ... OK
+ko18  Create profile matrix with method 'bin' and step 1 ... OK
+
+Sample number 2 used as center sample.
+Aligning ko18.CDF against ko16.CDF ... OK
+Aligning ko15.CDF against ko16.CDF ... OK
+Sample number 2 used as center sample.
+Aligning ko18.CDF against ko16.CDF ... OK
+Aligning ko15.CDF against ko16.CDF ... OK
+Sample number 2 used as center sample.
+Aligning ko18.CDF against ko16.CDF ... OK
+Aligning ko15.CDF against ko16.CDF ... OK
+Applying retention time adjustment to the identified chromatographic peaks ... OK
+Reverting retention times of identified peaks to original values ... OK
+center sample:  ko18 
+Processing: ko15  Create profile matrix with method 'bin' and step 1 ... OK
+Create profile matrix with method 'bin' and step 1 ... OK
+ko16  Create profile matrix with method 'bin' and step 1 ... OK
+
+Sample number 3 used as center sample.
+Aligning ko16.CDF against ko18.CDF ... OK
+Aligning ko15.CDF against ko18.CDF ... OK
+center sample:  ko18 
+Processing: ko15  Create profile matrix with method 'bin' and step 1 ... OK
+Create profile matrix with method 'bin' and step 1 ... OK
+ko16  Create profile matrix with method 'bin' and step 1 ... OK
+
+Sample number 3 used as center sample.
+Aligning ko16.CDF against ko18.CDF ... OK
+Aligning ko15.CDF against ko18.CDF ... OK
+ done successfully.
+
+
+
+Executing test function test_plotAdjustedRtime  ...  done successfully.
+
+
+
+Executing test function test_do_findPeaks_MSW  ...  done successfully.
+
+
+
+Executing test function test_findChromPeaks_MSW  ... Error in .local(object, param, ...) : 
+  No MS level 2 spectra present to perform peak detection
+In addition: Warning messages:
+1: In plotAdjustedRtime(xod_x) :
+  No alignment/retention time correction results present.
+2: In .local(object, ...) :
+  Adjusted retention times requested but none present. returning raw retention times instead.
+3: In .local(object, ...) :
+  Adjusted retention times requested but none present. returning raw retention times instead.
+4: In plotAdjustedRtime(xod_xg) :
+  No alignment/retention time correction results present.
+5: In .local(object, ...) :
+  Adjusted retention times requested but none present. returning raw retention times instead.
+6: In .local(object, ...) :
+  Adjusted retention times requested but none present. returning raw retention times instead.
+ done successfully.
+
+
+
+Executing test function test_do_findChromPeaks_centWave  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 2814 regions of interest ... OK: 62 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 2814 regions of interest ... OK: 57 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 1681 regions of interest ... OK: 102 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 1681 regions of interest ... OK: 102 found.
+ done successfully.
+
+
+
+Executing test function test_findChromPeaks_centWave  ... Detecting mass traces at 40 ppm ... OK
+Detecting chromatographic peaks in 78 regions of interest ... OK: 6 found.
+Detecting mass traces at 40 ppm ... OK
+Detecting chromatographic peaks in 78 regions of interest ... OK: 6 found.
+Detecting mass traces at 40 ppm ... OK
+Detecting chromatographic peaks in 78 regions of interest ... OK: 6 found.
+Error in .local(object, param, ...) : 
+  No MS level 2 spectra present to perform peak detection
+Detecting mass traces at 40 ppm ... OK
+Detecting chromatographic peaks in 78 regions of interest ... OK: 6 found.
+Note: you might want to set/adjust the 'sampclass' of the returned xcmSet object before proceeding with the analysis.
+Detecting mass traces at 40 ppm ... OK
+Detecting chromatographic peaks in 78 regions of interest ... OK: 6 found.
+ done successfully.
+
+
+
+Executing test function test_findChromPeaks_centWave_peakIntensity  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 523 regions of interest ... OK: 176 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 523 regions of interest ...Correspondence results (features) removed.
+Reverting retention times of identified peaks to original values ... OK
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 919 regions of interest ... done successfully.
+
+
+
+Executing test function test_findChromPeaks_multiple_MS  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 32539 regions of interest ... OK: 1568 found.
+ done successfully.
+
+
+
+Executing test function test_do_findChromPeaks_centWaveWithPredIsoROIs  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 10673 regions of interest ... OK: 758 found.
+Detecting chromatographic peaks in 3000 regions of interest ... OK: 147 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 10673 regions of interest ... OK: 758 found.
+Detecting chromatographic peaks in 3000 regions of interest ... OK: 147 found.
+ done successfully.
+
+
+
+Executing test function test_findChromPeaks_centWaveWithPredIsoROIs  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 5204 regions of interest ... OK: 274 found.
+Detecting chromatographic peaks in 1123 regions of interest ... OK: 87 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 5204 regions of interest ... OK: 274 found.
+Detecting chromatographic peaks in 1123 regions of interest ... OK: 87 found.
+Polarity can not be extracted from netCDF files, please set manually the polarity with the 'polarity' method.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 5204 regions of interest ... OK: 274 found.
+Detecting chromatographic peaks in 1123 regions of interest ... OK: 87 found.
+Error in .local(object, param, ...) : 
+  No MS level 2 spectra present to perform peak detection
+In addition: Warning message:
+In .local(object, param, ...) :
+  Your data appears to be not centroided! CentWave works best on data in centroid mode.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 5204 regions of interest ... OK: 274 found.
+Detecting chromatographic peaks in 1123 regions of interest ... OK: 87 found.
+Note: you might want to set/adjust the 'sampclass' of the returned xcmSet object before proceeding with the analysis.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 5204 regions of interest ... OK: 274 found.
+Detecting chromatographic peaks in 1123 regions of interest ... OK: 87 found.
+ done successfully.
+
+
+
+Executing test function test_do_findChromPeaks_massifquant  ... 
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 10ppm ... OK
+ 1542 Peaks.
+
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 10ppm ... OK
+ 1542 Peaks.
+
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 10ppm ... OK
+Detecting chromatographic peaks in 1542 regions of interest ... OK: 66 found.
+
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 10ppm ... OK
+Detecting chromatographic peaks in 1542 regions of interest ... OK: 66 found.
+
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 10ppm ... OK
+ 559 Peaks.
+
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 10ppm ... OK
+ 559 Peaks.
+ done successfully.
+
+
+
+Executing test function test_findChromPeaks_massifquant  ... 
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 20ppm ... OK
+ 122 Peaks.
+
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 20ppm ... OK
+ 122 Peaks.
+Note: you might want to set/adjust the 'sampclass' of the returned xcmSet object before proceeding with the analysis.
+Error in .local(object, param, ...) : 
+  No MS level 2 spectra present to perform peak detection
+ done successfully.
+
+
+
+Executing test function test_do_findChromPeaks_matchedFilter  ...  done successfully.
+
+
+
+Executing test function test_findChromPeaks_matchedFilter  ... Note: you might want to set/adjust the 'sampclass' of the returned xcmSet object before proceeding with the analysis.
+Error in .local(object, param, ...) : 
+  No MS level 2 spectra present to perform peak detection
+ done successfully.
+
+
+
+Executing test function test_do_groupChromPeaks_density  ... Processing 3195 mz slices ... OK
+Processing 3195 mz slices ... OK
+ done successfully.
+
+
+
+Executing test function test_do_groupChromPeaks_nearest  ... Processing sample number 1 ... OK
+Processing sample number 3 ... OK
+Processing sample number 1 ... OK
+Processing sample number 3 ... OK
+Processing sample number 1 ... OK
+Processing sample number 3 ... OK
+ done successfully.
+
+
+
+Executing test function test_do_groupPeaks_mzClust  ... 8.00  16.00  24.00  28.00  32.00  40.00  48.00  52.00  56.00  60.00  64.00  72.00  80.00  84.00  88.00  96.00  100.00  
+8.00  16.00  28.00  32.00  40.00  64.00  80.00  96.00  100.00  
+8.00  16.00  24.00  28.00  32.00  40.00  48.00  52.00  56.00  60.00  64.00  72.00  80.00  84.00  88.00  96.00  100.00  
+ done successfully.
+
+
+
+Executing test function test_featureValues_XCMSnExp  ... Processing 2572 mz slices ... OK
+Processing 2572 mz slices ... OK
+Error in .local(object, ...) : 
+  Column 'bla' not present in the chromatographic peaks matrix!
+ done successfully.
+
+
+
+Executing test function test_groupChromPeaks_NearestPeaksParam  ... Processing sample number 1 ... OK
+Processing sample number 3 ... OK
+Processing sample number 1 ... OK
+Processing sample number 3 ... OK
+Processing sample number 1 ... OK
+Processing sample number 3 ... OK
+Processing sample number 1 ... OK
+Processing sample number 3 ... OK
+ done successfully.
+
+
+
+Executing test function test_groupChromPeaks_PeakDensityParam  ... Processing 2572 mz slices ... OK
+Processing 2572 mz slices ... OK
+Processing 323 mz slices ... OK
+Processing 323 mz slices ... OK
+ done successfully.
+
+
+
+Executing test function test_groupPeaks_MzClustParam  ... 8.00  16.00  24.00  28.00  32.00  40.00  48.00  52.00  56.00  60.00  64.00  72.00  80.00  84.00  88.00  96.00  100.00  
+8.00  16.00  24.00  28.00  32.00  40.00  48.00  52.00  56.00  60.00  64.00  72.00  80.00  84.00  88.00  96.00  100.00  
+8.00  16.00  28.00  32.00  40.00  56.00  64.00  80.00  88.00  96.00  100.00  
+8.00  16.00  28.00  32.00  40.00  56.00  64.00  80.00  88.00  96.00  100.00  
+ done successfully.
+
+
+
+Executing test function test_fillChromPeaks  ... Requesting 10 missing peaks from ko16.CDF ... got 10.
+Requesting 8 missing peaks from ko18.CDF ... got 7.
+Requesting 8 missing peaks from ko15.CDF ... got 7.
+Correspondence results (features) removed.
+Correspondence results (features) removed.
+Correspondence results (features) removed.
+Correspondence results (features) removed.
+Correspondence results (features) removed.
+Correspondence results (features) removed.
+Requesting 87 missing peaks from ko15.CDF ... got 87.
+Correspondence results (features) removed.
+Requesting 100 missing peaks from ko16.CDF ... got 100.
+Correspondence results (features) removed.
+Requesting 61 missing peaks from ko18.CDF ... got 61.
+Correspondence results (features) removed.
+Requesting 8 missing peaks from ko15.CDF ... got 7.
+Requesting 8 missing peaks from ko18.CDF ... got 7.
+Requesting 10 missing peaks from ko16.CDF ... got 10.
+Requesting 8 missing peaks from ko18.CDF ... got 7.
+Requesting 10 missing peaks from ko16.CDF ... got 10.
+Requesting 8 missing peaks from ko15.CDF ... got 7.
+Requesting 10 missing peaks from ko16.CDF ... got 10.
+Requesting 8 missing peaks from ko15.CDF ... got 8.
+Requesting 8 missing peaks from ko18.CDF ... got 8.
+Requesting 8 missing peaks from ko18.CDF ... got 7.
+Requesting 10 missing peaks from ko16.CDF ... got 10.
+Requesting 8 missing peaks from ko15.CDF ... got 7.
+Correspondence results (features) removed.
+ done successfully.
+
+
+
+Executing test function test_fillChromPeaks_MSW  ... Empty 'sampleGroups' in 'param', assuming all samples to be in the same group.
+8.00  16.00  24.00  28.00  32.00  40.00  48.00  52.00  56.00  60.00  64.00  72.00  80.00  84.00  88.00  96.00  100.00  
+Error in .local(object, param, ...) : 
+  'object' does not provide feature definitions! Please run 'groupChromPeaks' first.
+Requesting 4 missing peaks from HAM004_641fE_14-11-07--Exp2.extracted.mzdata ... got 4.
+Requesting 5 missing peaks from HAM004_641fE_14-11-07--Exp1.extracted.mzdata ... got 5.
+8.00  16.00  24.00  28.00  32.00  40.00  48.00  52.00  56.00  60.00  64.00  72.00  80.00  84.00  88.00  96.00  100.00  
+HAM004_641fE_14-11-07--Exp1.extracted HAM004_641fE_14-11-07--Exp2.extracted 
+Correspondence results (features) removed.
+Requesting 17 missing peaks from HAM004_641fE_14-11-07--Exp1.extracted.mzdata ... got 17.
+ done successfully.
+
+
+
+Executing test function test_fillChromPeaks_matchedFilter  ... Processing 3195 mz slices ... OK
+Requesting 34 missing peaks from ko16.CDF ... got 33.
+Requesting 45 missing peaks from ko15.CDF ... got 40.
+Requesting 39 missing peaks from ko18.CDF ... got 38.
+Correspondence results (features) removed.
+Requesting 470 missing peaks from ko15.CDF ... got 470.
+Correspondence results (features) removed.
+Requesting 556 missing peaks from ko16.CDF ... got 556.
+Correspondence results (features) removed.
+Requesting 418 missing peaks from ko18.CDF ... got 418.
+Requesting 39 missing peaks from ko18.CDF ... got 39.
+Requesting 45 missing peaks from ko15.CDF ... got 41.
+Requesting 34 missing peaks from ko16.CDF ... got 34.
+ done successfully.
+
+
+
+Executing test function test.fillPeaksColumns  ... Processing 3195 mz slices ... OK
+Processing 2572 mz slices ... OK
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko15.CDF 
+method:  bin 
+step:  0.1 
+Processing 2572 mz slices ... OK
+Processing 2572 mz slices ... OK
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko15.CDF 
+method:  bin 
+step:  0.1 
+ done successfully.
+
+
+
+Executing test function test.getPeaks_implementation  ... method:  bin 
+step:  0.1 
+method:  bin 
+step:  0.3 
+method:  binlin 
+step:  0.2 
+method:  binlinbase 
+step:  0.2 
+method:  intlin 
+step:  0.2 
+ done successfully.
+
+
+
+Executing test function testFilledFlag  ... Processing 3195 mz slices ... OK
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko15.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt21.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt15.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko22.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko19.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt19.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt22.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko21.CDF 
+method:  bin 
+step:  0.1 
+ done successfully.
+
+
+
+Executing test function test.findPeaksCentWaveResort  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 292 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 292 found.
+ done successfully.
+
+
+
+Executing test function test.findPeaksCentWave  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 272 found.
+ done successfully.
+
+
+
+Executing test function test.addPredictedIsotopeFeatures  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 292 found.
+Detecting chromatographic peaks in 1312 regions of interest ... OK: 112 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ...Detecting chromatographic peaks in 1312 regions of interest ... done successfully.
+
+
+
+Executing test function test.findPeaksMassIfQuant  ... 
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 10ppm ... OK
+ 114 Peaks.
+ done successfully.
+
+
+
+Executing test function test_mzRBackendFromFilecontent  ...  done successfully.
+
+
+
+Executing test function test_mzRBackendFromFilename  ... Error in xcms:::.mzRBackendFromFilename(c(1, 2)) : 
+  parameter 'x' has to be of length 1
+ done successfully.
+
+
+
+Executing test function test_mzRBackendFromFiletype  ... Error in match.arg(tolower(x), c("mzml", "mzxml", "cdf", "netcdf", "mzdata")) : 
+  'arg' must be of length 1
+Error in match.arg(tolower(x), c("mzml", "mzxml", "cdf", "netcdf", "mzdata")) : 
+  'arg' should be one of "mzml", "mzxml", "cdf", "netcdf", "mzdata"
+ done successfully.
+
+
+
+Executing test function test_applyAdjustedRtime  ... Error in applyAdjustedRtime(faahko_od) : 
+  'object' has to be an 'XCMSnExp' object
+ done successfully.
+
+
+
+Executing test function test_plotChromPeakDensity  ...  done successfully.
+
+
+
+Executing test function test_plotChromPeakImage  ...  done successfully.
+
+
+
+Executing test function test_plotChromPeaks  ...  done successfully.
+
+
+
+Executing test function test.fitModel  ...  done successfully.
+
+
+
+Executing test function test_plotMsData  ...  done successfully.
+
+
+
+Executing test function test.getEICretcor  ... Create profile matrix with method 'bin' and step 0.1 ... OK
+Applying retention time correction to ko15.CDF.
+Create profile matrix with method 'bin' and step 0.1 ... OK
+Applying retention time correction to ko16.CDF.
+ done successfully.
+
+
+
+Executing test function test.plotEIC  ...  done successfully.
+
+
+
+Executing test function test_getEICxset  ... No slot mslevel available, consider updating the object with the 'updateObject' method.
+No slot scanrange available, consider updating the object with the 'updateObject' method.
+Create profile matrix with method 'bin' and step 0.1 ... OK
+No need to perform retention time correction, raw and corrected rt are identical for ko15.CDF.
+No slot mslevel available, consider updating the object with the 'updateObject' method.
+No slot scanrange available, consider updating the object with the 'updateObject' method.
+Create profile matrix with method 'bin' and step 0.1 ... OK
+No need to perform retention time correction, raw and corrected rt are identical for ko16.CDF.
+No slot mslevel available, consider updating the object with the 'updateObject' method.
+No slot scanrange available, consider updating the object with the 'updateObject' method.
+Create profile matrix with method 'bin' and step 0.1 ... OK
+No need to perform retention time correction, raw and corrected rt are identical for ko21.CDF.
+No slot mslevel available, consider updating the object with the 'updateObject' method.
+No slot scanrange available, consider updating the object with the 'updateObject' method.
+Create profile matrix with method 'bin' and step 0.1 ... OK
+No need to perform retention time correction, raw and corrected rt are identical for wt18.CDF.
+No slot mslevel available, consider updating the object with the 'updateObject' method.
+No slot scanrange available, consider updating the object with the 'updateObject' method.
+Create profile matrix with method 'bin' and step 0.1 ... OK
+Create profile matrix with method 'bin' and step 0.1 ... OK
+No slot mslevel available, consider updating the object with the 'updateObject' method.
+No slot scanrange available, consider updating the object with the 'updateObject' method.
+Create profile matrix with method 'bin' and step 0.1 ... OK
+No slot mslevel available, consider updating the object with the 'updateObject' method.
+No slot scanrange available, consider updating the object with the 'updateObject' method.
+Create profile matrix with method 'bin' and step 0.1 ... OK
+Create profile matrix with method 'bin' and step 0.1 ... OK
+Create profile matrix with method 'bin' and step 0.1 ... OK
+ done successfully.
+
+
+
+Executing test function test_profEIC  ... Create profile matrix with method 'bin' and step 1 ... OK
+Create profile matrix with method 'binlinbase' and step 1 ... OK
+Create profile matrix with method 'binlinbase' and step 0.2 ... OK
+Create profile matrix with method 'intlin' and step 1 ... OK
+Create profile matrix with method 'bin' and step 1 ... OK
+Create profile matrix with method 'bin' and step 0.2 ... OK
+Create profile matrix with method 'bin' and step 0.5 ... OK
+Error in xcms:::profEIC(xraw, mzrange = mzr) : 
+  'mzrange' number 1 (0, 14) is outside of the mz value range of 'object'
+Error in profEIC(object, mzrange = mzrange, rtrange = rtrange, step = step) : 
+  'mzrange' number 1 (0, 14) is outside of the mz value range of 'object'
+Error in xcms:::profEIC(xraw, rtrange = c(6000, 6060)) : 
+  'rtrange' number 1 (6000, 6060) is outside of the retention time range of 'object'
+Error in profEIC(object, mzrange = mzrange, rtrange = rtrange, step = step) : 
+  'rtrange' number 1 (6000, 6060) is outside of the retention time range of 'object'
+Error in xcms:::profEIC(xraw, mzrange = c(1, 3, 5)) : 
+  'mzrange' is supposed to be a two-column matrix with each row containing the min and max value specifying the mz range.
+Error in profEIC(object, mzrange = mzrange, rtrange = rtrange, step = step) : 
+  'mzrange' is supposed to be a two-column matrix with each row containing the min and max value specifying the mz range.
+Error in xcms:::profEIC(xraw, rtrange = c(2, 4, 6)) : 
+  'rtrange' is supposed to be a two-column matrix with each row containing the min and max value specifying the rt range.
+Error in profEIC(object, mzrange = mzrange, rtrange = rtrange, step = step) : 
+  'rtrange' is supposed to be a two-column matrix with each row containing the min and max value specifying the rt range.
+ done successfully.
+
+
+
+Executing test function test.getXcmsRaw  ... Create profile matrix with method 'bin' and step 0.1 ... OK
+Applying retention time correction to ko15.CDF.
+Create profile matrix with method 'bin' and step 0.1 ... OK
+Create profile matrix with method 'bin' and step 0.1 ... OK
+Create profile matrix with method 'bin' and step 0.1 ... OK
+Create profile matrix with method 'bin' and step 0.1 ... OK
+Create profile matrix with method 'bin' and step 0.1 ... OK
+Applying retention time correction to ko15.CDF.
+Applying retention time correction to ko16.CDF.
+Applying retention time correction to ko18.CDF.
+Applying retention time correction to ko19.CDF.
+Create profile matrix with method 'bin' and step 2 ... OK
+No need to perform retention time correction, raw and corrected rt are identical for ko15.CDF.
+Create profile matrix with method 'bin' and step 2 ... OK
+Create profile matrix with method 'bin' and step 2 ... OK
+No need to perform retention time correction, raw and corrected rt are identical for ko15.CDF.
+Create profile matrix with method 'bin' and step 2 ... OK
+Create profile matrix with method 'bin' and step 2 ... OK
+Create profile matrix with method 'bin' and step 2 ... OK
+No need to perform retention time correction, raw and corrected rt are identical for ko15.CDF.
+Create profile matrix with method 'bin' and step 2 ... OK
+ done successfully.
+
+
+
+Executing test function test.getXcmsRawIssue44  ... Processing 3195 mz slices ... OK
+center sample:  ko15 
+Processing: ko16  Create profile matrix with method 'bin' and step 1 ... OK
+Create profile matrix with method 'bin' and step 1 ... OK
+
+Create profile matrix with method 'bin' and step 0.1 ... OK
+Applying retention time correction to ko16.CDF.
+ done successfully.
+
+
+
+Executing test function testGroupDensityOnePeak  ... Processing 2 mz slices ... OK
+ done successfully.
+
+
+
+Executing test function testGroupNearest  ... Processing sample number 8 ... OK
+Processing sample number 1 ... OK
+Processing sample number 7 ... OK
+Processing sample number 3 ... OK
+Processing sample number 12 ... OK
+Processing sample number 9 ... OK
+Processing sample number 6 ... OK
+Processing sample number 5 ... OK
+Processing sample number 4 ... OK
+Processing sample number 11 ... OK
+Processing sample number 10 ... OK
+ done successfully.
+
+
+
+Executing test function test_matchpeaks  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 87 found.
+ done successfully.
+
+
+
+Executing test function test.msn2xcmsRaw  ... Create profile matrix with method 'bin' and step 1 ... OK
+ done successfully.
+
+
+
+Executing test function test.xcmsRawms1  ...  done successfully.
+
+
+
+Executing test function test.xcmsRawms123  ...  done successfully.
+
+
+
+Executing test function test.xcmsSetms2cw  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 557 regions of interest ... OK: 107 found.
+ done successfully.
+
+
+
+Executing test function test.xcmsSetms2mf  ...  done successfully.
+
+
+
+Executing test function test_compare_readRawData  ...  done successfully.
+
+
+
+Executing test function test_evaluate_xcmsSource  ...  done successfully.
+
+
+
+Executing test function test_scanrange_centWave  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 292 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 382 regions of interest ... OK: 63 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 382 regions of interest ... OK: 63 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 588 regions of interest ... OK: 87 found.
+ done successfully.
+
+
+
+Executing test function test_scanrange_massifquant  ... 
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 10ppm ... OK
+ 271 Peaks.
+
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 10ppm ... OK
+ 271 Peaks.
+
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 10ppm ... OK
+Detecting chromatographic peaks in 350 regions of interest ... OK: 23 found.
+
+ Massifquant, Copyright (C) 2013 Brigham Young University.
+ Massifquant comes with ABSOLUTELY NO WARRANTY. See LICENSE for details.
+
+ Detecting  mass traces at 10ppm ... OK
+Detecting chromatographic peaks in 350 regions of interest ... OK: 23 found.
+ done successfully.
+
+
+
+Executing test function test_scanrange_matchedFilter  ... Provided scanrange was adjusted to 901278
+ done successfully.
+
+
+
+Executing test function test_scanrange_xcmsRaw  ...  done successfully.
+
+
+
+Executing test function test.obiwarp.cor  ... center sample:  ko16 
+Processing: ko15  Create profile matrix with method 'bin' and step 10 ... OK
+Create profile matrix with method 'bin' and step 10 ... OK
+
+ done successfully.
+
+
+
+Executing test function test.obiwarp.cor_opt  ... center sample:  ko16 
+Processing: ko15  Create profile matrix with method 'bin' and step 10 ... OK
+Create profile matrix with method 'bin' and step 10 ... OK
+
+ done successfully.
+
+
+
+Executing test function test.obiwarp.cov  ... center sample:  ko16 
+Processing: ko15  Create profile matrix with method 'bin' and step 10 ... OK
+Create profile matrix with method 'bin' and step 10 ... OK
+
+ done successfully.
+
+
+
+Executing test function test.obiwarp.default  ... center sample:  ko16 
+Processing: ko15  Create profile matrix with method 'bin' and step 10 ... OK
+Create profile matrix with method 'bin' and step 10 ... OK
+
+ done successfully.
+
+
+
+Executing test function test.obiwarp.euc  ... center sample:  ko16 
+Processing: ko15  Create profile matrix with method 'bin' and step 10 ... OK
+Create profile matrix with method 'bin' and step 10 ... OK
+
+ done successfully.
+
+
+
+Executing test function test.obiwarp.local  ... center sample:  ko16 
+Processing: ko15  Create profile matrix with method 'bin' and step 10 ... OK
+Create profile matrix with method 'bin' and step 10 ... OK
+
+ done successfully.
+
+
+
+Executing test function test.obiwarp.prd  ... center sample:  ko16 
+Processing: ko15  Create profile matrix with method 'bin' and step 10 ... OK
+Create profile matrix with method 'bin' and step 10 ... OK
+
+ done successfully.
+
+
+
+Executing test function testMultiFactor  ... Processing 3195 mz slices ... OK
+ done successfully.
+
+
+
+Executing test function testMultiFactorDiffreport  ... Processing 3195 mz slices ... OK
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko15.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt21.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko18.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt19.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt22.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt15.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko22.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/WT/wt16.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko21.CDF 
+method:  bin 
+step:  0.1 
+/var/scratchro/tomas/QA/R-74238/lib/faahKO/cdf/KO/ko19.CDF 
+method:  bin 
+step:  0.1 
+ done successfully.
+
+
+
+Executing test function test_ProcessHistory_c_xcmsSet  ...  done successfully.
+
+
+
+Executing test function test_ProcessHistory_class  ... Error in validObject(ph) : 
+  invalid class "ProcessHistory" object: Got invalid type 'FAILURE'! Allowd are: "Unknown", "Peak detection", "Peak grouping", "Retention time correction", "Missing peak filling", "Calibration"
+In addition: Warning messages:
+1: In readRawData(fileName(object), includeMSn = includeMSn) :
+  MSn spectra requested but none present in the file.
+2: In split.xcmsRaw(object, f = object@msnLevel == mslevel) :
+  MSn information will be dropped
+3: In split.xcmsRaw(object, f = object@msnLevel == mslevel) :
+  MSn information will be dropped
+4: In split.xcmsRaw(object, f = object@msnLevel == mslevel) :
+  MSn information will be dropped
+5: In split.xcmsRaw(object, f = object@msnLevel == mslevel) :
+  MSn information will be dropped
+Error in validObject(.Object) : 
+  invalid class "ProcessHistory" object: Got invalid type 'any'! Allowd are: "Unknown", "Peak detection", "Peak grouping", "Retention time correction", "Missing peak filling", "Calibration"
+Error in validObject(object) : 
+  invalid class "ProcessHistory" object: Got invalid type 'OOOO'! Allowd are: "Unknown", "Peak detection", "Peak grouping", "Retention time correction", "Missing peak filling", "Calibration"
+Error in validObject(object) : 
+  invalid class "ProcessHistory" object: length of 'date' should not be larger than 1!
+Error in validObject(object) : 
+  invalid class "ProcessHistory" object: length of 'info' should not be larger than 1!
+ done successfully.
+
+
+
+Executing test function test_XProcessHistory_class  ... Error in validObject(ph) : 
+  invalid class "XProcessHistory" object: Got invalid type 'other'! Allowd are: "Unknown", "Peak detection", "Peak grouping", "Retention time correction", "Missing peak filling", "Calibration"
+ done successfully.
+
+
+
+Executing test function test_showError  ...  done successfully.
+
+
+
+Executing test function test.rawMat  ...  done successfully.
+
+
+
+Executing test function test.sampclass  ... Processing 3195 mz slices ... OK
+Processing 3195 mz slices ... OK
+Processing 3195 mz slices ... OK
+Processing 3195 mz slices ... OK
+Setting the class labels as the interaction of the data.frame columns.
+ done successfully.
+
+
+
+Executing test function test.xcmsRawScanrange.100  ...  done successfully.
+
+
+
+Executing test function test.xcmsRawScanrange.first  ...  done successfully.
+
+
+
+Executing test function test.xcmsRawScanrange.last  ...  done successfully.
+
+
+
+Executing test function test.xcmsRawScanrange.none  ...  done successfully.
+
+
+
+Executing test function testAssignClass  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 292 found.
+ done successfully.
+
+
+
+Executing test function testAssignNames  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 292 found.
+ done successfully.
+
+
+
+Executing test function test.specDist  ...  done successfully.
+
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 937 regions of interest ... OK: 75 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 781 regions of interest ... OK: 46 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 919 regions of interest ... OK: 41 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 1025 regions of interest ... OK: 79 found.
+
+
+Executing test function testCombine  ...  done successfully.
+
+
+
+Executing test function testSplit  ...  done successfully.
+
+
+
+Executing test function testSplitAll  ...  done successfully.
+
+
+
+Executing test function testSplitFactorLongDrop  ...  done successfully.
+
+
+
+Executing test function testSplitFactorShort  ...  done successfully.
+
+
+
+Executing test function testSplitFirst  ...  done successfully.
+
+
+
+Executing test function testSplitLast  ...  done successfully.
+
+
+
+Executing test function testSplitMiddle  ...  done successfully.
+
+
+
+Executing test function testSplitNone  ...  done successfully.
+
+
+
+Executing test function testSplitPhenoData  ... No slot mslevel available, consider updating the object with the 'updateObject' method.
+No slot scanrange available, consider updating the object with the 'updateObject' method.
+ done successfully.
+
+
+
+Executing test function testSubset  ... Comparing peaks...OK
+Comparing peaks...OK
+Processing 3195 mz slices ... OK
+Performing retention time correction using 132 peak groups.
+Processing 3195 mz slices ... OK
+Comparing peaks...OK
+Comparing peak groups...OK
+Comparing peaks...OK
+Comparing peak groups...OK
+Comparing peaks...OK
+Comparing peak groups...OK
+Error in xset[1, ] : Subsetting to rows is not supported!
+Error in xset[, 20] : j has to be a numeric with values between 1 and 12!
+Error in xset[, "not there"] : 
+  j has to be a numeric with values between 1 and 12!
+ done successfully.
+
+
+
+Executing test function test_c_ProcessHistory  ...  done successfully.
+
+
+
+Executing test function test_c_empty  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 22 regions of interest ... FAIL: none found!
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 7 regions of interest ... FAIL: none found!
+ done successfully.
+
+
+
+Executing test function test_getProcessHistory  ...  done successfully.
+
+
+
+Executing test function test_split_ProcessHistory  ...  done successfully.
+
+
+
+Executing test function testSplitRawEven  ...  done successfully.
+
+
+
+Executing test function testSplitRawFirst  ...  done successfully.
+
+
+
+Executing test function testSplitRawLast  ...  done successfully.
+
+
+
+Executing test function testSplitRawNone  ...  done successfully.
+
+
+
+Executing test function testSplitRawOdd  ...  done successfully.
+
+
+
+Executing test function test_bracket_subset_xcmsRaw  ... Create profile matrix with method 'bin' and step 20 ... OK
+Create profile matrix with method 'bin' and step 20 ... OK
+Create profile matrix with method 'bin' and step 20 ... OK
+No need to perform retention time correction, raw and corrected rt are identical for ko15.CDF.
+Create profile matrix with method 'bin' and step 20 ... OK
+ done successfully.
+
+
+
+Executing test function testGroup  ... Processing 3195 mz slices ... OK
+ done successfully.
+
+
+
+Executing test function test_updateObject_xcmsSet  ...  done successfully.
+
+
+
+Executing test function test_useOriginalCode  ...  done successfully.
+
+
+
+Executing test function test.write.cdf  ... Loading required package: ncdf4
+Create profile matrix with method 'bin' and step 1 ... OK
+ done successfully.
+
+
+
+Executing test function test.write.mzdata  ... Loading required package: caTools
+
+Attaching package: 'caTools'
+
+The following object is masked from 'package:S4Vectors':
+
+    runmean
+
+Create profile matrix with method 'bin' and step 1 ... OK
+ done successfully.
+
+
+
+Executing test function test.writeMS2.mzdata  ... Create profile matrix with method 'bin' and step 1 ... OK
+ done successfully.
+
+
+
+Executing test function test.writeMSn.mzdata  ... Create profile matrix with method 'bin' and step 1 ... OK
+ done successfully.
+
+
+
+Executing test function test.writePolarity.mzdata  ... Create profile matrix with method 'bin' and step 1 ... OK
+ done successfully.
+
+
+
+Executing test function test.write.mzQuantML  ... Processing 3195 mz slices ... OK
+Loading required package: XML
+ done successfully.
+
+
+
+Executing test function test.rawMat  ...  done successfully.
+
+
+
+Executing test function test.findPeaksCentWave  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 392 regions of interest ... OK: 154 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 392 regions of interest ... OK: 154 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 323 regions of interest ... OK: 96 found.
+ done successfully.
+
+
+
+Executing test function test.findPeaksMatchedFilter  ...  done successfully.
+
+
+
+Executing test function test.phenoDataFromPaths  ...  done successfully.
+
+
+
+Executing test function test.xcmsSetParallel  ... Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 323 regions of interest ... OK: 96 found.
+Detecting mass traces at 25 ppm ... OK
+Detecting chromatographic peaks in 323 regions of interest ... OK: 96 found.
+ done successfully.
+
+------------------- UNIT TEST SUMMARY ---------------------
+
+RUNIT TEST PROTOCOL -- Fri Feb  9 11:06:04 2018 
+*********************************************** 
+Number of test functions: 183 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+xcms unit testing - 183 test functions, 0 errors, 0 failures
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: printTextProtocol -> cat -> file
+In addition: Warning messages:
+1: In .centWave_orig(mz = mz, int = int, scantime = scantime, valsPerSpect = valsPerSpect,  :
+  No peaks found!
+2: In xcmsSet(system.file("microtofq/MM14.mzML", package = "msdata"),  :
+  No peaks found in sample MM14.
+3: In xmlRoot.XMLInternalDocument(currentNodes[[1]]) : empty XML document
+4: In checkAttrNamespaces(getEffectiveNamespaces(node), .attrs, suppressNamespaceWarning) :
+  missing namespace definitions for prefix(es) xsi
+5: In buildSmallMoleculeList(xs) :
+  xcmsSet still contains NA values, filling zero in. Better use fillPeaks() !
+6: In file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/xcms/unitTests/reportSummary.txt': Read-only file system
+Execution halted

@@ -1,0 +1,1266 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "metagenomeSeq"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('metagenomeSeq')
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: limma
+
+Attaching package: ‘limma’
+
+The following object is masked from ‘package:BiocGenerics’:
+
+    plotMA
+
+Loading required package: glmnet
+Loading required package: Matrix
+Loading required package: foreach
+Loaded glmnet 2.0-13
+
+Loading required package: RColorBrewer
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("MRcoefs")
+> ### * MRcoefs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MRcoefs
+> ### Title: Table of top-ranked features from fitZig or fitFeatureModel
+> ### Aliases: MRcoefs
+> 
+> ### ** Examples
+> 
+> 
+> data(lungData)
+> k = grep("Extraction.Control",pData(lungData)$SampleType)
+> lungTrim = lungData[,-k]
+> lungTrim=filterData(lungTrim,present=30)
+> lungTrim=cumNorm(lungTrim,p=0.5)
+> smokingStatus = pData(lungTrim)$SmokingStatus
+> mod = model.matrix(~smokingStatus)
+> fit = fitZig(obj = lungTrim,mod=mod)
+it= 0, nll=91.70, log10(eps+1)=Inf, stillActive=70
+it= 1, nll=105.92, log10(eps+1)=-0.01, stillActive=0
+> head(MRcoefs(fit))
+      (Intercept) smokingStatusSmoker scalingFactor      pvalues   adjPvalues
+2817    1.3765190            2.580564      9.004541 4.576846e-06 6.407584e-05
+2735    1.0663024            2.475395     13.586886 2.247708e-06 3.933488e-05
+48745   2.2676926           -2.211137     18.276141 1.001321e-08 7.009246e-07
+5411    0.3729732            1.976257     14.820837 4.359068e-08 1.525674e-06
+48692   1.6631453           -1.921107     17.195638 7.121119e-06 8.307972e-05
+48743   1.6920512           -1.770609     16.014602 2.032063e-06 3.933488e-05
+> ####
+> fit = fitFeatureModel(obj = lungTrim,mod=mod)
+> head(MRcoefs(fit))
+          logFC        se      pvalues   adjPvalues
+2817   2.204814 0.4474885 8.346564e-07 1.460649e-05
+2735   2.119781 0.4260232 6.499862e-07 1.460649e-05
+48745 -1.763889 0.3266782 6.683794e-08 2.339328e-06
+5411   1.708186 0.3044708 2.019252e-08 1.413477e-06
+48692 -1.639236 0.4098243 6.338250e-05 6.338250e-04
+48743 -1.559167 0.3473291 7.155164e-06 1.001723e-04
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MRcounts")
+> ### * MRcounts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MRcounts
+> ### Title: Accessor for the counts slot of a MRexperiment object
+> ### Aliases: MRcounts MRcounts,MRexperiment-method
+> 
+> ### ** Examples
+> 
+> 
+> data(lungData)
+> head(MRcounts(lungData))
+  CHK_6467_E3B11_BRONCH2_PREWASH_V1V2 CHK_6467_E3B11_OW_V1V2
+1                                   0                      0
+2                                   0                      0
+3                                   0                      0
+4                                   0                      0
+5                                   0                      0
+6                                   0                      0
+  CHK_6467_E3B08_OW_V1V2 CHK_6467_E3B07_BAL_A_V1V2 CHK_6467_E3B11_BAL_A_V1V2
+1                      0                         0                         0
+2                      0                         0                         0
+3                      0                         0                         0
+4                      0                         0                         0
+5                      0                         0                         0
+6                      0                         0                         0
+  CHK_6467_E3B09_OP_V1V2 CHK_6467_E3B08_BRONCH1_PREWASH_V1V2
+1                      0                                   0
+2                      0                                   0
+3                      0                                   0
+4                      0                                   0
+5                      0                                   0
+6                      0                                   0
+  CHK_6467_E3B11_BRONCH1_POSTWASH_V1V2 CHK_6467_E3B11_OP_V1V2
+1                                    0                      1
+2                                    0                      0
+3                                    0                      0
+4                                    0                      0
+5                                    0                      0
+6                                    0                      0
+  CHK_6467_E3B10_BRONCH1_TIPSWAB_V1V2 CHK_6467_E3B07_BAL_B_V1V2
+1                                   0                         0
+2                                   0                         0
+3                                   0                         0
+4                                   0                         0
+5                                   0                         0
+6                                   0                         0
+  CHK_6467_E3B08_BAL_A_V1V2 CHK_6467_E3B11_PSB_V1V2
+1                         0                       0
+2                         0                       0
+3                         0                       0
+4                         0                       0
+5                         0                       0
+6                         0                       0
+  CHK_6467_SAL1_11_5_209_11_18_V1V2 CHK_6467_E3B10_OW_V1V2
+1                                 0                      0
+2                                 0                      0
+3                                 0                      0
+4                                 0                      0
+5                                 0                      0
+6                                 0                      0
+  CHK_6467_SAL1_11_4_201_11_18_V1V2 CHK_6467_E3B09_BRONCH1_POSTWASH_V1V2
+1                                 0                                    0
+2                                 0                                    0
+3                                 0                                    0
+4                                 0                                    0
+5                                 0                                    0
+6                                 0                                    0
+  CHK_6467_E3B10_PSB_V1V2 CHK_6467_E3B08_BRONCH1_TIPSWAB_V1V2
+1                       0                                   0
+2                       0                                   0
+3                       0                                   0
+4                       0                                   0
+5                       0                                   0
+6                       0                                   0
+  CHK_6467_E3B06_BRONCH1_PREWASH_V1V2 CHK_6467_E3B10_BAL_1STRETURN_V1V2
+1                                   0                                 0
+2                                   0                                 0
+3                                   0                                 1
+4                                   0                                 0
+5                                   0                                 0
+6                                   0                                 0
+  CHK_6467_SS1_11_4_272_11_30_V1V2 CHK_6467_E3B08_BRONCH2_PREWASH_V1V2
+1                                0                                   0
+2                                0                                   0
+3                                0                                   0
+4                                0                                   0
+5                                0                                   0
+6                                0                                   0
+  CHK_6467_E3B10_NP_V1V2 CHK_6467_H2O1_11_5_208_11_18_V1V2
+1                      0                                 0
+2                      0                                 0
+3                      0                                 0
+4                      0                                 0
+5                      1                                 0
+6                      0                                 0
+  CHK_6467_E3B11_BAL_B_V1V2 CHK_6467_E3B11_BRONCH1_TIPSWAB_V1V2
+1                         0                                   0
+2                         0                                   0
+3                         0                                   0
+4                         0                                   0
+5                         0                                   0
+6                         0                                   0
+  CHK_6467_E3B08_BAL_1STRETURN_V1V2 CHK_6467_E3B08_NP_V1V2
+1                                 0                      0
+2                                 0                      0
+3                                 0                      0
+4                                 0                      0
+5                                 0                      0
+6                                 0                      0
+  CHK_6467_E3B10_BRONCH2_PREWASH_V1V2 CHK_6467_E3B09_NP_V1V2
+1                                   0                      0
+2                                   0                      0
+3                                   0                      0
+4                                   0                      0
+5                                   0                      0
+6                                   0                      0
+  CHK_6467_H2O1_11_2_280_11_30_V1V2 CHK_6467_E3B07_PSB_V1V2
+1                                 0                       0
+2                                 0                       1
+3                                 0                       0
+4                                 0                       0
+5                                 0                       0
+6                                 0                       0
+  CHK_6467_E3B07_NP_V1V2 CHK_6467_E3B09_BRONCH1_TIPSWAB_V1V2
+1                      0                                   0
+2                      0                                   0
+3                      0                                   0
+4                      0                                   0
+5                      0                                   0
+6                      0                                   0
+  CHK_6467_E3B06_BRONCH1_POSTWASH_V1V2 CHK_6467_E3B07_BAL_1STRETURN_V1V2
+1                                    0                                 0
+2                                    0                                 0
+3                                    0                                 0
+4                                    0                                 0
+5                                    0                                 0
+6                                    0                                 0
+  CHK_6467_E3B10_BRONCH1_PREWASH_V1V2 CHK_6467_E3B10_BRONCH1_POSTWASH_V1V2
+1                                   0                                    0
+2                                   0                                    0
+3                                   0                                    0
+4                                   0                                    0
+5                                   0                                    0
+6                                   0                                    0
+  CHK_6467_E3B11_BRONCH1_PREWASH_V1V2 CHK_6467_E3B09_PSB_V1V2
+1                                   0                       0
+2                                   0                       0
+3                                   0                       0
+4                                   0                       0
+5                                   0                       0
+6                                   0                       0
+  CHK_6467_E3B09_BRONCH1_PREWASH_V1V2 CHK_6467_E3B07_BRONCH2_PREWASH_V1V2
+1                                   0                                   0
+2                                   0                                   0
+3                                   0                                   0
+4                                   0                                   0
+5                                   0                                   0
+6                                   0                                   0
+  CHK_6467_PSBPLASTIC_12_6_285_12_6_V1V2 CHK_6467_E3B08_BRONCH1_POSTWASH_V1V2
+1                                      0                                    0
+2                                      0                                    0
+3                                      0                                    0
+4                                      0                                    0
+5                                      0                                    0
+6                                      0                                    0
+  CHK_6467_E3B06_BRONCH1_TIPSWAB_V1V2 CHK_6467_PSBMETAL_12_6_286_12_6_V1V2
+1                                   0                                    0
+2                                   0                                    0
+3                                   0                                    0
+4                                   0                                    0
+5                                   0                                    0
+6                                   0                                    0
+  CHK_6467_E3B11_NP_V1V2 CHK_6467_E3B10_OP_V1V2
+1                      0                      0
+2                      0                      0
+3                      0                      0
+4                      0                      0
+5                      0                      0
+6                      0                      0
+  CHK_6467_E3B09_BAL_1STRETURN_V1V2 CHK_6467_E3B06_NP_V1V2
+1                                 0                      0
+2                                 0                      0
+3                                 0                      0
+4                                 0                      0
+5                                 0                      0
+6                                 0                      0
+  CHK_6467_E3B09_BRONCH2_PREWASH_V1V2 CHK_6467_E3B06_BAL_A_V1V2
+1                                   0                         0
+2                                   0                         0
+3                                   0                         0
+4                                   0                         0
+5                                   0                         0
+6                                   0                         0
+  CHK_6467_E3B06_BAL_1STRETURN_V1V2 CHK_6467_E3B07_OP_V1V2
+1                                 0                      0
+2                                 0                      0
+3                                 0                      0
+4                                 0                      0
+5                                 0                      0
+6                                 0                      0
+  CHK_6467_E3B06_BAL_B_V1V2 CHK_6467_E3B11_BAL_1STRETURN_V1V2
+1                         0                                 0
+2                         0                                 0
+3                         0                                 0
+4                         0                                 0
+5                         0                                 0
+6                         0                                 0
+  CHK_6467_E3B07_BRONCH1_TIPSWAB_V1V2 CHK_6467_H2O1_11_4_222_11_18_V1V2
+1                                   0                                 0
+2                                   0                                 0
+3                                   0                                 0
+4                                   0                                 0
+5                                   0                                 0
+6                                   0                                 0
+  CHK_6467_E3B10_BAL_A_V1V2 CHK_6467_SS1_11_2_253_11_30_V1V2
+1                         0                                0
+2                         0                                0
+3                         0                                0
+4                         0                                0
+5                         0                                0
+6                         0                                0
+  CHK_6467_E3B06_BRONCH2_PREWASH_V1V2 CHK_6467_E3B06_OW_V1V2
+1                                   0                      0
+2                                   0                      0
+3                                   0                      0
+4                                   0                      0
+5                                   0                      0
+6                                   0                      0
+  CHK_6467_E3B07_BRONCH1_POSTWASH_V1V2 CHK_6467_E3B07_BRONCH1_PREWASH_V1V2
+1                                    0                                   0
+2                                    0                                   0
+3                                    0                                   0
+4                                    0                                   0
+5                                    0                                   0
+6                                    0                                   0
+  CHK_6467_E3B08_OP_V1V2 CHK_6467_E3B10_BAL_B_V1V2 CHK_6467_E3B06_OP_V1V2
+1                      0                         0                      0
+2                      0                         0                      0
+3                      0                         0                      0
+4                      0                         0                      0
+5                      0                         0                      0
+6                      0                         0                      0
+  CHK_6467_E3B07_OW_V1V2 CHK_6467_H2O1_11_2_223_11_29_V1V2
+1                      0                                 0
+2                      0                                 0
+3                      0                                 0
+4                      0                                 0
+5                      0                                 0
+6                      0                                 0
+  CHK_6467_E3B09_BAL_B_V1V2 CHK_6467_H201_12_6_281_12_6_V1V2
+1                         0                                0
+2                         0                                0
+3                         0                                0
+4                         0                                0
+5                         0                                0
+6                         0                                0
+  CHK_6467_E3B08_PSB_V1V2 CHK_6467_E3B08_BAL_B_V1V2 CHK_6467_E3B06_PSB_V1V2
+1                       0                         0                       0
+2                       0                         0                       0
+3                       0                         0                       0
+4                       0                         1                       0
+5                       0                         0                       0
+6                       0                         0                       1
+  CHK_6467_E3B09_OW_V1V2 CHK_6467_SAL1_11_2_224_11_29_V1V2
+1                      0                                 0
+2                      0                                 0
+3                      0                                 0
+4                      0                                 0
+5                      0                                 0
+6                      0                                 0
+  CHK_6467_E3B09_BAL_A_V1V2
+1                         0
+2                         0
+3                         0
+4                         0
+5                         0
+6                         0
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MRexperiment-class")
+> ### * MRexperiment-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MRexperiment
+> ### Title: Class "MRexperiment" - a modified eSet object for the data from
+> ###   high-throughput sequencing experiments
+> ### Aliases: MRexperiment-class [,MRexperiment,ANY,ANY,ANY-method
+> ###   [,MRexperiment-method colSums,MRexperiment-method
+> ###   rowSums,MRexperiment-method colMeans,MRexperiment-method
+> ###   rowMeans,MRexperiment-method libSize,MRexperiment-method
+> ###   normFactors,MRexperiment-method
+> 
+> ### ** Examples
+> 
+> # See vignette
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MRfulltable")
+> ### * MRfulltable
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MRfulltable
+> ### Title: Table of top microbial marker gene from linear model fit
+> ###   including sequence information
+> ### Aliases: MRfulltable
+> 
+> ### ** Examples
+> 
+> 
+> data(lungData)
+> k = grep("Extraction.Control",pData(lungData)$SampleType)
+> lungTrim = lungData[,-k]
+> lungTrim=filterData(lungTrim,present=30)
+> lungTrim=cumNorm(lungTrim,p=0.5)
+> smokingStatus = pData(lungTrim)$SmokingStatus
+> mod = model.matrix(~smokingStatus)
+> fit = fitZig(obj = lungTrim,mod=mod)
+it= 0, nll=91.70, log10(eps+1)=Inf, stillActive=70
+it= 1, nll=105.92, log10(eps+1)=-0.01, stillActive=0
+> # head(MRfulltable(fit))
+> ####
+> fit = fitFeatureModel(obj = lungTrim,mod=mod)
+> # head(MRfulltable(fit))
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("MRtable")
+> ### * MRtable
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: MRtable
+> ### Title: Table of top microbial marker gene from linear model fit
+> ###   including sequence information
+> ### Aliases: MRtable
+> 
+> ### ** Examples
+> 
+> 
+> data(lungData)
+> k = grep("Extraction.Control",pData(lungData)$SampleType)
+> lungTrim = lungData[,-k]
+> lungTrim=filterData(lungTrim,present=30)
+> lungTrim=cumNorm(lungTrim,p=0.5)
+> smokingStatus = pData(lungTrim)$SmokingStatus
+> mod = model.matrix(~smokingStatus)
+> fit = fitZig(obj = lungTrim,mod=mod)
+it= 0, nll=91.70, log10(eps+1)=Inf, stillActive=70
+it= 1, nll=105.92, log10(eps+1)=-0.01, stillActive=0
+> head(MRtable(fit))
+      +samples in group 0 +samples in group 1 counts in group 0
+2817                   14                  24               161
+2735                   14                  22               331
+48745                  22                  15               775
+5411                   17                  21                96
+48692                  22                  13               574
+48743                  22                  15               511
+      counts in group 1 (Intercept) smokingStatusSmoker scalingFactor
+2817               1881   1.3765190            2.580564      9.004541
+2735               1443   1.0663024            2.475395     13.586886
+48745               186   2.2676926           -2.211137     18.276141
+5411                642   0.3729732            1.976257     14.820837
+48692               121   1.6631453           -1.921107     17.195638
+48743                98   1.6920512           -1.770609     16.014602
+           pvalues   adjPvalues
+2817  4.576846e-06 6.407584e-05
+2735  2.247708e-06 3.933488e-05
+48745 1.001321e-08 7.009246e-07
+5411  4.359068e-08 1.525674e-06
+48692 7.121119e-06 8.307972e-05
+48743 2.032063e-06 3.933488e-05
+> ####
+> fit = fitFeatureModel(obj = lungTrim,mod=mod)
+> head(MRtable(fit))
+      +samples in group 0 +samples in group 1 counts in group 0
+2817                   14                  24               161
+2735                   14                  22               331
+48745                  22                  15               775
+5411                   17                  21                96
+48692                  22                  13               574
+48743                  22                  15               511
+      counts in group 1     logFC        se      pvalues   adjPvalues
+2817               1881  2.204814 0.4474885 8.346564e-07 1.460649e-05
+2735               1443  2.119781 0.4260232 6.499862e-07 1.460649e-05
+48745               186 -1.763889 0.3266782 6.683794e-08 2.339328e-06
+5411                642  1.708186 0.3044708 2.019252e-08 1.413477e-06
+48692               121 -1.639236 0.4098243 6.338250e-05 6.338250e-04
+48743                98 -1.559167 0.3473291 7.155164e-06 1.001723e-04
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("aggregateBySample")
+> ### * aggregateBySample
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: aggregateBySample
+> ### Title: Aggregates a MRexperiment object or counts matrix to by a
+> ###   factor.
+> ### Aliases: aggregateBySample aggSamp aggSamp
+> 
+> ### ** Examples
+> 
+> 
+> data(mouseData)
+> aggregateBySample(mouseData[1:100,],fct="diet",aggfun=rowSums)
+MRexperiment (storageMode: environment)
+assayData: 100 features, 2 samples 
+  element names: counts 
+protocolData: none
+phenoData
+  sampleNames: BK Western
+  varLabels: phenoData
+  varMetadata: labelDescription
+featureData
+  featureNames: Prevotellaceae:1 Lachnospiraceae:1 ... Clostridiales:23
+    (100 total)
+  fvarLabels: superkingdom phylum ... OTU (7 total)
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> # not run
+> # aggregateBySample(mouseData,fct="diet",aggfun=matrixStats::rowMedians)
+> # aggSamp(mouseData,fct='diet',aggfun=rowMaxs)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("aggregateByTaxonomy")
+> ### * aggregateByTaxonomy
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: aggregateByTaxonomy
+> ### Title: Aggregates a MRexperiment object or counts matrix to a
+> ###   particular level.
+> ### Aliases: aggregateByTaxonomy aggTax aggTax
+> 
+> ### ** Examples
+> 
+> 
+> data(mouseData)
+> aggregateByTaxonomy(mouseData[1:100,],lvl="class",norm=TRUE,aggfun=colSums)
+MRexperiment (storageMode: environment)
+assayData: 5 features, 139 samples 
+  element names: counts 
+protocolData: none
+phenoData
+  sampleNames: PM1:20080107 PM1:20080108 ... PM9:20080303 (139 total)
+  varLabels: mouseID date ... status (5 total)
+  varMetadata: labelDescription
+featureData
+  featureNames: Bacilli Bacteroidetes ... NA (5 total)
+  fvarLabels: superkingdom phylum class
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> # not run
+> # aggregateByTaxonomy(mouseData,lvl="class",norm=TRUE,aggfun=colMedians)
+> # aggTax(mouseData,lvl='phylum',norm=FALSE,aggfun=colSums)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("biom2MRexperiment")
+> ### * biom2MRexperiment
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: biom2MRexperiment
+> ### Title: Biom to MRexperiment objects
+> ### Aliases: biom2MRexperiment
+> 
+> ### ** Examples
+> 
+> 
+> library(biomformat)
+> rich_dense_file = system.file("extdata", "rich_dense_otu_table.biom", package = "biomformat")
+> x = biomformat::read_biom(rich_dense_file)
+> biom2MRexperiment(x)
+MRexperiment (storageMode: environment)
+assayData: 5 features, 6 samples 
+  element names: counts 
+protocolData: none
+phenoData
+  sampleNames: Sample1 Sample2 ... Sample6 (6 total)
+  varLabels: BarcodeSequence LinkerPrimerSequence BODY_SITE Description
+  varMetadata: labelDescription
+featureData
+  featureNames: GG_OTU_1 GG_OTU_2 ... GG_OTU_5 (5 total)
+  fvarLabels: taxonomy1 taxonomy2 ... taxonomy7 (7 total)
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:biomformat’
+
+> nameEx("calcNormFactors")
+> ### * calcNormFactors
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: calcNormFactors
+> ### Title: Cumulative sum scaling (css) normalization factors
+> ### Aliases: calcNormFactors
+> 
+> ### ** Examples
+> 
+> 
+> data(mouseData)
+> head(calcNormFactors(mouseData))
+Default value being used.
+             normFactors
+PM1:20080107         152
+PM1:20080108         229
+PM1:20080114         257
+PM1:20071211         221
+PM1:20080121         246
+PM1:20071217         258
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("correctIndices")
+> ### * correctIndices
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: correctIndices
+> ### Title: Calculate the correct indices for the output of correlationTest
+> ### Aliases: correctIndices
+> 
+> ### ** Examples
+> 
+> 
+> data(mouseData)
+> mat = MRcounts(mouseData)[55:60,]
+> cors = correlationTest(mat)
+> ind  = correctIndices(nrow(mat))
+> 
+> cormat = as.matrix(dist(mat))
+> cormat[cormat>0] = 0
+> cormat[upper.tri(cormat)][ind] = cors[,1]
+> table(cormat[1,-1] - cors[1:5,1])
+
+0 
+5 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("correlationTest")
+> ### * correlationTest
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: correlationTest
+> ### Title: Correlation of each row of a matrix or MRexperiment object
+> ### Aliases: correlationTest corTest
+> 
+> ### ** Examples
+> 
+> 
+> # Pairwise correlation of raw counts
+> data(mouseData)
+> cors = correlationTest(mouseData[1:10,],norm=FALSE,log=FALSE)
+> head(cors)
+                                                       correlation         p
+Prevotellaceae:1-Lachnospiraceae:1                    -0.007246377 0.9325292
+Prevotellaceae:1-Unclassified-Screened:1              -0.007246377 0.9325292
+Prevotellaceae:1-Clostridiales:1                      -0.007246377 0.9325292
+Prevotellaceae:1-Clostridiales:2                      -0.007246377 0.9325292
+Prevotellaceae:1-Firmicutes:1                         -0.007246377 0.9325292
+Prevotellaceae:1-PeptostreptococcaceaeIncertaeSedis:1 -0.007246377 0.9325292
+> 
+> mat = MRcounts(mouseData)[1:10,]
+> cormat = as.matrix(dist(mat)) # Creating a matrix
+> cormat[cormat>0] = 0 # Creating an empty matrix
+> ind = correctIndices(nrow(mat))
+> cormat[upper.tri(cormat)][ind] = cors[,1] 
+> table(cormat[1,-1] - cors[1:9,1])
+
+0 
+9 
+> 
+> # Correlation of raw counts with a vector (library size in this case)
+> data(mouseData)
+> cors = correlationTest(mouseData[1:10,],libSize(mouseData),norm=FALSE,log=FALSE)
+> head(cors)
+                         correlation         p
+Prevotellaceae:1         0.001507641 0.9859465
+Lachnospiraceae:1       -0.096288036 0.2594931
+Unclassified-Screened:1  0.122936187 0.1493636
+Clostridiales:1          0.013781064 0.8720802
+Clostridiales:2         -0.016510788 0.8470258
+Firmicutes:1            -0.056595264 0.5081291
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cumNorm")
+> ### * cumNorm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cumNorm
+> ### Title: Cumulative sum scaling normalization
+> ### Aliases: cumNorm
+> 
+> ### ** Examples
+> 
+> 
+> data(mouseData)
+> cumNorm(mouseData)
+Default value being used.
+MRexperiment (storageMode: environment)
+assayData: 10172 features, 139 samples 
+  element names: counts 
+protocolData: none
+phenoData
+  sampleNames: PM1:20080107 PM1:20080108 ... PM9:20080303 (139 total)
+  varLabels: mouseID date ... status (5 total)
+  varMetadata: labelDescription
+featureData
+  featureNames: Prevotellaceae:1 Lachnospiraceae:1 ...
+    Parabacteroides:956 (10172 total)
+  fvarLabels: superkingdom phylum ... OTU (7 total)
+  fvarMetadata: labelDescription
+experimentData: use 'experimentData(object)'
+Annotation:  
+> head(normFactors(mouseData))
+PM1:20080107 PM1:20080108 PM1:20080114 PM1:20071211 PM1:20080121 PM1:20071217 
+         152          229          257          221          246          258 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cumNormMat")
+> ### * cumNormMat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cumNormMat
+> ### Title: Cumulative sum scaling factors.
+> ### Aliases: cumNormMat
+> 
+> ### ** Examples
+> 
+> 
+> data(mouseData)
+> head(cumNormMat(mouseData))
+Default value being used.
+                        PM1:20080107 PM1:20080108 PM1:20080114 PM1:20071211
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM1:20080121 PM1:20071217 PM1:20080128 PM1:20080204
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM1:20080211 PM1:20080218 PM1:20080225 PM1:20080303
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM10:20080107 PM10:20080108 PM10:20080114 PM10:20071211
+Prevotellaceae:1                    0             0             0             0
+Lachnospiraceae:1                   0             0             0             0
+Unclassified-Screened:1             0             0             0             0
+Clostridiales:1                     0             0             0             0
+Clostridiales:2                     0             0             0             0
+Firmicutes:1                        0             0             0             0
+                        PM10:20080121 PM10:20071217 PM10:20080128 PM10:20080204
+Prevotellaceae:1                    0             0             0             0
+Lachnospiraceae:1                   0             0             0             0
+Unclassified-Screened:1             0             0             0             0
+Clostridiales:1                     0             0             0             0
+Clostridiales:2                     0             0             0             0
+Firmicutes:1                        0             0             0             0
+                        PM10:20080211 PM10:20080218 PM10:20080225 PM10:20080303
+Prevotellaceae:1                    0             0             0             0
+Lachnospiraceae:1                   0             0             0             0
+Unclassified-Screened:1             0             0             0             0
+Clostridiales:1                     0             0             0             0
+Clostridiales:2                     0             0             0             0
+Firmicutes:1                        0             0             0             0
+                        PM11:20080107 PM11:20080108 PM11:20080114 PM11:20071211
+Prevotellaceae:1                    0             0             0             0
+Lachnospiraceae:1                   0             0             0             0
+Unclassified-Screened:1             0             0             0             0
+Clostridiales:1                     0             0             0             0
+Clostridiales:2                     0             0             0             0
+Firmicutes:1                        0             0             0             0
+                        PM11:20080121 PM11:20071217 PM11:20080128 PM11:20080204
+Prevotellaceae:1                    0             0      0.000000             0
+Lachnospiraceae:1                   0             0      0.000000             0
+Unclassified-Screened:1             0             0      3.322259             0
+Clostridiales:1                     0             0      0.000000             0
+Clostridiales:2                     0             0      0.000000             0
+Firmicutes:1                        0             0      0.000000             0
+                        PM11:20080211 PM11:20080218 PM11:20080225 PM11:20080303
+Prevotellaceae:1                    0             0             0             0
+Lachnospiraceae:1                   0             0             0             0
+Unclassified-Screened:1             0             0             0             0
+Clostridiales:1                     0             0             0             0
+Clostridiales:2                     0             0             0             0
+Firmicutes:1                        0             0             0             0
+                        PM12:20080107 PM12:20080108 PM12:20080114 PM12:20080121
+Prevotellaceae:1                    0             0             0             0
+Lachnospiraceae:1                   0             0             0             0
+Unclassified-Screened:1             0             0             0             0
+Clostridiales:1                     0             0             0             0
+Clostridiales:2                     0             0             0             0
+Firmicutes:1                        0             0             0             0
+                        PM12:20071217 PM12:20080128 PM12:20080204 PM12:20080211
+Prevotellaceae:1                    0             0             0             0
+Lachnospiraceae:1                   0             0             0             0
+Unclassified-Screened:1             0             0             0             0
+Clostridiales:1                     0             0             0             0
+Clostridiales:2                     0             0             0             0
+Firmicutes:1                        0             0             0             0
+                        PM12:20080218 PM12:20080225 PM12:20080303 PM2:20080107
+Prevotellaceae:1                    0             0             0            0
+Lachnospiraceae:1                   0             0             0            0
+Unclassified-Screened:1             0             0             0            0
+Clostridiales:1                     0             0             0            0
+Clostridiales:2                     0             0             0            0
+Firmicutes:1                        0             0             0            0
+                        PM2:20080108 PM2:20080114 PM2:20071211 PM2:20080121
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM2:20071217 PM2:20080128 PM2:20080204 PM2:20080211
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM2:20080218 PM2:20080225 PM2:20080303 PM3:20080107
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM3:20080108 PM3:20080114 PM3:20071211 PM3:20080121
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM3:20071217 PM3:20080128 PM3:20080204 PM3:20080211
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM3:20080218 PM3:20080225 PM3:20080303 PM4:20080107
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM4:20080108 PM4:20080114 PM4:20080121 PM4:20071217
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM4:20080128 PM4:20080204 PM4:20080211 PM4:20080218
+Prevotellaceae:1                   0            0     0.000000            0
+Lachnospiraceae:1                  0            0     0.000000            0
+Unclassified-Screened:1            0            0     0.000000            0
+Clostridiales:1                    0            0     0.000000            0
+Clostridiales:2                    0            0     4.926108            0
+Firmicutes:1                       0            0     0.000000            0
+                        PM4:20080225 PM4:20080303 PM5:20080107 PM5:20080108
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM5:20080114 PM5:20071211 PM5:20080121 PM5:20071217
+Prevotellaceae:1            0.000000     0.000000            0            0
+Lachnospiraceae:1           0.000000     5.050505            0            0
+Unclassified-Screened:1     0.000000     0.000000            0            0
+Clostridiales:1             3.676471     0.000000            0            0
+Clostridiales:2             0.000000     0.000000            0            0
+Firmicutes:1                0.000000     0.000000            0            0
+                        PM5:20080128 PM5:20080204 PM5:20080211 PM5:20080218
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM5:20080225 PM5:20080303 PM6:20080107 PM6:20080108
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM6:20080114 PM6:20080121 PM6:20071217 PM6:20080128
+Prevotellaceae:1                   0            0     4.807692            0
+Lachnospiraceae:1                  0            0     0.000000            0
+Unclassified-Screened:1            0            0     0.000000            0
+Clostridiales:1                    0            0     0.000000            0
+Clostridiales:2                    0            0     0.000000            0
+Firmicutes:1                       0            5     0.000000            0
+                        PM6:20080204 PM6:20080211 PM6:20080218 PM6:20080225
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM6:20080303 PM7:20080114 PM7:20071211 PM7:20080121
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM7:20071217 PM7:20080128 PM7:20080204 PM7:20080211
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM7:20080218 PM7:20080225 PM7:20080303 PM8:20080107
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM8:20080108 PM8:20080114 PM8:20071211 PM8:20080121
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM8:20071217 PM8:20080128 PM8:20080204 PM8:20080211
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM8:20080218 PM8:20080225 PM8:20080303 PM9:20080107
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM9:20080108 PM9:20080114 PM9:20071211 PM9:20080121
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM9:20071217 PM9:20080128 PM9:20080204 PM9:20080211
+Prevotellaceae:1                   0            0            0            0
+Lachnospiraceae:1                  0            0            0            0
+Unclassified-Screened:1            0            0            0            0
+Clostridiales:1                    0            0            0            0
+Clostridiales:2                    0            0            0            0
+Firmicutes:1                       0            0            0            0
+                        PM9:20080218 PM9:20080225 PM9:20080303
+Prevotellaceae:1                   0            0            0
+Lachnospiraceae:1                  0            0            0
+Unclassified-Screened:1            0            0            0
+Clostridiales:1                    0            0            0
+Clostridiales:2                    0            0            0
+Firmicutes:1                       0            0            0
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cumNormStat")
+> ### * cumNormStat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cumNormStat
+> ### Title: Cumulative sum scaling percentile selection
+> ### Aliases: cumNormStat
+> 
+> ### ** Examples
+> 
+> 
+> data(mouseData)
+> p = round(cumNormStat(mouseData,pFlag=FALSE),digits=2)
+Default value being used.
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cumNormStatFast")
+> ### * cumNormStatFast
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cumNormStatFast
+> ### Title: Cumulative sum scaling percentile selection
+> ### Aliases: cumNormStatFast
+> 
+> ### ** Examples
+> 
+> 
+> data(mouseData)
+> p = round(cumNormStatFast(mouseData,pFlag=FALSE),digits=2)
+Default value being used.
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("expSummary")
+> ### * expSummary
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: expSummary
+> ### Title: Access MRexperiment object experiment data
+> ### Aliases: expSummary expSummary,MRexperiment-method
+> 
+> ### ** Examples
+> 
+> 
+> data(mouseData)
+> expSummary(mouseData)
+              libSize normFactors
+PM1:20080107      977         152
+PM1:20080108     1886         229
+PM1:20080114     2793         257
+PM1:20071211     1472         221
+PM1:20080121     2102         246
+PM1:20071217     3567         258
+PM1:20080128     2742         241
+PM1:20080204     2935         299
+PM1:20080211     2218         191
+PM1:20080218     1554         205
+PM1:20080225     2462         224
+PM1:20080303     1344         246
+PM10:20080107    2530         255
+PM10:20080108    2210         321
+PM10:20080114    2147         249
+PM10:20071211    1511         195
+PM10:20080121    2086         230
+PM10:20071217    5808         258
+PM10:20080128    2418         257
+PM10:20080204    1904         226
+PM10:20080211    1997         213
+PM10:20080218    1553         234
+PM10:20080225    2549         259
+PM10:20080303    2213         227
+PM11:20080107    2775         248
+PM11:20080108    2908         234
+PM11:20080114    2659         235
+PM11:20071211    1289         187
+PM11:20080121    2567         226
+PM11:20071217    1968         177
+PM11:20080128    3212         301
+PM11:20080204    2668         281
+PM11:20080211    2574         278
+PM11:20080218    2605         245
+PM11:20080225    2519         268
+PM11:20080303    2587         231
+PM12:20080107    2558         211
+PM12:20080108    2460         258
+PM12:20080114    2273         240
+PM12:20080121    2494         267
+PM12:20071217    2505         231
+PM12:20080128    3043         288
+PM12:20080204    2331         226
+PM12:20080211    2413         283
+PM12:20080218    1862         206
+PM12:20080225    2223         258
+PM12:20080303    2348         273
+PM2:20080107     1845         226
+PM2:20080108     1777         208
+PM2:20080114     3004         254
+PM2:20071211     1091         224
+PM2:20080121     2340         228
+PM2:20071217     1736         221
+PM2:20080128     2046         243
+PM2:20080204     1839         196
+PM2:20080211     2132         195
+PM2:20080218     3570         372
+PM2:20080225     2943         226
+PM2:20080303     2194         212
+PM3:20080107     1910         212
+PM3:20080108     2049         167
+PM3:20080114     1978         206
+PM3:20071211     1331         211
+PM3:20080121     2120         248
+PM3:20071217     5777         380
+PM3:20080128     2747         280
+PM3:20080204     2104         199
+PM3:20080211     1897         234
+PM3:20080218     1379         230
+PM3:20080225     2472         232
+PM3:20080303     1791         215
+PM4:20080107     1692         211
+PM4:20080108     2149         235
+PM4:20080114     2245         208
+PM4:20080121     2096         241
+PM4:20071217     1871         195
+PM4:20080128     3058         268
+PM4:20080204     1789         204
+PM4:20080211     2144         203
+PM4:20080218     2341         246
+PM4:20080225     2343         275
+PM4:20080303     2828         323
+PM5:20080107     1861         218
+PM5:20080108     2492         355
+PM5:20080114     2376         272
+PM5:20071211     1533         198
+PM5:20080121     1764         223
+PM5:20071217     2126         140
+PM5:20080128     3071         360
+PM5:20080204     1999         277
+PM5:20080211     1557         186
+PM5:20080218     2528         274
+PM5:20080225     2281         232
+PM5:20080303     2325         302
+PM6:20080107     2796         270
+PM6:20080108     2803         397
+PM6:20080114     2187         246
+PM6:20080121     1837         200
+PM6:20071217     2282         208
+PM6:20080128     2152         279
+PM6:20080204     2274         273
+PM6:20080211     1723         199
+PM6:20080218     2196         237
+PM6:20080225     2256         268
+PM6:20080303     2620         319
+PM7:20080114     2455         215
+PM7:20071211     1130         152
+PM7:20080121     2120         201
+PM7:20071217     2151         205
+PM7:20080128     2802         297
+PM7:20080204     2367         223
+PM7:20080211     1996         212
+PM7:20080218     2245         221
+PM7:20080225     2527         226
+PM7:20080303     2431         306
+PM8:20080107     1985         247
+PM8:20080108     2731         343
+PM8:20080114     2162         290
+PM8:20071211     1478         234
+PM8:20080121     2000         206
+PM8:20071217     1765         162
+PM8:20080128     2007         294
+PM8:20080204     2322         279
+PM8:20080211     1892         224
+PM8:20080218     3691         395
+PM8:20080225     2524         241
+PM8:20080303     2417         259
+PM9:20080107     2098         209
+PM9:20080108     2326         316
+PM9:20080114     2055         258
+PM9:20071211      848         150
+PM9:20080121     2072         251
+PM9:20071217     2477         279
+PM9:20080128     2611         272
+PM9:20080204     2263         266
+PM9:20080211     1751         208
+PM9:20080218     1685         301
+PM9:20080225     2892         238
+PM9:20080303     1831         228
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("exportMat")
+> ### * exportMat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: exportMat
+> ### Title: Export the normalized MRexperiment dataset as a matrix.
+> ### Aliases: exportMat exportMatrix
+> 
+> ### ** Examples
+> 
+> 
+> data(lungData)
+> dataDirectory <- system.file("extdata", package="metagenomeSeq")
+> exportMat(lungData[,1:5],file=file.path(dataDirectory,"tmp.tsv"))
+Default value being used.
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/metagenomeSeq/extdata/tmp.tsv': Read-only file system
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: exportMat -> write -> cat -> file
+Execution halted

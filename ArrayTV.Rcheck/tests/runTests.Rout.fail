@@ -1,0 +1,97 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> BiocGenerics:::testPackage("ArrayTV")
+Loading required package: doParallel
+Loading required package: foreach
+Loading required package: iterators
+Loading required package: parallel
+Loading required package: BSgenome
+Loading required package: BiocGenerics
+
+Attaching package: 'BiocGenerics'
+
+The following objects are masked from 'package:parallel':
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from 'package:base':
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: 'S4Vectors'
+
+The following object is masked from 'package:base':
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: 'Biostrings'
+
+The following object is masked from 'package:base':
+
+    strsplit
+
+Loading required package: rtracklayer
+Timing stopped at: 4.62 0.528 59.45
+Error in gzfile(file, "wb") : cannot open the connection
+In addition: Warning messages:
+1: multiple methods tables found for 'coverage2' 
+2: In gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/ArrayTV/extdata/nimcM1List.rda', probable reason 'Read-only file system'
+
+
+RUNIT TEST PROTOCOL -- Thu Feb  8 23:04:23 2018 
+*********************************************** 
+Number of test functions: 1 
+Number of errors: 1 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+ArrayTV RUnit Tests - 1 test function, 1 error, 0 failures
+ERROR in test_gcCorrectMain: Error in gzfile(file, "wb") : cannot open the connection
+
+Test files with failing tests
+
+   test_gcCorrectMain.R 
+     test_gcCorrectMain 
+
+
+Error in BiocGenerics:::testPackage("ArrayTV") : 
+  unit tests failed for package ArrayTV
+Execution halted

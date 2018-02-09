@@ -1,0 +1,208 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> BiocGenerics:::testPackage("BiocCheck") 
+* Checking for blank lines in DESCRIPTION...
+* Checking for whitespace in DESCRIPTION field names...
+    * ERROR: Remove whitespace from DESCRIPTION field names.
+* Checking for blank lines in DESCRIPTION...
+    * ERROR: Remove blank lines from DESCRIPTION.
+* Checking for blank lines in DESCRIPTION...
+* Checking for whitespace in DESCRIPTION field names...
+* Checking that Package field matches directory/tarball name...
+    * ERROR: Package directory 'unitTestTempDir' must match Package:
+      field (got 'Foo').
+* Checking for blank lines in DESCRIPTION...
+* Checking for whitespace in DESCRIPTION field names...
+* Checking that Package field matches directory/tarball name...
+    * ERROR: Package directory 'unitTestTempDir' must match Package:
+      field (got '').
+* Checking for blank lines in DESCRIPTION...
+* Checking for whitespace in DESCRIPTION field names...
+* Checking that Package field matches directory/tarball name...
+* Checking for Version field...
+* Checking for valid maintainer...
+    * ERROR: Authors@R must evaluate to 'person' object.
+* Checking for blank lines in DESCRIPTION...
+* Checking for whitespace in DESCRIPTION field names...
+* Checking that Package field matches directory/tarball name...
+* Checking for Version field...
+* Checking for valid maintainer...
+    * ERROR: Must have one author with maintainer (cre) role.
+* Checking for blank lines in DESCRIPTION...
+* Checking for whitespace in DESCRIPTION field names...
+* Checking that Package field matches directory/tarball name...
+* Checking for Version field...
+* Checking for valid maintainer...
+    * ERROR: No Maintainer or Authors@R field in DESCRIPTION file.
+* Checking for blank lines in DESCRIPTION...
+* Checking for whitespace in DESCRIPTION field names...
+* Checking that Package field matches directory/tarball name...
+* Checking for Version field...
+* Checking for valid maintainer...
+    * ERROR: No email address in Maintainer field.
+* Checking for blank lines in DESCRIPTION...
+* Checking for whitespace in DESCRIPTION field names...
+* Checking that Package field matches directory/tarball name...
+* Checking for Version field...
+* Checking for valid maintainer...
+* Checking for blank lines in DESCRIPTION...
+* Checking for whitespace in DESCRIPTION field names...
+* Checking that Package field matches directory/tarball name...
+* Checking for Version field...
+* Checking for valid maintainer...
+* Checking that biocViews are present...
+    * ERROR: No biocViews terms found.
+* Checking that biocViews are present...
+* Checking for non-trivial biocViews...
+* Checking that biocViews come from the same category...
+* Checking biocViews validity...
+    * WARNING: 'foo' is an invalid BiocViews term.
+    * WARNING: 'Cancer' is an invalid BiocViews term.
+    * WARNING: 'bar' is an invalid BiocViews term. Did you mean: 'ag'
+    * WARNING: 'baz' is an invalid BiocViews term. Did you mean: 'ag'
+* Checking for recommended biocViews...
+* Checking that biocViews are present...
+* Checking for non-trivial biocViews...
+* Checking that biocViews come from the same category...
+* Checking biocViews validity...
+* Checking for recommended biocViews...
+* Checking that biocViews are present...
+* Checking for non-trivial biocViews...
+* Checking that biocViews come from the same category...
+    * WARNING: Use biocViews from one category only (one of Software,
+      ExperimentData, AnnotationData)
+    * ERROR: Use 'parallel' instead of 'multicore'. 'multicore' is
+      deprecated and does not work on Windows.
+    * ERROR: At least 80% of man pages documenting exported objects
+      must have runnable examples. The following pages do not:
+      baddep.Rd
+* Checking if other packages can import this one...
+    * ERROR: Packages providing 1 object(s) used in this package should
+      be imported in the NAMESPACE file, otherwise packages importing
+      this package may fail.
+    
+      package::object (function)
+        RJSONIO::isValidJSON (baddep)
+      
+* Checking to see if we understand object initialization...
+    * NOTE: Consider clarifying how 3 object(s) are initialized. Maybe
+      they are part of a data set loaded with data(), or perhaps part
+      of an object referenced in with() or within().
+    object (function)
+      update.packages (bad_fun)
+      R (has_devel)
+      colone (iambad)
+Loading required namespace: knitr
+    Found browser() in R/morecode.R (line 1, column 12)
+    Found @ in
+    * NOTE: Use accessors; don't access S4 class slots via '@' in
+      examples/vignettes.
+    * NOTE: Remove generated comments from man pages a.Rd, baddep.Rd
+
+    * ERROR: Version number in tarball filename must match Version
+      field in DESCRIPTION. (Tip: create tarball with R CMD build)
+    * NOTE: Consider shorter lines; 1 lines (0%) are > 80 characters
+      long.
+    First 1 lines:
+      R/morebadcode.R:2 # this is a really long line with many characters in ...
+    * NOTE: Consider 4 spaces instead of tabs; 2 lines (1%) contain
+      tabs.
+    First 2 lines:
+      man/a.Rd:48 ##--	or do  help(data=index)  for the standard data sets.
+      man/baddep.Rd:41 ##--	or do  help(data=index)  for the standard data sets.
+    * NOTE: Consider multiples of 4 spaces for line indents, 1
+      lines(0%) are not.
+    First 1 lines:
+      R/morebadcode.R:6      # something other than a multiple of 5 spaces!
+    See http://bioconductor.org/developers/how-to/coding-style/
+    * NOTE: Consider adding a NEWS file, so your package news will be
+      included in Bioconductor release announcements.
+    * WARNING: Fix formatting of NEWS.Rd. Malformed package NEWS will
+      not be included in Bioconductor release announcements.
+    * ERROR: New package version starting with 0.99.* (e.g., 0.99.0,
+      0.99.1, ...); got '1.2.3'.
+    * WARNING: Update R version dependency from 1.0.0 to 3.5.
+  cmd: /var/scratch/tomas/QA/R-74238/build/bin/R
+  args: --vanilla CMD INSTALL --no-test-load --library=/var/scratch/tomas/tmp/RtmpSFWxZb/lib '/var/scratchro/tomas/QA/R-74238/lib/BiocCheck/testpackages/testpkg1'
+  stderr:
+  * installing *source* package 'testpkg1' ...
+  ** libs
+  Assembler messages:
+  Fatal error: can't create testpkg1.o: Read-only file system
+  make[1]: *** [testpkg1.o] Error 1
+  ERROR: compilation failed for package 'testpkg1'
+  * removing '/ssd/tomas/tmp/RtmpSFWxZb/lib/testpkg1'
+    * ERROR:
+      /var/scratchro/tomas/QA/R-74238/lib/BiocCheck/testpackages/testpkg1
+      must be installable.
+Timing stopped at: 0.388 0.072 1.4
+Error in (function (package, help, pos = 2, lib.loc = NULL, character.only = FALSE,  : 
+  there is no package called 'testpkg1'
+    Found T in R/morecode.R (line 10, column 8)
+    Found F in R/morecode.R (line 7, column 5)
+    * NOTE: Consider adding unit tests. We strongly encourage them. See
+      http://bioconductor.org/developers/how-to/unitTesting-guidelines/.
+    * NOTE: skip_on_bioc() found in testthat files: a_test.R
+    * NOTE: biocLite, install.packages, or update.packages found in R
+      files
+    bad_coding.R: 3
+    * NOTE: Avoid sapply(); use vapply() found in files:
+    bad_coding.R (line 9, column 5)
+    * NOTE: Avoid 1:...; use seq_len() or seq_along() found in files:
+    bad_coding.R (line 5, column 15)
+    * ERROR: Invalid package Version, see
+      http://www.bioconductor.org/developers/how-to/version-numbering/
+    * ERROR: Invalid package Version, see
+      http://www.bioconductor.org/developers/how-to/version-numbering/
+    * WARNING: y of x.y.z version should be odd in devel
+
+    * ERROR: No 'vignettes' directory.
+    * ERROR: No vignette sources in vignettes/ directory.
+    # of chunks: 0, # of eval=FALSE: 0 (0%)
+    * WARNING: Remove vignette sources from inst/doc; they belong in
+      vignettes/.
+    # of chunks: 0, # of eval=FALSE: 0 (0%)
+    * WARNING: Remove vignette sources from inst/doc; they belong in
+      vignettes/.
+    # of chunks: 0, # of eval=FALSE: 0 (0%)
+    # of chunks: 0, # of eval=FALSE: 0 (0%)
+    # of chunks: 2, # of eval=FALSE: 1 (50%)
+    * WARNING: Evaluate more vignette chunks.
+
+
+RUNIT TEST PROTOCOL -- Thu Feb  8 23:21:33 2018 
+*********************************************** 
+Number of test functions: 29 
+Number of errors: 1 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+BiocCheck RUnit Tests - 29 test functions, 1 error, 0 failures
+ERROR in test_checkRegistrationOfEntryPoints: Error in (function (package, help, pos = 2, lib.loc = NULL, character.only = FALSE,  : 
+  there is no package called 'testpkg1'
+
+Test files with failing tests
+
+   test_BiocCheck.R 
+     test_checkRegistrationOfEntryPoints 
+
+
+Error in BiocGenerics:::testPackage("BiocCheck") : 
+  unit tests failed for package BiocCheck
+Execution halted

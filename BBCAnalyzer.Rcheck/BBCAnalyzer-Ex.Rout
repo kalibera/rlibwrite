@@ -1,0 +1,262 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "BBCAnalyzer"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('BBCAnalyzer')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("BBCAnalyzer-package")
+> ### * BBCAnalyzer-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: BBCAnalyzer-package
+> ### Title: BBCAnalyzer: an R/Bioconductor package for visualizing base
+> ###   counts
+> ### Aliases: BBCAnalyzer 'Bases By Cigar Analyzer' 'BasesByCigar Analyzer'
+> ###   BasesByCigarAnalyzer 'Bases Coverage' 'Cigar Analysis'
+> ### Keywords: package
+> 
+> ### ** Examples
+> 
+> library("BSgenome.Hsapiens.UCSC.hg19")
+Loading required package: BSgenome
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: rtracklayer
+> ref_genome<-BSgenome.Hsapiens.UCSC.hg19
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:BSgenome.Hsapiens.UCSC.hg19’, ‘package:BSgenome’,
+  ‘package:rtracklayer’, ‘package:Biostrings’, ‘package:XVector’,
+  ‘package:GenomicRanges’, ‘package:GenomeInfoDb’, ‘package:IRanges’,
+  ‘package:S4Vectors’, ‘package:stats4’, ‘package:BiocGenerics’,
+  ‘package:parallel’
+
+> nameEx("analyzeBases")
+> ### * analyzeBases
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: analyzeBases
+> ### Title: Analyze the bases at all previously defined positions
+> ### Aliases: analyzeBases 'analyze Bases'
+> 
+> ### ** Examples
+> 
+> library("BSgenome.Hsapiens.UCSC.hg19")
+Loading required package: BSgenome
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: rtracklayer
+> ref_genome<-BSgenome.Hsapiens.UCSC.hg19
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:BSgenome.Hsapiens.UCSC.hg19’, ‘package:BSgenome’,
+  ‘package:rtracklayer’, ‘package:Biostrings’, ‘package:XVector’,
+  ‘package:GenomicRanges’, ‘package:GenomeInfoDb’, ‘package:IRanges’,
+  ‘package:S4Vectors’, ‘package:stats4’, ‘package:BiocGenerics’,
+  ‘package:parallel’
+
+> nameEx("analyzeBasesPlotOnly")
+> ### * analyzeBasesPlotOnly
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: analyzeBasesPlotOnly
+> ### Title: Plots the number of reads at all previously defined positions
+> ### Aliases: analyzeBasesPlotOnly 'analyze Bases Plot Only'
+> 
+> ### ** Examples
+> 
+> library("BSgenome.Hsapiens.UCSC.hg19")
+Loading required package: BSgenome
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: rtracklayer
+> ref_genome<-BSgenome.Hsapiens.UCSC.hg19
+> 
+> output<-analyzeBases(sample_names=system.file("extdata","SampleNames_small.txt",package="BBCAnalyzer"),
++                      bam_input=system.file("extdata",package="BBCAnalyzer"),
++                      target_regions=system.file("extdata","targetRegions_small.txt",package="BBCAnalyzer"),
++                      vcf_input="",
++                      output=system.file("extdata",package="BBCAnalyzer"),
++                      output_pictures=system.file("extdata",package="BBCAnalyzer"),
++                      known_file="",
++                      genome=ref_genome,
++                      MQ_threshold=60,
++                      BQ_threshold=50,
++                      frequency_threshold=0.01,
++                      qual_lower_bound=58,
++                      qual_upper_bound=63,
++                      marks=c(0.01),
++                      relative=TRUE,
++                      per_sample=TRUE)
+Determine Target
+Analyze Reads
+Sample 1 out of 1
+Position 1 out of 1
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/BBCAnalyzer/extdata/Example_IonTorrent_small.bases.txt': Read-only file system
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: analyzeBases -> analyzeReads -> write.table -> file
+Execution halted

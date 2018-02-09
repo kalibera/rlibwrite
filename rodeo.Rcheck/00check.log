@@ -1,0 +1,85 @@
+* using log directory ‘/ssd/tomas/QA/R-74238/check/rodeo.Rcheck’
+* using R Under development (unstable) (2018-02-08 r74238)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘rodeo/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘rodeo’ version ‘0.7.1’
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘rodeo’ can be installed ... OK
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of ‘data’ directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+* checking re-building of vignette outputs ... WARNING
+Error in re-building vignettes:
+  ...
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+gfortran  -fpic -g -O2  -c  /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/linked/waterSediment/functions.f95 -o /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/linked/waterSediment/functions.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44b463e19.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44b463e19.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43d176047.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43d176047.o
+gfortran -shared -L/var/scratch/tomas/QA/R-74238/build/lib -L/usr/local/lib -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e4b2937fd.so /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/linked/waterSediment/functions.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44b463e19.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43d176047.o -L/var/scratch/tomas/QA/R-74238/build/lib -lR
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+gfortran  -fpic -g -O2  -c  /var/scratchro/tomas/QA/R-74238/lib/rodeo/fortran/integrators.f95 -o /var/scratchro/tomas/QA/R-74238/lib/rodeo/fortran/integrators.o
+Assembler messages:
+Fatal error: can't create /var/scratchro/tomas/QA/R-74238/lib/rodeo/fortran/integrators.o: Read-only file system
+/var/scratch/tomas/QA/R-74238/build/etc/Makeconf:184: recipe for target '/var/scratchro/tomas/QA/R-74238/lib/rodeo/fortran/integrators.o' failed
+make[1]: *** [/var/scratchro/tomas/QA/R-74238/lib/rodeo/fortran/integrators.o] Error 1
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+Quitting from lines 1371-1371 (rodeoVignette.Rmd) 
+Error: processing vignette 'rodeoVignette.Rmd' failed with diagnostics:
+Failed to build shared library.
+Execution halted
+
+* checking PDF version of manual ... OK
+* DONE
+Status: 1 WARNING

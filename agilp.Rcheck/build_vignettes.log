@@ -1,0 +1,8 @@
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/agilp/output//gRaw_scanner_file_1.txt': Read-only file system
+
+Error: processing vignette 'agilp_manual.Rnw' failed with diagnostics:
+ chunk 3 
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Execution halted

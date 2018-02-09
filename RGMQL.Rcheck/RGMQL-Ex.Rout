@@ -1,0 +1,629 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "RGMQL"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('RGMQL')
+Loading required package: RGMQLlib
+GMQL successfully loaded
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("aggr-class")
+> ### * aggr-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: AGGREGATES-Object
+> ### Title: AGGREGATES object class constructor
+> ### Aliases: AGGREGATES-Object SUM AGGREGATES-Object COUNT
+> ###   AGGREGATES-Object COUNTSAMP AGGREGATES-Object MIN AGGREGATES-Object
+> ###   MAX AGGREGATES-Object AVG AGGREGATES-Object MEDIAN AGGREGATES-Object
+> ###   STD AGGREGATES-Object BAG AGGREGATES-Object BAGD AGGREGATES-Object Q1
+> ###   AGGREGATES-Object Q2 AGGREGATES-Object Q3
+> 
+> ### ** Examples
+> 
+> 
+> ## This statement initializes and runs the GMQL server for local execution 
+> ## and creation of results on disk. Then, with system.file() it defines 
+> ## the path to the folder "DATASET" in the subdirectory "example"
+> ## of the package "RGMQL" and opens such folder as a GMQL dataset 
+> ## named "exp" using customParser
+> 
+> init_gmql()
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+18/02/09 08:09:20 INFO SparkContext: Running Spark version 2.2.0
+18/02/09 08:09:21 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+18/02/09 08:09:22 WARN Utils: Your hostname, ra resolves to a loopback address: 127.0.1.1; using 10.200.111.91 instead (on interface eno1)
+18/02/09 08:09:22 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+18/02/09 08:09:22 INFO SparkContext: Submitted application: GMQL-R
+18/02/09 08:09:22 INFO SecurityManager: Changing view acls to: tomas
+18/02/09 08:09:22 INFO SecurityManager: Changing modify acls to: tomas
+18/02/09 08:09:22 INFO SecurityManager: Changing view acls groups to: 
+18/02/09 08:09:22 INFO SecurityManager: Changing modify acls groups to: 
+18/02/09 08:09:22 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users  with view permissions: Set(tomas); groups with view permissions: Set(); users  with modify permissions: Set(tomas); groups with modify permissions: Set()
+18/02/09 08:09:23 INFO Utils: Successfully started service 'sparkDriver' on port 32987.
+18/02/09 08:09:23 INFO SparkEnv: Registering MapOutputTracker
+18/02/09 08:09:23 INFO SparkEnv: Registering BlockManagerMaster
+18/02/09 08:09:24 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+18/02/09 08:09:24 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+18/02/09 08:09:24 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-fab92b7b-6b57-410c-bfc7-970b2cc8237f
+18/02/09 08:09:24 INFO MemoryStore: MemoryStore started with capacity 114.6 MB
+18/02/09 08:09:24 INFO SparkEnv: Registering OutputCommitCoordinator
+18/02/09 08:09:25 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+18/02/09 08:09:25 INFO SparkUI: Bound SparkUI to 0.0.0.0, and started at http://10.200.111.91:4040
+18/02/09 08:09:25 INFO Executor: Starting executor ID driver on host localhost
+18/02/09 08:09:26 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 33101.
+18/02/09 08:09:26 INFO NettyBlockTransferService: Server created on 10.200.111.91:33101
+18/02/09 08:09:26 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+18/02/09 08:09:26 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 10.200.111.91, 33101, None)
+18/02/09 08:09:26 INFO BlockManagerMasterEndpoint: Registering block manager 10.200.111.91:33101 with 114.6 MB RAM, BlockManagerId(driver, 10.200.111.91, 33101, None)
+18/02/09 08:09:26 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 10.200.111.91, 33101, None)
+18/02/09 08:09:26 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 10.200.111.91, 33101, None)
+GMQL Server is up
+> test_path <- system.file("example", "DATASET", package = "RGMQL")
+> exp = read_gmql(test_path)
+> 
+> ## This statement copies all samples of exp dataset into res dataset, and 
+> ## then calculates new metadata attribute 'sum_score' for each of them: 
+> ## sum_score is the sum of score values of the sample regions.
+> 
+> res = extend(exp, sum_score = SUM("score"))
+> 
+> ## This statement copies all samples of exp dataset into res dataset, 
+> ## and then calculates new metadata attribute 'min_pvalue' for each of them: 
+> ## min_pvalue is the minimum pvalue of the sample regions.
+> 
+> res = extend(exp, min_pvalue = MIN("pvalue"))
+> 
+> ## This statement copies all samples of exp dataset into res dataset, 
+> ## and then calculates new metadata attribute 'max_score' for each of them: 
+> ## max_score is the maximum score of the sample regions.
+> 
+> res = extend(exp, max_score = MAX("score"))
+> 
+> ## The following cover operation produces output regions where at least 2 
+> ## and at most 3 regions of exp dataset overlap, having as resulting region 
+> ## attribute the average signal of the overlapping regions; 
+> ## the result has one sample for each input cell value.
+> 
+> res = cover(exp, 2, 3, groupBy = conds("cell"), avg_signal = AVG("signal"))
+> 
+> ## This statement copies all samples of 'exp' dataset into 'out' dataset, 
+> ## and then for each of them it adds another metadata attribute, allScore, 
+> ## which is the aggregation comma-separated list of all the values 
+> ## that the region attribute score takes in the sample.
+> 
+> out = extend(exp, allScore = BAG("score"))
+> 
+> ## This statement counts the regions in each sample and stores their number 
+> ## as value of the new metadata 'RegionCount' attribute of the sample.
+> 
+> out = extend(exp, RegionCount = COUNT())
+> 
+> ## This statement copies all samples of exp dataset into res dataset, 
+> ## and then calculates new metadata attribute 'std_score' for each of them: 
+> ## std_score is the standard deviation of the score values of the sample 
+> ## regions.
+> 
+> res = extend(exp, std_score = STD("score"))
+> 
+> ## This statement copies all samples of exp dataset into res dataset, 
+> ## and then calculates new metadata attribute 'm_score' for each of them: 
+> ## m_score is the median score of the sample regions.
+> 
+> res = extend(exp, m_score = MEDIAN("score"))
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("aggregate")
+> ### * aggregate
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: aggregate
+> ### Title: Method aggregate
+> ### Aliases: aggregate aggregate,GMQLDataset-method
+> 
+> ### ** Examples
+> 
+> 
+> ## This statement initializes and runs the GMQL server for local execution 
+> ## and creation of results on disk. Then, with system.file() it defines 
+> ## the path to the folder "DATASET" in the subdirectory "example"
+> ## of the package "RGMQL" and opens such file as a GMQL dataset named "exp" 
+> ## using customParser
+> 
+> init_gmql()
+18/02/09 08:09:27 WARN SparkContext: Using an existing SparkContext; some configuration may not take effect.
+GMQL Server is up
+> test_path <- system.file("example", "DATASET", package = "RGMQL")
+> exp = read_gmql(test_path)
+> 
+> ## This statement creates a dataset called merged which contains one 
+> ## sample for each antibody_target and cell value found within the metadata 
+> ## of the exp dataset sample; each created sample contains all regions 
+> ## from all 'exp' samples with a specific value for their 
+> ## antibody_target and cell metadata attributes.
+> 
+> merged = aggregate(exp, conds(c("antibody_target", "cell")))
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("arrange")
+> ### * arrange
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: arrange
+> ### Title: Method arrange
+> ### Aliases: arrange arrange,GMQLDataset-method
+> 
+> ### ** Examples
+> 
+> 
+> ## This statement initializes and runs the GMQL server for local execution 
+> ## and creation of results on disk. Then, with system.file() it defines 
+> ## the path to the folder "DATASET" in the subdirectory "example"
+> ## of the package "RGMQL" and opens such file as a GMQL dataset named 
+> ## "data" using customParser
+> 
+> init_gmql()
+18/02/09 08:09:27 WARN SparkContext: Using an existing SparkContext; some configuration may not take effect.
+GMQL Server is up
+> test_path <- system.file("example", "DATASET", package = "RGMQL")
+> data = read_gmql(test_path)
+> 
+> ## The following statement orders the samples according to the Region_Count 
+> ## metadata attribute and takes the two samples that have the highest count. 
+> 
+> o = arrange(data, list(ASC("Region_Count")), fetch_opt = "mtop", 
++ num_fetch = 2)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("collect")
+> ### * collect
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: collect
+> ### Title: Method collect
+> ### Aliases: collect collect,GMQLDataset-method
+> 
+> ### ** Examples
+> 
+> 
+> ## This statement initializes and runs the GMQL server for local execution 
+> ## and creation of results on disk. Then, with system.file() it defines 
+> ## the path to the folder "DATASET" in the subdirectory "example"
+> ## of the package "RGMQL" and opens such file as a GMQL dataset named 
+> ## "data" using customParser
+> 
+> init_gmql()
+18/02/09 08:09:27 WARN SparkContext: Using an existing SparkContext; some configuration may not take effect.
+GMQL Server is up
+> test_path <- system.file("example", "DATASET", package = "RGMQL")
+> data = read_gmql(test_path)
+> 
+> ## The following statement materializes the dataset 'data', previoulsy read, 
+> ## at the specific destination test_path into local folder "ds1" opportunely 
+> ## created
+> 
+> collect(data, dir_out = test_path)
+Warning in dir.create(res_dir_out) :
+  cannot create dir '/var/scratchro/tomas/QA/R-74238/lib/RGMQL/example/DATASET/ds1', reason 'Read-only file system'
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("compile_query")
+> ### * compile_query
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: compile_query
+> ### Title: Compile GMQL query
+> ### Aliases: compile_query compile_query compile_query_fromfile
+> 
+> ### ** Examples
+> 
+> 
+> ## Login to GMQL REST services suite as guest
+> 
+> remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+> login_gmql(remote_url)
+[1] "your Token is 1502b070-e939-45b1-a015-89bdcebc5ade"
+> 
+> ## This statement get the query as text string and run the compile 
+> ## web service
+> 
+> compile_query(remote_url, "DATASET = SELECT() Example_Dataset_1;
++ MATERIALIZE DATASET INTO RESULT_DS;")
+$id
+[1] "job_guest_new4245_only_compile_20180209_140904"
+
+$status
+[1] "COMPILE_SUCCESS"
+
+$message
+[1] ""
+
+> 
+> 
+> ## This statement defines the path to the file "query1.txt" in the 
+> ## subdirectory "example" of the package "RGMQL" and run the compile 
+> ## web service
+> 
+> test_path <- system.file("example", package = "RGMQL")
+> test_query <- file.path(test_path, "query1.txt")
+> compile_query_fromfile(remote_url, test_query)
+$id
+[1] "job_guest_new4245_only_compile_20180209_140904"
+
+$status
+[1] "COMPILE_SUCCESS"
+
+$message
+[1] ""
+
+> 
+> ## logout from GMQL REST services suite
+> 
+> logout_gmql(remote_url)
+[1] "Logout"
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cover-param-class")
+> ### * cover-param-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Cover-Param
+> ### Title: PARAM object class constructor
+> ### Aliases: Cover-Param ALL Cover-Param ANY
+> 
+> ### ** Examples
+> 
+> 
+> ## This statement initializes and runs the GMQL server for local execution 
+> ## and creation of results on disk. Then, with system.file() it defines 
+> ## the path to the file "DATASET" in the subdirectory "example"
+> ## of the package "RGMQL" and opens such file as a GMQL dataset named "exp" 
+> ## using customParser
+> 
+> init_gmql()
+18/02/09 08:09:32 WARN SparkContext: Using an existing SparkContext; some configuration may not take effect.
+GMQL Server is up
+> test_path <- system.file("example", "DATASET", package = "RGMQL")
+> exp = read_gmql(test_path)
+> 
+> ## The following statement produces an output dataset with a single 
+> ## output sample. The COVER operation considers all areas defined by 
+> ## a minimum of two overlapping regions in the input samples, 
+> ## up to maximum amount of overlapping regions equal to the number 
+> ## of input samples.
+> 
+> res = cover(exp, 2, ALL())
+> 
+> ## The following statement produces an output dataset with a single 
+> ## output sample. The COVER operation considers all areas defined by 
+> ## a minimum of two overlapping regions in the input samples, 
+> ## up to any amount of overlapping regions.
+> 
+> res = cover(exp, 2, ANY())
+> 
+> ## The following statement produces an output dataset with a single 
+> ## output sample. The COVER operation considers all areas defined by 
+> ## minimum of overlapping regions in the input samples equal to half of 
+> ## the number of input samples, up to any amount of overlapping regions.
+> 
+> res = cover(exp, ALL()/2, ANY())
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cover")
+> ### * cover
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cover
+> ### Title: Method cover
+> ### Aliases: cover cover cover,GMQLDataset-method
+> 
+> ### ** Examples
+> 
+> 
+> ## This statement initializes and runs the GMQL server for local execution 
+> ## and creation of results on disk. Then, with system.file() it defines 
+> ## the path to the folder "DATASET" in the subdirectory "example"
+> ## of the package "RGMQL" and opens such file as a GMQL dataset named "exp" 
+> ## using customParser
+> 
+> init_gmql()
+18/02/09 08:09:33 WARN SparkContext: Using an existing SparkContext; some configuration may not take effect.
+GMQL Server is up
+> test_path <- system.file("example", "DATASET", package = "RGMQL")
+> exp = read_gmql(test_path)
+>   
+> ## The following statement produces an output dataset with a single output 
+> ## sample. The COVER operation considers all areas defined by a minimum 
+> ## of two overlapping regions in the input samples, up to any amount of 
+> ## overlapping regions.
+> 
+> res = cover(exp, 2, ANY())
+> 
+> ## The following GMQL statement computes the result grouping the input 
+> ## exp samples by the values of their cell metadata attribute, 
+> ## thus one output res sample is generated for each cell value; 
+> ## output regions are produced where at least 2 and at most 3 regions 
+> ## of grouped exp samples overlap, setting as attributes of the resulting 
+> ## regions the minimum pvalue of the overlapping regions (min_pvalue) 
+> ## and their Jaccard indexes (JaccardIntersect and JaccardResult).
+> 
+> res = cover(exp, 2, 3, groupBy = conds("cell"), min_pValue = MIN("pvalue"))
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("delete_dataset")
+> ### * delete_dataset
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: delete_dataset
+> ### Title: Delete dataset
+> ### Aliases: delete_dataset
+> 
+> ### ** Examples
+> 
+> 
+> ## Not run: 
+> ##D 
+> ##D ## This dataset does not exist
+> ##D 
+> ##D remote_url <- "http://genomic.deib.polimi.it/gmql-rest-r/"
+> ##D login_gmql(remote_url)
+> ##D delete_dataset(remote_url, "test1_20170604_180908_RESULT_DS")
+> ##D 
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("distal-class")
+> ### * distal-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: DISTAL-Object
+> ### Title: DISTAL object class constructor
+> ### Aliases: DISTAL-Object DL DG DISTAL-Object DLE DISTAL-Object DGE
+> ###   DISTAL-Object MD DISTAL-Object UP DISTAL-Object DOWN
+> 
+> ### ** Examples
+> 
+> ## This statement initializes and runs the GMQL server for local execution 
+> ## and creation of results on disk. Then, with system.file() it defines 
+> ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
+> ## "example" of the package "RGMQL", and opens such folders as a GMQL 
+> ## datasets named "TSS" and "HM", respectively, using customParser
+> 
+> init_gmql()
+18/02/09 08:09:33 WARN SparkContext: Using an existing SparkContext; some configuration may not take effect.
+GMQL Server is up
+> test_path <- system.file("example", "DATASET", package = "RGMQL")
+> test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
+> TSS = read_gmql(test_path)
+> HM = read_gmql(test_path2)
+> 
+> ## Given a dataset HM and one called TSS with a sample including 
+> ## Transcription Start Site annotations, this statement  searches for those 
+> ## regions of HM that are at a minimal distance from a transcription 
+> ## start site (TSS) and takes the first/closest one for each TSS, provided 
+> ## that such distance is lesser than 1200 bases and joined TSS and HM 
+> ## samples are obtained from the same provider (joinby clause).
+> 
+> join_data = merge(TSS, HM, 
++ genometric_predicate = list(MD(1), DL(1200)), conds("provider"), 
++ region_output = "RIGHT")
+> 
+> ## Given a dataset HM and one called TSS with a sample including 
+> ## Transcription Start Site annotations, this statement searches for those 
+> ## regions of HM that are downstream and at a minimal distance from a 
+> ## transcription start site (TSS) and takes the first/closest one for each 
+> ## TSS, provided that such distance is greater than 12K bases and joined 
+> ## TSS and HM samples are obtained from the same provider (joinby clause).
+> 
+> join_data = merge(TSS, HM, 
++ genometric_predicate = list(MD(1), DGE(12000), DOWN()), conds("provider"), 
++ region_output = "RIGHT")
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("download_dataset")
+> ### * download_dataset
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: download_dataset
+> ### Title: Download Dataset
+> ### Aliases: download_dataset download_as_GRangesList
+> 
+> ### ** Examples
+> 
+> 
+> ## Download dataset in R working directory
+> ## In this case we try to download a public dataset
+> 
+> ## Not run: 
+> ##D 
+> ##D remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+> ##D login_gmql(remote_url)
+> ##D download_dataset(remote_url, "public.Example_Dataset_1", path = getwd())
+> ##D 
+> ##D ## Create GRangesList from public dataset Example_Dataset1 got 
+> ##D ## from repository
+> ##D 
+> ##D download_as_GRangesList(remote_url, "public.Example_Dataset_1")
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("execute")
+> ### * execute
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: execute
+> ### Title: GMQL Function: EXECUTE
+> ### Aliases: execute
+> 
+> ### ** Examples
+> 
+> ## This statement initializes and runs the GMQL server for local execution 
+> ## and creation of results on disk. Then, with system.file() it defines 
+> ## the path to the folder "DATASET" in the subdirectory "example" 
+> ## of the package "RGMQL" and opens such folder as a GMQL dataset 
+> ## named "data"
+> 
+> init_gmql()
+18/02/09 08:09:33 WARN SparkContext: Using an existing SparkContext; some configuration may not take effect.
+GMQL Server is up
+> test_path <- system.file("example", "DATASET", package = "RGMQL")
+> data = read_gmql(test_path)
+> 
+> ## The following statement materializes the dataset "data", previoulsy read, 
+> ## at the specific destination test_path into local folder "ds1" opportunely 
+> ## created
+> 
+> collect(data, dir_out = test_path)
+Warning in dir.create(res_dir_out) :
+  cannot create dir '/var/scratchro/tomas/QA/R-74238/lib/RGMQL/example/DATASET/ds1', reason 'Read-only file system'
+> 
+> ## This statement executes GMQL query.
+> ## Not run: 
+> ##D 
+> ##D execute()
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("export_gmql")
+> ### * export_gmql
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: export_gmql
+> ### Title: Create GMQL dataset from GRangesList
+> ### Aliases: export_gmql
+> 
+> ### ** Examples
+> 
+> 
+> ## Load and attach add-on GenomicRanges package
+> library(GenomicRanges)
+Loading required package: stats4
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+> 
+> ## These statemens create two GRanges with the region attributes: seqnames, 
+> ## ranges (region coordinates) and strand, plus two column elements:  
+> ## score and GC
+> 
+> gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(3, 6), strand = "+", 
++ score = 5L, GC = 0.45)
+> gr2 <- GRanges(seqnames = c("chr1", "chr1"),
++ ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), 
++ score = 3:4, GC = c(0.3, 0.5))
+> 
+> ## This statement creates a GRangesList using the previous GRanges 
+> 
+> grl = GRangesList(gr1, gr2)
+> 
+> ## This statement defines the path to the subdirectory "example" of the 
+> ## package "RGMQL" and exports the GRangesList as GMQL datasets using the 
+> ## last name of 'dir_out' path as dataset name
+> 
+> test_out_path <- system.file("example", package = "RGMQL")
+> export_gmql(grl, test_out_path, TRUE)
+Warning in dir.create(files_sub_dir) :
+  cannot create dir '/var/scratchro/tomas/QA/R-74238/lib/RGMQL/example/files', reason 'Read-only file system'
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/RGMQL/example/files/S_1.gtf': No such file or directory
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: export_gmql ... <Anonymous> -> export -> export -> .local -> cat -> file
+Execution halted

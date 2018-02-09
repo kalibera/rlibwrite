@@ -1,0 +1,99 @@
+Warning in engine$weave(file, quiet = quiet, encoding = enc) :
+  Pandoc (>= 1.12.3) and/or pandoc-citeproc not available. Falling back to R Markdown v1.
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+gfortran  -fpic -g -O2  -c  /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/vignetteData/fortran/functionsCode.f95 -o /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/vignetteData/fortran/functionsCode.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43739bf58.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43739bf58.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43e90479f.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43e90479f.o
+gfortran -shared -L/var/scratch/tomas/QA/R-74238/build/lib -L/usr/local/lib -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e4a61404f.so /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/vignetteData/fortran/functionsCode.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43739bf58.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43e90479f.o -L/var/scratch/tomas/QA/R-74238/build/lib -lR
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e414eae028.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e414eae028.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e441d196e4.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e441d196e4.o
+gfortran -shared -L/var/scratch/tomas/QA/R-74238/build/lib -L/usr/local/lib -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e433a43d54.so /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e414eae028.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e441d196e4.o -L/var/scratch/tomas/QA/R-74238/build/lib -lR
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e41edc3441.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e41edc3441.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e456c6ddd.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e456c6ddd.o
+gfortran -shared -L/var/scratch/tomas/QA/R-74238/build/lib -L/usr/local/lib -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e42390b3d2.so /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e41edc3441.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e456c6ddd.o -L/var/scratch/tomas/QA/R-74238/build/lib -lR
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+gfortran  -fpic -g -O2  -c  /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/1D/advectionDispersion/functions.f95 -o /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/1D/advectionDispersion/functions.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e454d3c2e8.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e454d3c2e8.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e45ac86c48.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e45ac86c48.o
+gfortran -shared -L/var/scratch/tomas/QA/R-74238/build/lib -L/usr/local/lib -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e46f8680e.so /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/1D/advectionDispersion/functions.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e454d3c2e8.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e45ac86c48.o -L/var/scratch/tomas/QA/R-74238/build/lib -lR
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+gfortran  -fpic -g -O2  -c  /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/1D/groundwater/functions.f95 -o /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/1D/groundwater/functions.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44f4c9a93.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44f4c9a93.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e4f0b2814.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e4f0b2814.o
+gfortran -shared -L/var/scratch/tomas/QA/R-74238/build/lib -L/usr/local/lib -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e41e01eccf.so /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/1D/groundwater/functions.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44f4c9a93.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e4f0b2814.o -L/var/scratch/tomas/QA/R-74238/build/lib -lR
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+gfortran  -fpic -g -O2  -c  /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/1D/tetracycline/functions.f95 -o /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/1D/tetracycline/functions.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44ac266b7.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44ac266b7.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e479f6dbbf.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e479f6dbbf.o
+gfortran -shared -L/var/scratch/tomas/QA/R-74238/build/lib -L/usr/local/lib -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e460c18de8.so /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/1D/tetracycline/functions.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44ac266b7.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e479f6dbbf.o -L/var/scratch/tomas/QA/R-74238/build/lib -lR
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+gfortran  -fpic -g -O2  -c  /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/linked/waterSediment/functions.f95 -o /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/linked/waterSediment/functions.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44b463e19.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44b463e19.o
+gfortran  -fpic -g -O2  -c  /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43d176047.f95 -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43d176047.o
+gfortran -shared -L/var/scratch/tomas/QA/R-74238/build/lib -L/usr/local/lib -o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e4b2937fd.so /ssd/tomas/QA/R-74238/check/rodeo.Rcheck/vign_test/rodeo/vignettes/examples/linked/waterSediment/functions.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e44b463e19.o /var/scratch/tomas/tmp/RtmpSY74if/rodeo82e43d176047.o -L/var/scratch/tomas/QA/R-74238/build/lib -lR
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+gfortran  -fpic -g -O2  -c  /var/scratchro/tomas/QA/R-74238/lib/rodeo/fortran/integrators.f95 -o /var/scratchro/tomas/QA/R-74238/lib/rodeo/fortran/integrators.o
+Assembler messages:
+Fatal error: can't create /var/scratchro/tomas/QA/R-74238/lib/rodeo/fortran/integrators.o: Read-only file system
+/var/scratch/tomas/QA/R-74238/build/etc/Makeconf:184: recipe for target '/var/scratchro/tomas/QA/R-74238/lib/rodeo/fortran/integrators.o' failed
+make[1]: *** [/var/scratchro/tomas/QA/R-74238/lib/rodeo/fortran/integrators.o] Error 1
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Entering directory '/ssd/tomas/tmp/RtmpSY74if'
+make[1]: Leaving directory '/ssd/tomas/tmp/RtmpSY74if'
+Quitting from lines 1371-1371 (rodeoVignette.Rmd) 
+Error: processing vignette 'rodeoVignette.Rmd' failed with diagnostics:
+Failed to build shared library.
+Execution halted

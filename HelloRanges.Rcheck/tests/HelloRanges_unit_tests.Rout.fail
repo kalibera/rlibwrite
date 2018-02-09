@@ -1,0 +1,227 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> require("HelloRanges") || stop("unable to load HelloRanges package")
+Loading required package: HelloRanges
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: 'BiocGenerics'
+
+The following objects are masked from 'package:parallel':
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from 'package:base':
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: 'S4Vectors'
+
+The following object is masked from 'package:base':
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomicRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: 'Biostrings'
+
+The following object is masked from 'package:base':
+
+    strsplit
+
+Loading required package: BSgenome
+Loading required package: rtracklayer
+Loading required package: GenomicFeatures
+Loading required package: AnnotationDbi
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: VariantAnnotation
+Loading required package: SummarizedExperiment
+Loading required package: DelayedArray
+Loading required package: matrixStats
+
+Attaching package: 'matrixStats'
+
+The following objects are masked from 'package:Biobase':
+
+    anyMissing, rowMedians
+
+Loading required package: BiocParallel
+
+Attaching package: 'DelayedArray'
+
+The following objects are masked from 'package:matrixStats':
+
+    colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges
+
+The following object is masked from 'package:Biostrings':
+
+    type
+
+The following objects are masked from 'package:base':
+
+    aperm, apply
+
+Loading required package: Rsamtools
+
+Attaching package: 'VariantAnnotation'
+
+The following object is masked from 'package:base':
+
+    tabulate
+
+Loading required package: GenomicAlignments
+[1] TRUE
+> HelloRanges:::.test()
+Timing stopped at: 5.068 0.108 8.949
+Error : subscript contains out-of-bounds indices
+Timing stopped at: 0.324 0 0.682
+Error in value[[3L]](cond) : 
+  'asBam' 'sortBam' failed to create destination 'three_blocks.bam'
+  SAM file: 'three_blocks.sam'
+
+Timing stopped at: 7.248 0.016 12.51
+Error : C stack usage  7969300 is too close to the limit
+Timing stopped at: 0.06 0 0.061
+Error in (function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function 'getListElement' for signature '"GRanges"'
+Timing stopped at: 3.856 0.008 5.945
+Error in value[[3L]](cond) : 
+  'asBam' 'sortBam' failed to create destination 'one_block.bam'
+  SAM file: 'one_block.sam'
+
+Timing stopped at: 1.664 0 3.725
+Error : 'bgzip' error: opening 'dest': Read-only file system
+  file: testA.vcf
+  dest: testA.vcf.bgz'<pointer: 0x561f814217f0>' error: opening 'dest': Read-only file system
+  file: testA.vcf
+  dest: testA.vcf.bgz'list(name = "Rsamtools", path = "/var/scratchro/tomas/QA/R-74238/lib/Rsamtools/libs/Rsamtoolsso", dynamicLookup = TRUE, handle = <pointer: 0x561f8ac9bee0>, info = <pointer: 0x561f7e812e80>)' error: opening 'dest': Read-only file system
+  file: testA.vcf
+  dest: testA.vcf.bgz'2' error: opening 'dest': Read-only file system
+  file: testA.vcf
+  dest: testA.vcf.bgz
+Timing stopped at: 0.28 0 0.484
+Error in V_recycle(value, x, x_what = "value", skeleton_what = "x") : 
+  'NROW(value)' is 0 but 'length(x)' is not
+Timing stopped at: 6.924 0.02 12.21
+Error : C stack usage  7972596 is too close to the limit
+Timing stopped at: 1.14 0 1.794
+Error in checkIdentical(exp, eval(r)) : FALSE 
+ 
+Timing stopped at: 0.3 0.004 0.53
+Error : subscript contains out-of-bounds indices
+
+
+RUNIT TEST PROTOCOL -- Fri Feb  9 03:11:34 2018 
+*********************************************** 
+Number of test functions: 17 
+Number of errors: 9 
+Number of failures: 1 
+
+ 
+1 Test Suite : 
+HelloRanges RUnit Tests - 17 test functions, 9 errors, 1 failure
+ERROR in test_closest: Error : subscript contains out-of-bounds indices
+ERROR in test_genomecov: Error in value[[3L]](cond) : 
+  'asBam' 'sortBam' failed to create destination 'three_blocks.bam'
+  SAM file: 'three_blocks.sam'
+
+ERROR in test_getfasta: Error : C stack usage  7969300 is too close to the limit
+ERROR in test_groupby: Error in (function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function 'getListElement' for signature '"GRanges"'
+ERROR in test_intersect: Error in value[[3L]](cond) : 
+  'asBam' 'sortBam' failed to create destination 'one_block.bam'
+  SAM file: 'one_block.sam'
+
+ERROR in test_merge: Error : 'bgzip' error: opening 'dest': Read-only file system
+  file: testA.vcf
+  dest: testA.vcf.bgz'<pointer: 0x561f814217f0>' error: opening 'dest': Read-only file system
+  file: testA.vcf
+  dest: testA.vcf.bgz'list(name = "Rsamtools", path = "/var/scratchro/tomas/QA/R-74238/lib/Rsamtools/libs/Rsamtoolsso", dynamicLookup = TRUE, handle = <pointer: 0x561f8ac9bee0>, info = <pointer: 0x561f7e812e80>)' error: opening 'dest': Read-only file system
+  file: testA.vcf
+  dest: testA.vcf.bgz'2' error: opening 'dest': Read-only file system
+  file: testA.vcf
+  dest: testA.vcf.bgz
+ERROR in test_multiinter: Error in V_recycle(value, x, x_what = "value", skeleton_what = "x") : 
+  'NROW(value)' is 0 but 'length(x)' is not
+ERROR in test_nuc: Error : C stack usage  7972596 is too close to the limit
+FAILURE in test_subtract: Error in checkIdentical(exp, eval(r)) : FALSE 
+ 
+ERROR in test_unionbedg: Error : subscript contains out-of-bounds indices
+
+Test files with failing tests
+
+   test_closest.R 
+     test_closest 
+
+   test_genomecov.R 
+     test_genomecov 
+
+   test_getfasta.R 
+     test_getfasta 
+
+   test_groupby.R 
+     test_groupby 
+
+   test_intersect.R 
+     test_intersect 
+
+   test_merge.R 
+     test_merge 
+
+   test_multiinter.R 
+     test_multiinter 
+
+   test_nuc.R 
+     test_nuc 
+
+   test_subtract.R 
+     test_subtract 
+
+   test_unionbedg.R 
+     test_unionbedg 
+
+
+Error in BiocGenerics:::testPackage("HelloRanges") : 
+  unit tests failed for package HelloRanges
+Calls: <Anonymous> -> <Anonymous>
+Execution halted

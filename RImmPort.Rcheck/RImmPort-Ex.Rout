@@ -1,0 +1,865 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "RImmPort"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('RImmPort')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("Events-class")
+> ### * Events-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Events-class
+> ### Title: Events class
+> ### Aliases: Events Events-class
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> sdy139 <- getStudy("SDY139")
+loading Study ID =  SDY139 
+loading Demographics data....done 
+loading Concomitant Medications data....done 
+loading Exposure data....done 
+loading Substance Use data....done 
+loading Adverse Events data....done 
+loading Protocol Deviations data....done 
+loading Medical History data....done 
+loading Associated Persons Medical History data....done 
+loading Laboratory Test Results data....done 
+loading Physical Examination data....done 
+loading Vital Signs data....done 
+loading Questionnaires data....done 
+loading Findings About data....done 
+loading Skin Response data....done 
+loading Genetics Findings data....loading HLA Typing Results data....done 
+loading Array Results data....done 
+done 
+loading Protein Quantification data....loading ELISA Results data....done 
+loading MBAA Results data....done 
+done 
+loading Cellular Quantification data....loading FCS Results data....done 
+loading ELISPOT Results data....done 
+done 
+loading Nucleic Acid Quantification data....loading PCR Results data....done 
+done 
+loading Titer Assay Results data....loading HAI Assay Results data....done 
+loading Neut. Ab Titer Results data....done 
+done 
+loading TrialArms data....done 
+loading Trial Visits data....done 
+loading  TrialInclusionExclusionCriteria data....done 
+loading TrialSummary data.... SDY139  done 
+done loading Study ID =  SDY139 
+> ae_df <- sdy139$events$ae_l$ae_df
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:bindrcpp’, ‘package:sqldf’, ‘package:RSQLite’,
+  ‘package:gsubfn’, ‘package:proto’, ‘package:DBI’
+
+> nameEx("Findings-class")
+> ### * Findings-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Findings-class
+> ### Title: Findings class
+> ### Aliases: Findings Findings-class
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> sdy139 <- getStudy("SDY139")
+loading Study ID =  SDY139 
+loading Demographics data....done 
+loading Concomitant Medications data....done 
+loading Exposure data....done 
+loading Substance Use data....done 
+loading Adverse Events data....done 
+loading Protocol Deviations data....done 
+loading Medical History data....done 
+loading Associated Persons Medical History data....done 
+loading Laboratory Test Results data....done 
+loading Physical Examination data....done 
+loading Vital Signs data....done 
+loading Questionnaires data....done 
+loading Findings About data....done 
+loading Skin Response data....done 
+loading Genetics Findings data....loading HLA Typing Results data....done 
+loading Array Results data....done 
+done 
+loading Protein Quantification data....loading ELISA Results data....done 
+loading MBAA Results data....done 
+done 
+loading Cellular Quantification data....loading FCS Results data....done 
+Warning: call dbDisconnect() when finished working with a connection
+loading ELISPOT Results data....done 
+done 
+loading Nucleic Acid Quantification data....loading PCR Results data....done 
+done 
+loading Titer Assay Results data....loading HAI Assay Results data....done 
+loading Neut. Ab Titer Results data....done 
+done 
+loading TrialArms data....done 
+loading Trial Visits data....done 
+loading  TrialInclusionExclusionCriteria data....done 
+loading TrialSummary data.... SDY139  done 
+done loading Study ID =  SDY139 
+> zb_df <- sdy139$findings$zb_l$zb_df
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("Interventions-class")
+> ### * Interventions-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Interventions-class
+> ### Title: Interventions class
+> ### Aliases: Interventions Interventions-class
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> sdy139 <- getStudy("SDY139")
+loading Study ID =  SDY139 
+loading Demographics data....done 
+loading Concomitant Medications data....done 
+loading Exposure data....done 
+loading Substance Use data....done 
+loading Adverse Events data....done 
+loading Protocol Deviations data....done 
+loading Medical History data....done 
+loading Associated Persons Medical History data....done 
+loading Laboratory Test Results data....done 
+loading Physical Examination data....done 
+loading Vital Signs data....done 
+loading Questionnaires data....done 
+loading Findings About data....done 
+loading Skin Response data....done 
+loading Genetics Findings data....loading HLA Typing Results data....done 
+loading Array Results data....done 
+done 
+loading Protein Quantification data....loading ELISA Results data....done 
+loading MBAA Results data....done 
+done 
+loading Cellular Quantification data....loading FCS Results data....done 
+loading ELISPOT Results data....done 
+done 
+loading Nucleic Acid Quantification data....loading PCR Results data....done 
+done 
+loading Titer Assay Results data....loading HAI Assay Results data....done 
+loading Neut. Ab Titer Results data....done 
+done 
+loading TrialArms data....done 
+loading Trial Visits data....done 
+loading  TrialInclusionExclusionCriteria data....done 
+loading TrialSummary data.... SDY139  done 
+done loading Study ID =  SDY139 
+> cm_df <- sdy139$interventions$cm_l$cm_df
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("SpecialPurpose-class")
+> ### * SpecialPurpose-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: SpecialPurpose-class
+> ### Title: Special Purpose class
+> ### Aliases: SpecialPurpose SpecialPurpose-class
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> sdy139 <- getStudy("SDY139")
+loading Study ID =  SDY139 
+loading Demographics data....done 
+loading Concomitant Medications data....done 
+loading Exposure data....done 
+loading Substance Use data....done 
+loading Adverse Events data....done 
+loading Protocol Deviations data....done 
+loading Medical History data....done 
+loading Associated Persons Medical History data....done 
+loading Laboratory Test Results data....done 
+loading Physical Examination data....done 
+loading Vital Signs data....done 
+loading Questionnaires data....done 
+loading Findings About data....done 
+loading Skin Response data....done 
+loading Genetics Findings data....loading HLA Typing Results data....done 
+loading Array Results data....done 
+done 
+loading Protein Quantification data....loading ELISA Results data....done 
+loading MBAA Results data....done 
+done 
+loading Cellular Quantification data....loading FCS Results data....done 
+loading ELISPOT Results data....done 
+done 
+loading Nucleic Acid Quantification data....loading PCR Results data....done 
+done 
+loading Titer Assay Results data....loading HAI Assay Results data....done 
+loading Neut. Ab Titer Results data....done 
+done 
+loading TrialArms data....done 
+loading Trial Visits data....done 
+loading  TrialInclusionExclusionCriteria data....done 
+loading TrialSummary data.... SDY139  done 
+done loading Study ID =  SDY139 
+> dm_df <- sdy139$special_purpose$dm_l$dm_df
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("Study-class")
+> ### * Study-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Study-class
+> ### Title: Study class
+> ### Aliases: Study Study-class
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> sdy139 <- getStudy("SDY139")
+loading Study ID =  SDY139 
+loading Demographics data....done 
+loading Concomitant Medications data....done 
+loading Exposure data....done 
+loading Substance Use data....done 
+loading Adverse Events data....done 
+loading Protocol Deviations data....done 
+loading Medical History data....done 
+loading Associated Persons Medical History data....done 
+loading Laboratory Test Results data....done 
+loading Physical Examination data....done 
+loading Vital Signs data....done 
+loading Questionnaires data....done 
+loading Findings About data....done 
+loading Skin Response data....done 
+loading Genetics Findings data....loading HLA Typing Results data....done 
+loading Array Results data....done 
+done 
+loading Protein Quantification data....loading ELISA Results data....done 
+loading MBAA Results data....done 
+done 
+loading Cellular Quantification data....loading FCS Results data....done 
+loading ELISPOT Results data....done 
+done 
+loading Nucleic Acid Quantification data....loading PCR Results data....done 
+done 
+loading Titer Assay Results data....loading HAI Assay Results data....done 
+loading Neut. Ab Titer Results data....done 
+done 
+loading TrialArms data....done 
+loading Trial Visits data....done 
+loading  TrialInclusionExclusionCriteria data....done 
+loading TrialSummary data.... SDY139  done 
+done loading Study ID =  SDY139 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("TrialDesign-class")
+> ### * TrialDesign-class
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: TrialDesign-class
+> ### Title: Trial Design class
+> ### Aliases: TrialDesign TrialDesign-class
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> sdy139 <- getStudy("SDY139")
+loading Study ID =  SDY139 
+loading Demographics data....done 
+loading Concomitant Medications data....done 
+loading Exposure data....done 
+loading Substance Use data....done 
+loading Adverse Events data....done 
+loading Protocol Deviations data....done 
+loading Medical History data....done 
+loading Associated Persons Medical History data....done 
+loading Laboratory Test Results data....done 
+loading Physical Examination data....done 
+loading Vital Signs data....done 
+loading Questionnaires data....done 
+loading Findings About data....done 
+loading Skin Response data....done 
+loading Genetics Findings data....loading HLA Typing Results data....done 
+loading Array Results data....done 
+done 
+loading Protein Quantification data....loading ELISA Results data....done 
+loading MBAA Results data....done 
+done 
+loading Cellular Quantification data....loading FCS Results data....done 
+loading ELISPOT Results data....done 
+done 
+loading Nucleic Acid Quantification data....loading PCR Results data....done 
+done 
+loading Titer Assay Results data....loading HAI Assay Results data....done 
+loading Neut. Ab Titer Results data....done 
+done 
+loading TrialArms data....done 
+loading Trial Visits data....done 
+loading  TrialInclusionExclusionCriteria data....done 
+loading TrialSummary data.... SDY139  done 
+done loading Study ID =  SDY139 
+> ts_df <- sdy139$trial_design$ts_l$ts_df
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("buildNewSqliteDb")
+> ### * buildNewSqliteDb
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: buildNewSqliteDb
+> ### Title: buildNewSqliteDb
+> ### Aliases: buildNewSqliteDb
+> 
+> ### ** Examples
+> 
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> # set tab_dir to the folder where the zip files are located
+> tab_dir <- file.path(studies_dir, "Tab")
+> # set db_dir to the folder where the database file 'ImmPort.sqlite' should be stored
+> db_dir <- file.path(studies_dir, "Db")
+> # build a new ImmPort SQLite database with the data in the downloaded zip files
+> # dbname <- buildNewSqliteDb(tab_dir, db_dir) 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getAssayDataOfStudies")
+> ### * getAssayDataOfStudies
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getAssayDataOfStudies
+> ### Title: Get specific assay data of one or more studies from the ImmPort
+> ###   database
+> ### Aliases: getAssayDataOfStudies
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> elispot_l <- getAssayDataOfStudies("SDY139", "ELISPOT")
+loading Protein Quantification data....done 
+loading Cellular Quantification data....loading ELISPOT Results data....done 
+done 
+loading Nucleic Acid Quantification data....done 
+loading Titer Assay Results data....done 
+loading Genetics Findings data....done 
+> if (length(elispot_l) > 0)
++   names(elispot_l)
+[1] "zb_df"     "suppzb_df"
+> head(elispot_l$zb_df)
+  STUDYID DOMAIN   USUBJID ZBSEQ           ZBTEST                   ZBCAT
+1  SDY139     ZB SUB118053  8673 Figure-4_ELISPOT Cellular Quantification
+2  SDY139     ZB SUB118053  8681 Figure-4_ELISPOT Cellular Quantification
+3  SDY139     ZB SUB118053  8687 Figure-4_ELISPOT Cellular Quantification
+4  SDY139     ZB SUB118053  8672 Figure-4_ELISPOT Cellular Quantification
+5  SDY139     ZB SUB118053  8676 Figure-4_ELISPOT Cellular Quantification
+6  SDY139     ZB SUB118053  8663 Figure-4_ELISPOT Cellular Quantification
+  ZBMETHOD ZBPOPDEF ZBPOPNAM  ZBORRES ZBORRESU ZBBASPOP ZBSPEC VISITNUM
+1  ELISPOT     IL-2     IL-2 1048.571 1000000             Cell        3
+2  ELISPOT     IL-4     IL-4   1300.0 1000000             Cell        3
+3  ELISPOT     IFNg     IFNg   1325.0 1000000             Cell        3
+4  ELISPOT     IL-2     IL-2 651.4286 1000000             Cell        3
+5  ELISPOT     IL-2     IL-2 382.8571 1000000             Cell        3
+6  ELISPOT    IL-21    IL-21 798.5714 1000000             Cell        3
+                                           VISIT ZBELTM
+1 Day 8 Sample collection, SL_Sant_Plos1_2012_d8    P8D
+2 Day 8 Sample collection, SL_Sant_Plos1_2012_d8    P8D
+3 Day 8 Sample collection, SL_Sant_Plos1_2012_d8    P8D
+4 Day 8 Sample collection, SL_Sant_Plos1_2012_d8    P8D
+5 Day 8 Sample collection, SL_Sant_Plos1_2012_d8    P8D
+6 Day 8 Sample collection, SL_Sant_Plos1_2012_d8    P8D
+                                ZBTPTREF  ZBREFID ZBXFN
+1 Time of initial vaccine administration ES661768      
+2 Time of initial vaccine administration ES661776      
+3 Time of initial vaccine administration ES661782      
+4 Time of initial vaccine administration ES661767      
+5 Time of initial vaccine administration ES661771      
+6 Time of initial vaccine administration ES661758      
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("getDomainCode")
+> ### * getDomainCode
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getDomainCode
+> ### Title: Get code of a specific domain
+> ### Aliases: getDomainCode
+> 
+> ### ** Examples
+> 
+>  domain <- "Demographics"
+>  code <- getDomainCode(domain)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getDomainDataOfStudies")
+> ### * getDomainDataOfStudies
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getDomainDataOfStudies
+> ### Title: Get specific domain data of one or more studies from the ImmPort
+> ###   database
+> ### Aliases: getDomainDataOfStudies
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> dm_df <- getDomainDataOfStudies("Demographics", "SDY139")
+loading Demographics data....done 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("getListOfAssayTypes")
+> ### * getListOfAssayTypes
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getListOfAssayTypes
+> ### Title: Get a list of Assay Types
+> ### Aliases: getListOfAssayTypes
+> 
+> ### ** Examples
+> 
+>  at_l <- getListOfAssayTypes()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getListOfDomains")
+> ### * getListOfDomains
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getListOfDomains
+> ### Title: Get names of all domains and their codes
+> ### Aliases: getListOfDomains
+> 
+> ### ** Examples
+> 
+>  domains_df <- getListOfDomains()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getListOfStudies")
+> ### * getListOfStudies
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getListOfStudies
+> ### Title: Get a list of all studies
+> ### Aliases: getListOfStudies
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> study_ids <- getListOfStudies()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("getStudiesWithSpecificAssayData")
+> ### * getStudiesWithSpecificAssayData
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getStudiesWithSpecificAssayData
+> ### Title: Get a list of studies that have specific assay type data
+> ### Aliases: getStudiesWithSpecificAssayData
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> study_ids <- getStudiesWithSpecificAssayData("ELISPOT")
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("getStudiesWithSpecificDomainData")
+> ### * getStudiesWithSpecificDomainData
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getStudiesWithSpecificDomainData
+> ### Title: Get a list of studies that have specific domain data
+> ### Aliases: getStudiesWithSpecificDomainData
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> study_ids <- getStudiesWithSpecificDomainData("Demographics")
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("getStudy")
+> ### * getStudy
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getStudy
+> ### Title: Get all data of a specific study from the ImmPort data source
+> ### Aliases: getStudy
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> sdy139 <- getStudy("SDY139")
+loading Study ID =  SDY139 
+loading Demographics data....done 
+loading Concomitant Medications data....done 
+loading Exposure data....done 
+loading Substance Use data....done 
+loading Adverse Events data....done 
+loading Protocol Deviations data....done 
+loading Medical History data....done 
+loading Associated Persons Medical History data....done 
+loading Laboratory Test Results data....done 
+loading Physical Examination data....done 
+loading Vital Signs data....done 
+loading Questionnaires data....done 
+loading Findings About data....done 
+loading Skin Response data....done 
+loading Genetics Findings data....loading HLA Typing Results data....done 
+loading Array Results data....done 
+done 
+loading Protein Quantification data....loading ELISA Results data....done 
+loading MBAA Results data....done 
+done 
+loading Cellular Quantification data....loading FCS Results data....done 
+loading ELISPOT Results data....done 
+done 
+loading Nucleic Acid Quantification data....loading PCR Results data....done 
+done 
+loading Titer Assay Results data....loading HAI Assay Results data....done 
+loading Neut. Ab Titer Results data....done 
+done 
+loading TrialArms data....done 
+loading Trial Visits data....done 
+loading  TrialInclusionExclusionCriteria data....done 
+loading TrialSummary data.... SDY139  done 
+done loading Study ID =  SDY139 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("loadSerializedStudyData")
+> ### * loadSerializedStudyData
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: loadSerializedStudyData
+> ### Title: Load the Serialized Data of a Study
+> ### Aliases: loadSerializedStudyData
+> 
+> ### ** Examples
+> 
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> # the folder where the .rds files will be stored
+> rds_dir <- file.path(studies_dir, "Rds")
+> # load the serialized data of study `SDY208` 
+> loadSerializedStudyData(rds_dir, 'SDY208', "Demographics")
+
+domain_file_path =  /var/scratchro/tomas/QA/R-74238/lib/RImmPort/extdata/ImmPortStudies/Rds/SDY208/dm.rds 
+suppdomain_file_path =  /var/scratchro/tomas/QA/R-74238/lib/RImmPort/extdata/ImmPortStudies/Rds/SDY208/suppdm.rds 
+[[1]]
+  STUDYID DOMAIN   USUBJID AGE  AGEU    SEX RACE ETHNIC      SPECIES STRAIN
+1  SDY208     DM SUB120516   6 Weeks Female <NA>   <NA> Mus musculus   <NA>
+2  SDY208     DM SUB120517   6 Weeks Female <NA>   <NA> Mus musculus   <NA>
+3  SDY208     DM SUB120518   6 Weeks Female <NA>   <NA> Mus musculus   <NA>
+4  SDY208     DM SUB120519   6 Weeks Female <NA>   <NA> Mus musculus   <NA>
+5  SDY208     DM SUB120520   6 Weeks Female <NA>   <NA> Mus musculus   <NA>
+6  SDY208     DM SUB120521   6 Weeks Female <NA>   <NA> Mus musculus   <NA>
+7  SDY208     DM SUB120522   6 Weeks Female <NA>   <NA> Mus musculus   <NA>
+  SBSTRAIN  ARMCD
+1     <NA> ARM881
+2     <NA> ARM882
+3     <NA> ARM883
+4     <NA> ARM884
+5     <NA> ARM885
+6     <NA> ARM886
+7     <NA> ARM887
+                                                                                                                 ARM
+1                                                 Microneedle vaccination- 5 ug inactivated A/California/04/09 virus
+2                                               Subcutaneous vaccination-  5 ug inactivated A/California/04/09 virus
+3                                                                         Uncoated microneedle vaccination-  Placebo
+4  Microneedle vaccination- 5 ug inactivated A/California/04/09 virus, Challenged: 10x LD50 A/California/04/09 virus
+5 Subcutaneous vaccination- 5 ug inactivated A/California/04/09 virus, Challenged: 10x LD50 A/California/04/09 virus
+6                          Uncoated microneedle vaccination-  Placebo, Challenged: 10x LD50 A/California/04/09 virus
+7                                              Uncoated microneedle vaccination-  Placebo, Challenged: Not infected 
+
+[[2]]
+data frame with 0 columns and 0 rows
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mergeDomainAndSupplemental")
+> ### * mergeDomainAndSupplemental
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mergeDomainAndSupplemental
+> ### Title: Merge the Domain dataframe and Supplemental dataframe (long
+> ###   form)
+> ### Aliases: mergeDomainAndSupplemental
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> l <- getDomainDataOfStudies("Cellular Quantification", "SDY208")
+loading Cellular Quantification data....loading FCS Results data....done 
+loading ELISPOT Results data....done 
+done 
+> df <- mergeDomainAndSupplemental(l)
+Joining, by = c("STUDYID", "DOMAIN", "USUBJID", "ZBSEQ")
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sqldf’, ‘package:RSQLite’, ‘package:gsubfn’,
+  ‘package:proto’, ‘package:DBI’
+
+> nameEx("serialzeStudyData")
+> ### * serialzeStudyData
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: serialzeStudyData
+> ### Title: Serialize the Study Data
+> ### Aliases: serialzeStudyData
+> 
+> ### ** Examples
+> 
+> library(DBI)
+> library(sqldf)
+Loading required package: gsubfn
+Loading required package: proto
+Loading required package: RSQLite
+> studies_dir <- system.file("extdata", "ImmPortStudies", package = "RImmPort")
+> db_dir <- file.path(studies_dir, "Db")
+> sqlite_conn <- dbConnect(SQLite(), dbname=file.path(db_dir, "ImmPort.sqlite"))
+> setImmPortDataSource(sqlite_conn)
+[1] 1
+> # the folder where the .rds files will be stored
+> rds_dir <- file.path(studies_dir, "Rds")
+> study_ids <- c('SDY139', 'SDY208')
+> serialzeStudyData(study_ids, rds_dir)
+Study ID =  SDY139 
+loading Adverse Events data....done 
+loading Concomitant Medications data....done 
+loading Demographics data....done 
+Warning in gzfile(file, mode) :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/RImmPort/extdata/ImmPortStudies/Rds/SDY139/dm.rds', probable reason 'Read-only file system'
+Error in gzfile(file, mode) : cannot open the connection
+Calls: serialzeStudyData -> saveRDS -> gzfile
+Execution halted

@@ -1,0 +1,240 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### doRUnit.R
+> ###------------------------------------------------------------------------
+> ### What: Run unit tests with RUnit
+> ### $Id$
+> ### Time-stamp: <2007-04-19 00:32:42 ggorjan>
+> ###------------------------------------------------------------------------
+> 
+> ## unit tests will not be done if RUnit is not available
+> if(require("RUnit", quietly=TRUE)) {
++ 
++   ## --- Setup ---
++ 
++   pkg <- "GeneticsPed"
++   if(Sys.getenv("RCMDCHECK") == "FALSE") {
++     ## Path to unit tests for standalone running under Makefile (not R CMD check)
++     ## PKG/tests/../inst/unitTests
++     path <- file.path(getwd(), "..", "inst", "unitTests")
++   } else {
++     ## Path to unit tests for R CMD check
++     ## PKG.Rcheck/tests/../PKG/unitTests
++     path <- system.file(package=pkg, "unitTests")
++   }
++   cat("\nRunning unit tests\n")
++   print(list(pkg=pkg, getwd=getwd(), pathToUnitTests=path))
++ 
++   library(package=pkg, character.only=TRUE)
++ 
++   ## --- Testing ---
++ 
++   ## Define tests
++   testSuite <- defineTestSuite(name=paste(pkg, "unit testing"),
++                                           dirs=path)
++   ## Run
++   tests <- runTestSuite(testSuite)
++ 
++   ## Default report name
++   pathReport <- file.path(path, "report")
++ 
++   ## Report to stdout and text files
++   cat("------------------- UNIT TEST SUMMARY ---------------------\n\n")
++   printTextProtocol(tests, showDetails=FALSE)
++   printTextProtocol(tests, showDetails=FALSE,
++                     fileName=paste(pathReport, "Summary.txt", sep=""))
++   printTextProtocol(tests, showDetails=TRUE,
++                     fileName=paste(pathReport, ".txt", sep=""))
++ 
++   ## Report to HTML file
++   ## NOTE from H. Pages <hpages@fhcrc.org> from the Gentleman Lab (Oct 16,
++   ##   2008): I've added the test below because printHTMLProtocol() seems
++   ##   to be broken in RUnit 0.4.19 on the OS X platform.
++   if (substring(R.Version()$os, 1, 6) != "darwin") 
++     printHTMLProtocol(tests, fileName=paste(pathReport, ".html", sep=""))
++ 
++   ## Return stop() to cause R CMD check stop in case of
++   ##  - failures i.e. FALSE to unit tests or
++   ##  - errors i.e. R errors
++   tmp <- getErrors(tests)
++   if(tmp$nFail > 0 | tmp$nErr > 0) {
++     stop(paste("\n\nunit testing failed (#test failures: ", tmp$nFail,
++                ", #R errors: ",  tmp$nErr, ")\n\n", sep=""))
++   }
++ } else {
++   warning("cannot run unit tests -- package RUnit is not available")
++ }
+
+Running unit tests
+$pkg
+[1] "GeneticsPed"
+
+$getwd
+[1] "/ssd/tomas/QA/R-74238/check/GeneticsPed.Rcheck/tests"
+
+$pathToUnitTests
+[1] "/var/scratchro/tomas/QA/R-74238/lib/GeneticsPed/unitTests"
+
+Loading required package: MASS
+
+Attaching package: 'GeneticsPed'
+
+The following object is masked from 'package:stats':
+
+    family
+
+
+
+Executing test function test.extend  ...  done successfully.
+
+
+
+Executing test function test.A  ...  done successfully.
+
+
+
+Executing test function test.F  ...  done successfully.
+
+
+
+Executing test function test.Z  ...  done successfully.
+
+
+
+Executing test function test.gpLong2Wide  ... Error in gpLong2Wide(x = 1) : 'x' must be a data.frame
+Error in gpLong2Wide(x = tmp, id = 2, genotype = "gen", prob = "pro") : 
+  'id', 'genotype', and 'prob' must be character
+Error in gpLong2Wide(x = tmp, id = "id", genotype = "gen", prob = "pro") : 
+  'id', 'genotype', and 'prob' must be column names of 'x'
+Error in gpLong2Wide(x = tmp, id = "ind", genotype = "gen", prob = "pro") : 
+  'x' must be of a genotype class
+Loading required package: genetics
+Loading required package: combinat
+
+Attaching package: 'combinat'
+
+The following object is masked from 'package:utils':
+
+    combn
+
+Loading required package: gdata
+gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+
+gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+
+Attaching package: 'gdata'
+
+The following object is masked from 'package:stats':
+
+    nobs
+
+The following object is masked from 'package:utils':
+
+    object.size
+
+The following object is masked from 'package:base':
+
+    startsWith
+
+Loading required package: gtools
+Loading required package: mvtnorm
+
+
+NOTE: THIS PACKAGE IS NOW OBSOLETE.
+
+
+
+  The R-Genetics project has developed an set of enhanced genetics
+
+  packages to replace 'genetics'. Please visit the project homepage
+
+  at http://rgenetics.org for informtion.
+
+
+
+
+Attaching package: 'genetics'
+
+The following objects are masked from 'package:base':
+
+    %in%, as.factor, order
+
+ done successfully.
+
+
+
+Executing test function test.gpi  ... Error in gpi(gp = -1, hwp = 0.5) : 
+  probabilities should lie on interval 0, 1
+Error in gpi(gp = 0.5, hwp = 5) : 
+  probabilities should lie on interval 0, 1
+Error in gpi(gp = "0.5", hwp = 0.2) : 
+  'gp' and 'hwp' must be numeric vector or matrix
+Error in gpi(gp = 0.5, hwp = list(0.2)) : 
+  'gp' and 'hwp' must be numeric vector or matrix
+Error in gpi(gp = matrix("0.5"), hwp = 0.2) : 
+  'gp' and 'hwp' must be numeric vector or matrix
+Error in gpi(gp = gp, hwp = gp[, 1, drop = FALSE]) : 
+  'gp' and 'hwp' must be of the same dimension
+Error in gpi(gp = c(0.1, 0.5), hwp = gp[, 1, drop = FALSE]) : 
+  'gp' and 'hwp' must be of the same dimension
+Error in gpi(gp = c(0.1, 0.5), hwp = c(0.1)) : 
+  'gp' and 'hwp' must be of the same dimension
+Error in gpi(gp = c(0.1, 0.5, 0.2, 0), hwp = c(0.1, 0.6, 0.1, 0.1)) : 
+  nonconformant dimensions of 'gp':
+no. dimensions (k)= 4
+no. alleles (n) = 2.70156211871642
+k = n*(n + 1))/2 - 1?
+ done successfully.
+
+
+
+Executing test function test.hwp  ... Error in hwp(x = "A/A") : 'x' must be of a genotype class
+ done successfully.
+
+
+
+Executing test function test.Pedigree  ... Error in Pedigree(x = Mrode3.1, subject = "calf", ascendant = c("sire",  : 
+  values of 'ascendantSex' must accord with values of 'sex' column
+ done successfully.
+
+
+
+Executing test function test.prune  ...  done successfully.
+
+
+
+Executing test function test.TODO  ...  done successfully.
+
+------------------- UNIT TEST SUMMARY ---------------------
+
+RUNIT TEST PROTOCOL -- Fri Feb  9 02:22:26 2018 
+*********************************************** 
+Number of test functions: 10 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+GeneticsPed unit testing - 10 test functions, 0 errors, 0 failures
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Calls: printTextProtocol -> cat -> file
+In addition: Warning message:
+In file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/GeneticsPed/unitTests/reportSummary.txt': Read-only file system
+Execution halted

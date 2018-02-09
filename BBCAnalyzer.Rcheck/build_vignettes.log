@@ -1,0 +1,64 @@
+Loading required package: BSgenome
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ, clusterExport, clusterMap,
+    parApply, parCapply, parLapply, parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append, as.data.frame, basename,
+    cbind, colMeans, colSums, colnames, dirname, do.call, duplicated, eval, evalq, get,
+    grep, grepl, intersect, is.unsorted, lapply, lengths, mapply, match, mget, order,
+    paste, pmax, pmax.int, pmin, pmin.int, rank, rbind, rowMeans, rowSums, rownames,
+    sapply, setdiff, sort, table, tapply, union, unique, unsplit, which, which.max,
+    which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: GenomicRanges
+Loading required package: Biostrings
+Loading required package: XVector
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: rtracklayer
+Determine Target
+Analyze Reads
+Sample 1 out of 2
+Position 1 out of 7
+Position 2 out of 7
+Position 3 out of 7
+Position 4 out of 7
+Position 5 out of 7
+Position 6 out of 7
+Position 7 out of 7
+Warning in file(file, ifelse(append, "a", "w")) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/BBCAnalyzer/extdata/Example_IonTorrent.bases.txt': Read-only file system
+
+Error: processing vignette 'BBCAnalyzer.Rnw' failed with diagnostics:
+ chunk 7 (label = 8) 
+Error in file(file, ifelse(append, "a", "w")) : 
+  cannot open the connection
+Execution halted

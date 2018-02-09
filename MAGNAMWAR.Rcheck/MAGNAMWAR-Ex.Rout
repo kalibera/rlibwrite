@@ -1,0 +1,102 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "MAGNAMWAR"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('MAGNAMWAR')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("CalculatePrincipalCoordinates")
+> ### * CalculatePrincipalCoordinates
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: CalculatePrincipalCoordinates
+> ### Title: Show Principal Components Breakdown
+> ### Aliases: CalculatePrincipalCoordinates
+> 
+> ### ** Examples
+> 
+> CalculatePrincipalCoordinates(after_ortho_format)
+    PC1     PC2     PC3     PC4     PC5     PC6     PC7     PC8     PC9    PC10 
+0.28163 0.11873 0.09965 0.08416 0.07503 0.06671 0.05531 0.05109 0.04038 0.03217 
+   PC11    PC12    PC13    PC14    PC15    PC16    PC17 
+0.02799 0.02360 0.01496 0.01204 0.00784 0.00617 0.00253 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("FormatAfterOrtho")
+> ### * FormatAfterOrtho
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: FormatAfterOrtho
+> ### Title: Format file from output of OrthoMCL algorithm before use in
+> ###   AnalyzeOrthoMCL
+> ### Aliases: FormatAfterOrtho
+> 
+> ### ** Examples
+> 
+> file <- system.file('extdata', 'orthologGroups.txt', package='MAGNAMWAR')
+> after_ortho_format <- FormatAfterOrtho(file)
+reading in OrthoMCL data...   done
+creating list of OG proteins...  done
+creating presence absence matrix...	done
+
+Exported list with Presence/Absence Matrix & list of OG Proteins> 
+> file_grps <- system.file('extdata', 'groups_example_r.txt', package='MAGNAMWAR')
+> after_ortho_format_grps <- FormatAfterOrtho(file_grps, format = 'groups')
+reading in OrthoMCL data...   done
+creating list of OG proteins...  done
+creating presence absence matrix...	done
+
+Exported list with Presence/Absence Matrix & list of OG Proteins> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("FormatMCLFastas")
+> ### * FormatMCLFastas
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: FormatMCLFastas
+> ### Title: Format all raw GenBank fastas to single OrthoMCL compatible
+> ###   fasta file
+> ### Aliases: FormatMCLFastas
+> 
+> ### ** Examples
+> 
+> 
+> dir <- system.file('extdata', 'fasta_dir', package='MAGNAMWAR')
+> dir <- paste(dir,'/',sep='')
+> formatted_file <- FormatMCLFastas(dir)
+Warning in file.remove(outfile) :
+  cannot remove file '/var/scratchro/tomas/QA/R-74238/lib/MAGNAMWAR/extdata/fasta_dir/MCLformatted_all.fasta', reason 'Read-only file system'
+Writing out to /var/scratchro/tomas/QA/R-74238/lib/MAGNAMWAR/extdata/fasta_dir/MCLformatted_all.fasta 
+Warning in file(description = file.out, open = open) :
+  cannot open file '/var/scratchro/tomas/QA/R-74238/lib/MAGNAMWAR/extdata/fasta_dir/MCLformatted_all.fasta': Read-only file system
+Error in file(description = file.out, open = open) : 
+  cannot open the connection
+Calls: FormatMCLFastas -> <Anonymous> -> file
+Execution halted

@@ -1,0 +1,1846 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "WhopGenome"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('WhopGenome')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("VCF_read_snp_diplo_bial_int_altpresence")
+> ### * VCF_read_snp_diplo_bial_int_altpresence
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: VCF_read_snp_diplo_bial_int_altpresence
+> ### Title: (OBSOLETE) Read batch of biallelic SNP data into matrices
+> ### Aliases: VCF_read_snp_diplo_bial_int_altpresence
+> ###   VCF_read_snp_diplo_bial_int_nuclcodes VCF_read_snp_diplo_bial_str_01
+> ###   VCF_read_snp_diplo_bial_str_allelechars
+> ###   VCF_read_snp_diplo_bial_str_nuclcodes
+> 
+> ### ** Examples
+> 
+> 	warning("These functions are obsolete! Consult VCF_snpmat_diplo_bial_geno_filtered etc.")
+Warning: These functions are obsolete! Consult VCF_snpmat_diplo_bial_geno_filtered etc.
+> 
+> 
+> 
+> cleanEx()
+> nameEx("VCF_snpmat_diplo_bial_geno_filtered")
+> ### * VCF_snpmat_diplo_bial_geno_filtered
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: VCF_snpmat_diplo_bial_geno_filtered
+> ### Title: Read SNP matrices in one of various representations.
+> ### Aliases: VCF_snpmat_diplo_bial_geno_filtered
+> ###   VCF_snpmat_diplo_bial_geno_filtered
+> ###   VCF_snpmat_diplo_anyal_geno_filtered
+> ###   VCF_snpmat_diplo_bial_geno_unfiltered
+> ###   VCF_snpmat_diplo_anyal_geno_unfiltered
+> ###   VCF_snpmat_diplo_bial_ishet_filtered
+> ###   VCF_snpmat_diplo_anyal_ishet_filtered
+> ###   VCF_snpmat_diplo_bial_ishet_unfiltered
+> ###   VCF_snpmat_diplo_anyal_ishet_unfiltered
+> ###   VCF_snpmat_diplo_bial_hasalt_filtered
+> ###   VCF_snpmat_diplo_bial_hasalt_unfiltered
+> ###   VCF_snpmat_diplo_anyal_hasalt_filtered
+> ###   VCF_snpmat_diplo_anyal_hasalt_unfiltered
+> ###   VCF_snpmat_diplo_bial_nucodes_filtered
+> ###   VCF_snpmat_diplo_bial_nucodes_unfiltered
+> ###   VCF_snpmat_diplo_anyal_nucodes_filtered
+> ###   VCF_snpmat_diplo_anyal_nucodes_unfiltered
+> ###   VCF_snpmat_anyplo_bial_nucodes_filtered
+> ###   VCF_snpmat_anyplo_bial_nucodes_unfiltered
+> ###   VCF_snpmat_anyplo_anyal_nucodes_filtered
+> ###   VCF_snpmat_anyplo_anyal_nucodes_unfiltered VCF_readIntoCodeMatrix
+> ###   read_snp_diplo_bial_int_altpresence read_snp_diplo_bial_int_nuclcodes
+> ###   read_snp_diplo_bial_str_allelechars read_snp_diplo_bial_str_01
+> ###   read_snp_diplo_bial_str_nuclcodes
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example :
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_setregion(vcffile, "Y", 1, 100000 )
+[1] TRUE
+> 	
+> 	sn <- vcf_getsamples( vcffile )
+> 	vcf_selectsamples( vcffile , sn )
+[1] TRUE
+> 	
+> 	m <- matrix( data=as.integer(0) , nrow = length(sn) , ncol = 4 )
+> 	
+> 	VCF_read_snp_diplo_bial_int_nuclcodes( vcffile , m )
+(?!) Warning : VCF_snpmat_diplo_bial_nucodes_filtered : matrix has no column names vector! not setting SNP positions in matrix!
+[1] TRUE
+> 	m
+     [,1] [,2] [,3] [,4]
+[1,]   25   25   21   12
+[2,]   12   11   11   11
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("WhopPkg-package")
+> ### * WhopPkg-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: WhopGenome-package
+> ### Title: High-speed, high-specialisation population-scale whole-genome
+> ###   variation and sequence data access
+> ### Aliases: WhopGenome-package WhopGenome
+> ### Keywords: package
+> 
+> ### ** Examples
+> 
+> #vcfh <- .Call("VCF_open","/data/vcf/1000g/ALL.Chromosome1.consensus.vcf.gz",PACKAGE="WhopGenome")
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bgzf_compress")
+> ### * bgzf_compress
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bgzf_compress
+> ### Title: Compress file with bgzip
+> ### Aliases: bgzf_compress
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> gfffile  <- system.file("data", "ex.gff3", package = "WhopGenome" )
+> gffgzfile <- paste( sep="", gfffile, ".gz" )
+> file.remove( gffgzfile )
+Warning in file.remove(gffgzfile) :
+  cannot remove file '.gz', reason 'No such file or directory'
+[1] FALSE
+> bgzf_compress( gfffile , gffgzfile )
+(!!) bgzf_compress : Could not open for reading: input file ''
+[1] FALSE
+> file.exists( gffgzfile )
+[1] FALSE
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fai_build")
+> ### * fai_build
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fai_build
+> ### Title: Build a .fai-index for the given FASTA file.
+> ### Aliases: fai_build
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> faifile  <- system.file("extdata", "ex.fasta", package = "WhopGenome")
+> faiindexfile <- paste( sep="", faifile, ".fai" )	# construct name of index file
+> file.remove( faiindexfile )				# remove existing index
+Warning in file.remove(faiindexfile) :
+  cannot remove file '/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.fasta.fai', reason 'Read-only file system'
+[1] FALSE
+> fai_build( faifile )					# re-create index
+[fai_build] fail to write FASTA index /var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.fasta.fai
+(!!) failed to build fasta index for (/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.fasta)!
+[1] FALSE
+> stopifnot( file.exists(faiindexfile) )	# check whether index file exists
+> print( "All OK" )
+[1] "All OK"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fai_close")
+> ### * fai_close
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fai_close
+> ### Title: Closes a file previously opened with fai_open
+> ### Aliases: fai_close
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> faifile  <- system.file("extdata", "ex.fasta", package = "WhopGenome")
+> faifh <- fai_open( faifile )
+> stopifnot( !is.null(faifh) )
+> fai_close( faifh )
+[1] TRUE
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fai_open")
+> ### * fai_open
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fai_open
+> ### Title: Open a faidx-indexed FASTA file
+> ### Aliases: fai_open
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> faifile  <- system.file("extdata", "ex.fasta", package = "WhopGenome")
+> faifh <- fai_open( faifile )
+> stopifnot( !is.null(faifh) )
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fai_query2")
+> ### * fai_query2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fai_query2
+> ### Title: Extract a part of a FASTA sequence.
+> ### Aliases: fai_query2 fai_query3
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> faifile  <- system.file("extdata", "ex.fasta", package = "WhopGenome")
+> faifh <- fai_open( faifile )
+> stopifnot( !is.null(faifh) )
+> result = fai_query2( faifh , "1:100-200" )
+> if( result != FALSE )
++ {
++ 	print( result )
++ }
+[1] "TCAGATCGCGAGAGATATAATATAGAGGCCTATCGATCGATCAGATCGACTAGCCGCGCGCGCGCTATATATAATCGCGCTATAAAGAGAGAAGCCTCGCC"
+> fai_close( faifh )
+[1] TRUE
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fai_query4")
+> ### * fai_query4
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fai_query4
+> ### Title: Extract a part of a FASTA sequence.
+> ### Aliases: fai_query4 fai_query5
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> faifile  <- system.file("extdata", "ex.fasta", package = "WhopGenome")
+> faifh <- fai_open( faifile )
+> stopifnot( !is.null(faifh) )
+> result = fai_query4( faifh , "1", 9 , 20 )
+> if( result != FALSE )
++ {
++ 	print( result )
++ }
+[1] "CTATCGATCGAC"
+> fai_close( faifh )
+[1] TRUE
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fai_reopen")
+> ### * fai_reopen
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fai_reopen
+> ### Title: Reopen a FAIhandle that has become stale.
+> ### Aliases: fai_reopen
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example :
+> 	##
+> 	faifile  <- system.file("extdata", "ex.fasta", package = "WhopGenome")
+> 	faifh <- fai_open( faifile )
+> 	stopifnot( !is.null(faifh) )
+> 	result <- fai_query4( faifh , "1", 100 , 200 )
+> 	print( result )
+[1] "CAGATCGCGAGAGATATAATATAGAGGCCTATCGATCGATCAGATCGACTAGCCGCGCGCGCGCTATATATAATCGCGCTATAAAGAGAGAAGCCTCGCCG"
+> 	fai_close( faifh )
+[1] TRUE
+> 	fai_reopen( faifh )
+[1] TRUE
+> 	result <- fai_query4( faifh , "1", 100 , 110 )
+> 	print( result )
+[1] "CAGATCGCGAG"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tabix_build")
+> ### * tabix_build
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tabix_build
+> ### Title: Build a tabix index file for fast access to tab-separated-value
+> ###   formatted files.
+> ### Aliases: tabix_build
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> 
+> gfffile  <- system.file("extdata", "ex.gff3", package = "WhopGenome" )
+> gfffile
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3"
+> 
+> gffbasename <- tempfile()
+> file.copy( from=gfffile, to=gffbasename )
+[1] TRUE
+> gffgzfile <- paste( sep="", gffbasename, ".gz" )
+> gffgzfile
+[1] "/var/scratch/tomas/tmp/RtmpTmkavI/file3616625fe830.gz"
+> 
+> ##
+> ##
+> gffindexfile <- paste( sep="", gffgzfile, ".tbi" )
+> gffindexfile
+[1] "/var/scratch/tomas/tmp/RtmpTmkavI/file3616625fe830.gz.tbi"
+> stopifnot( ! file.exists( gffindexfile ) )
+> print( "Index file does not exist yet!" )
+[1] "Index file does not exist yet!"
+> 
+> ###
+> ###	compress GFF file
+> ###
+> bgzf_compress( gffbasename , gffgzfile )
+[1] TRUE
+> stopifnot( file.exists( gffgzfile ) )
+> ###
+> ###	build index
+> ###
+> tabix_build( filename = gffgzfile,
++ 			 sc = as.integer(1),
++ 			 bc = as.integer(2),
++ 			 ec = as.integer(3),
++ 			 meta = "#",
++ 			 lineskip = as.integer(0)
++ 			)
+[1] TRUE
+> # [1] TRUE
+> stopifnot( file.exists( gffindexfile ) )
+> print( "Index file has been built" )
+[1] "Index file has been built"
+> #
+> gffh <- tabix_open( gffgzfile )
+> gffh
+<pointer: 0x5611f7a5c090>
+attr(,"Tabix.filename")
+[1] "/var/scratch/tomas/tmp/RtmpTmkavI/file3616625fe830.gz"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tabix_close")
+> ### * tabix_close
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tabix_close
+> ### Title: Close Tabix-indexed file
+> ### Aliases: tabix_close
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> gffgzfile  <- system.file("extdata", "ex.gff3.gz", package = "WhopGenome" )
+> gffh <- tabix_open( gffgzfile )
+> gffh
+<pointer: 0x5611f8b82710>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> tabix_close( gffh )
+[1] TRUE
+> gffh
+<pointer: (nil)>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tabix_getregion")
+> ### * tabix_getregion
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tabix_getregion
+> ### Title: Return the currently selected region of the given tabix file.
+> ### Aliases: tabix_getregion
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> gffgzfile  <- system.file("extdata", "ex.gff3.gz", package = "WhopGenome" )
+> gffh <- tabix_open( gffgzfile )
+> gffh
+<pointer: 0x5611f856a6d0>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> tabix_setregion( gffh, "ex.1", 1, 400 )
+[1] TRUE
+> tabix_getregion( gffh )
+NULL
+> tabix_close( gffh )
+[1] TRUE
+> gffh
+<pointer: (nil)>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tabix_open")
+> ### * tabix_open
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tabix_open
+> ### Title: Open Tabix-indexed file for subsequent access with other tabix_
+> ###   methods
+> ### Aliases: tabix_open
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> gffgzfile  <- system.file("extdata", "ex.gff3.gz", package = "WhopGenome" )
+> gffh <- tabix_open( gffgzfile )
+> gffh
+<pointer: 0x5611f80f7270>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> tabix_close( gffh )
+[1] TRUE
+> gffh
+<pointer: (nil)>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tabix_read")
+> ### * tabix_read
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tabix_read
+> ### Title: Read a line from a tabix_open()'ed file
+> ### Aliases: tabix_read tabix_readraw
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example : (NOT RUN)
+> ##
+> 
+> print("Opening and reading")
+[1] "Opening and reading"
+> gffgzfile  <- system.file("extdata", "ex.gff3.gz", package = "WhopGenome" )
+> if( file.exists(gffgzfile) )
++ {
++  gffgzfile
++  gffh <- tabix_open( gffgzfile )
++  gffh
++  stopifnot( !is.null(gffh) )
++  tabix_read( gffh )
++  tabix_close( gffh )
++  gffh
++ }
+<pointer: (nil)>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tabix_reopen")
+> ### * tabix_reopen
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tabix_reopen
+> ### Title: Reopen a Tabix-indexed file if the filehandle became invalid.
+> ### Aliases: tabix_reopen
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> 
+> ##
+> ##	Example :
+> ##
+> gffgzfile  <- system.file("extdata", "ex.gff3.gz", package = "WhopGenome" )
+> gffh <- tabix_open( gffgzfile )
+> gffh
+<pointer: 0x5611f80f7270>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> tabix_close( gffh )
+[1] TRUE
+> gffh
+<pointer: (nil)>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> tabix_reopen( gffh )
+[1] TRUE
+> gffh
+<pointer: 0x5611f8729850>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tabix_restartregion")
+> ### * tabix_restartregion
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tabix_restartregion
+> ### Title: Reset the currently selected region to the beginning.
+> ### Aliases: tabix_restartregion
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> gffgzfile  <- system.file("extdata", "ex.gff3.gz", package = "WhopGenome" )
+> gffh <- tabix_open( gffgzfile )
+> gffh
+<pointer: 0x5611f856cef0>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> ##
+> ##
+> ##
+> tabix_setregion( gffh, "ex.1", 1, 400 )
+[1] TRUE
+> tabix_read( gffh )
+[1] "ex.1"     "."        "gene"     "1"        "456"      "."        "+"       
+[8] "."        "ID=gene1"
+> tabix_read( gffh )
+[1] "ex.1"                                   
+[2] "."                                      
+[3] "mRNA"                                   
+[4] "1"                                      
+[5] "456"                                    
+[6] "."                                      
+[7] "+"                                      
+[8] "."                                      
+[9] "Parent=gene;Name=Awesome+Gene+1;ID=rna1"
+> tabix_restartregion( gffh )
+[1] TRUE
+> tabix_read( gffh )
+[1] "ex.1"     "."        "gene"     "1"        "456"      "."        "+"       
+[8] "."        "ID=gene1"
+> tabix_read( gffh )
+[1] "ex.1"                                   
+[2] "."                                      
+[3] "mRNA"                                   
+[4] "1"                                      
+[5] "456"                                    
+[6] "."                                      
+[7] "+"                                      
+[8] "."                                      
+[9] "Parent=gene;Name=Awesome+Gene+1;ID=rna1"
+> tabix_close( gffh )
+[1] TRUE
+> gffh
+<pointer: (nil)>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tabix_setregion")
+> ### * tabix_setregion
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tabix_setregion
+> ### Title: Reopen a Tabix-indexed file if the filehandle became invalid.
+> ### Aliases: tabix_setregion
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> gffgzfile  <- system.file("extdata", "ex.gff3.gz", package = "WhopGenome" )
+> gffh <- tabix_open( gffgzfile )
+> gffh
+<pointer: 0x5611f88c0820>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> tabix_setregion( gffh, "ex.1", 1, 400 )
+[1] TRUE
+> tabix_close( gffh )
+[1] TRUE
+> gffh
+<pointer: (nil)>
+attr(,"Tabix.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.gff3.gz"
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_addfilter")
+> ### * vcf_addfilter
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_addfilter
+> ### Title: Add a condition for SNP filtering from VCF files.
+> ### Aliases: vcf_addfilter
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_setregion(vcffile, "Y", 1, 100000 )
+[1] TRUE
+> 	vcf_addfilter( vcffile, "POS", "", "INT_CMP_OO",
++ 					as.integer(49005), as.integer(49007), "DROP" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 1 n=(POS       )	sf=           	in range (49005,49007)	SKIP (active)
+---------
+NULL
+> 	####
+> 	####
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"           "49007"       "."           "GG"          "A,T"        
+ [6] "42.7"        "PASS"        "AA=."        "GT:PL"       "0|1|1:9,9,9"
+[11] "0|1|2:9,9,9"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"              "49008"          "."              "G"             
+ [5] "A,TT"           "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"                                   "50001"                              
+ [3] "."                                   "C"                                  
+ [5] "T"                                   "87.9"                               
+ [7] "PASS"                                "AA=G;AF=0.285;ANNO=Nonsyn:CDS:Ybrb9"
+ [9] "GT:PL"                               "1|1|1:0,6,62"                       
+[11] "0|0|0:0,15,113"                     
+> 	#######
+> 	#######
+> 	vcf_clearfilters( vcffile )
+NULL
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+---------
+NULL
+> 	vcf_restartregion( vcffile )
+[1] TRUE
+> 	####
+> 	####
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"              "49006"          "."              "G"             
+ [5] "A,T"            "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"           "49007"       "."           "GG"          "A,T"        
+ [6] "42.7"        "PASS"        "AA=."        "GT:PL"       "0|1|1:9,9,9"
+[11] "0|1|2:9,9,9"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"              "49008"          "."              "G"             
+ [5] "A,TT"           "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 	##
+> 	##
+> 	vcf_close( vcffile )
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_buildindex")
+> ### * vcf_buildindex
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_buildindex
+> ### Title: Build Tabix-index required for processing VCF files.
+> ### Aliases: vcf_buildindex
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_clearfilters")
+> ### * vcf_clearfilters
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_clearfilters
+> ### Title: Removes all filter steps.
+> ### Aliases: vcf_clearfilters
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_setregion(vcffile, "Y", 1, 100000 )
+[1] TRUE
+> 	vcf_addfilter( vcffile, "POS", "", "INT_CMP_OO",
++ 					as.integer(49005), as.integer(49007), "DROP" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 1 n=(POS       )	sf=           	in range (49005,49007)	SKIP (active)
+---------
+NULL
+> 	####
+> 	####
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"           "49007"       "."           "GG"          "A,T"        
+ [6] "42.7"        "PASS"        "AA=."        "GT:PL"       "0|1|1:9,9,9"
+[11] "0|1|2:9,9,9"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"              "49008"          "."              "G"             
+ [5] "A,TT"           "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"                                   "50001"                              
+ [3] "."                                   "C"                                  
+ [5] "T"                                   "87.9"                               
+ [7] "PASS"                                "AA=G;AF=0.285;ANNO=Nonsyn:CDS:Ybrb9"
+ [9] "GT:PL"                               "1|1|1:0,6,62"                       
+[11] "0|0|0:0,15,113"                     
+> 	#######
+> 	#######
+> 	vcf_clearfilters( vcffile )
+NULL
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+---------
+NULL
+> 	vcf_restartregion( vcffile )
+[1] TRUE
+> 	####
+> 	####
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"              "49006"          "."              "G"             
+ [5] "A,T"            "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"           "49007"       "."           "GG"          "A,T"        
+ [6] "42.7"        "PASS"        "AA=."        "GT:PL"       "0|1|1:9,9,9"
+[11] "0|1|2:9,9,9"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"              "49008"          "."              "G"             
+ [5] "A,TT"           "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 	##
+> 	##
+> 	vcf_close( vcffile )
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_close")
+> ### * vcf_close
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_close
+> ### Title: Close a VCF file previously opened with vcf_open.
+> ### Aliases: vcf_close
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" )
+> 	vcffile
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.vcf.gz"
+> 	vcffh <- vcf_open( vcffile )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcffh
+<pointer: 0x5611f8509960>
+attr(,"VCF.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.vcf.gz"
+> 	
+> 	##
+> 	##
+> 	vcf_close( vcffh )
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_countSNPs")
+> ### * vcf_countSNPs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_countSNPs
+> ### Title: Count how many entries in the selected region
+> ### Aliases: vcf_countSNPs vcf_countBiallelicSNPs
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" )
+> 	vcffile
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.vcf.gz"
+> 	vcffh <- vcf_open( vcffile )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcffh
+<pointer: 0x5611f8509960>
+attr(,"VCF.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.vcf.gz"
+> 	vcf_countSNPs( vcffh )
+[1] 10
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_describefilters")
+> ### * vcf_describefilters
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_describefilters
+> ### Title: Prints description of current filter rules
+> ### Aliases: vcf_describefilters
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_setregion(vcffile, "Y", 1, 100000 )
+[1] TRUE
+> 	vcf_addfilter( vcffile, "POS", "", "INT_CMP_OO",
++ 					as.integer(49005), as.integer(49007), "DROP" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 1 n=(POS       )	sf=           	in range (49005,49007)	SKIP (active)
+---------
+NULL
+> 	####
+> 	####
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"           "49007"       "."           "GG"          "A,T"        
+ [6] "42.7"        "PASS"        "AA=."        "GT:PL"       "0|1|1:9,9,9"
+[11] "0|1|2:9,9,9"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"              "49008"          "."              "G"             
+ [5] "A,TT"           "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"                                   "50001"                              
+ [3] "."                                   "C"                                  
+ [5] "T"                                   "87.9"                               
+ [7] "PASS"                                "AA=G;AF=0.285;ANNO=Nonsyn:CDS:Ybrb9"
+ [9] "GT:PL"                               "1|1|1:0,6,62"                       
+[11] "0|0|0:0,15,113"                     
+> 	#######
+> 	#######
+> 	vcf_clearfilters( vcffile )
+NULL
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+---------
+NULL
+> 	vcf_restartregion( vcffile )
+[1] TRUE
+> 	####
+> 	####
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"              "49006"          "."              "G"             
+ [5] "A,T"            "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"           "49007"       "."           "GG"          "A,T"        
+ [6] "42.7"        "PASS"        "AA=."        "GT:PL"       "0|1|1:9,9,9"
+[11] "0|1|2:9,9,9"
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"              "49008"          "."              "G"             
+ [5] "A,TT"           "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 	##
+> 	##
+> 	vcf_close( vcffile )
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_eor")
+> ### * vcf_eor
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_eor
+> ### Title: Determine whether all lines in the selected region have been
+> ###   read.
+> ### Aliases: vcf_eor
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_setregion(vcffile, "Y", 1, 100000 )
+[1] TRUE
+> 	while( !vcf_eor(vcffile) )
++ 	{
++ 		vcf_readLineVec( vcffile )
++ 	}
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_getChrom")
+> ### * vcf_getChrom
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_getChrom
+> ### Title: Return a specific piece of information from the last line
+> ###   processed with vcf_parseNextSNP or vcf_parsenextline.
+> ### Aliases: vcf_getChrom vcf_getPos vcf_getID vcf_getRef vcf_getAlt
+> ###   vcf_getQual vcf_getFilter vcf_getInfo vcf_getInfoField vcf_getFormat
+> ###   vcf_getSample
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_parseNextSNP( vcffile )
+[1] TRUE
+> 	vcf_getChrom( vcffile )
+[1] "Y"
+> 	vcf_getPos( vcffile )
+[1] 49006
+> 	vcf_getID( vcffile )
+[1] "."
+> 	vcf_getAlt( vcffile )
+[1] "A,T"
+> 	vcf_getQual( vcffile )
+[1] "42.7"
+> 	vcf_getFilter( vcffile )
+[1] "PASS"
+> 	vcf_getInfoField( vcffile, "AA" )
+[1] "."
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_getcontignames")
+> ### * vcf_getcontignames
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_getcontignames
+> ### Title: Return the contig/chromosome identifiers used in the VCF file
+> ### Aliases: vcf_getcontignames
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_getcontignames( vcffile )
+[1] "Y"
+> 	# [1] "Y"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_getfieldnames")
+> ### * vcf_getfieldnames
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_getfieldnames
+> ### Title: Return a vector with the field names used in the VCF file.
+> ### Aliases: vcf_getfieldnames
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_getfieldnames( vcffile )
+ [1] "CHROM"   "POS"     "ID"      "REF"     "ALT"     "QUAL"    "FILTER" 
+ [8] "INFO"    "FORMAT"  "HG00096" "HG00101"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_getheaderline")
+> ### * vcf_getheaderline
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_getheaderline
+> ### Title: Return one of the header lines of the VCF file
+> ### Aliases: vcf_getheaderline
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_getheaderline( vcffile , as.integer(0) )
+[1] "##fileformat=VCFv4.1"
+> 	vcf_getheaderline( vcffile , as.integer(1) )
+[1] "##samtoolsVersion=0.1.17 (r973:277)"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_getnumcontigs")
+> ### * vcf_getnumcontigs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_getnumcontigs
+> ### Title: Get the number of different contigs/chromosomes stored in the
+> ###   file
+> ### Aliases: vcf_getnumcontigs
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_getnumcontigs( vcffile )
+[1] 1
+> 	# [1] 1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_getregion")
+> ### * vcf_getregion
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_getregion
+> ### Title: Get description of currently selected chromosomal region.
+> ### Aliases: vcf_getregion
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_getregion( vcffile )
+[1] ":0-0"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_isINDEL")
+> ### * vcf_isINDEL
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_isINDEL
+> ### Title: Determines whether the last vcf_parse-call returned a InDel
+> ###   (instead of SNP)
+> ### Aliases: vcf_isINDEL
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_parseNextSNP( vcffile )
+[1] TRUE
+> 	vcf_getPos( vcffile )
+[1] 49006
+> 	vcf_isINDEL( vcffile )
+[1] FALSE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_isSNP")
+> ### * vcf_isSNP
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_isSNP
+> ### Title: Determines whether the last vcf_parse-call returned a SNP
+> ###   (instead of InDel)
+> ### Aliases: vcf_isSNP
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_parseNextSNP( vcffile )
+[1] TRUE
+> 	vcf_getPos( vcffile )
+[1] 49006
+> 	vcf_isSNP( vcffile )
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_open")
+> ### * vcf_open
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_open
+> ### Title: Open the specified VCF file and return a filehandle for
+> ###   subsequent access.
+> ### Aliases: vcf_open
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_parseNextSNP")
+> ### * vcf_parseNextSNP
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_parseNextSNP
+> ### Title: Read until next SNP or next line and buffer it
+> ### Aliases: vcf_parseNextSNP vcf_parseNextLine
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_parseNextSNP( vcffile )
+[1] TRUE
+> 	vcf_getPos( vcffile )
+[1] 49006
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_readLineDF")
+> ### * vcf_readLineDF
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_readLineDF
+> ### Title: Read a line of data from the given VCF file and return it as a
+> ###   data frame
+> ### Aliases: vcf_readLineDF
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	d <- vcf_readLineDF( vcffile )
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_readLineRaw")
+> ### * vcf_readLineRaw
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_readLineRaw
+> ### Title: Read a line of data from the given VCF file and return it as a
+> ###   string without postprocessing.
+> ### Aliases: vcf_readLineRaw vcf_readLineRawFiltered
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	d <- vcf_readLineRaw( vcffile )
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_readLineVec")
+> ### * vcf_readLineVec
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_readLineVec
+> ### Title: Read a line of data from the given VCF file and return the
+> ###   fields as vector elements
+> ### Aliases: vcf_readLineVec vcf_readLineVecFiltered
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_readLineVec( vcffile )
+ [1] "Y"              "49006"          "."              "G"             
+ [5] "A,T"            "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_reopen")
+> ### * vcf_reopen
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_reopen
+> ### Title: Reopen a closed or stale VCF file handle.
+> ### Aliases: vcf_reopen
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcffile
+<pointer: 0x5611f7d61be0>
+attr(,"VCF.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.vcf.gz"
+> 	vcf_close( vcffile )
+[1] TRUE
+> 	vcffile
+<pointer: (nil)>
+attr(,"VCF.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.vcf.gz"
+> 	vcf_reopen( vcffile )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+[1] TRUE
+> 	vcffile
+<pointer: 0x5611f82b2bf0>
+attr(,"VCF.filename")
+[1] "/var/scratchro/tomas/QA/R-74238/lib/WhopGenome/extdata/ex.vcf.gz"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_restartregion")
+> ### * vcf_restartregion
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_restartregion
+> ### Title: Let subsequent read calls return from the start of the currently
+> ###   set region.
+> ### Aliases: vcf_restartregion
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_setregion(vcffile, "Y", 1, 100000 )
+[1] TRUE
+> 	
+> 	vcf_readLineVec( vcffile )
+ [1] "Y"              "49006"          "."              "G"             
+ [5] "A,T"            "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 	vcf_readLineVec( vcffile )
+ [1] "Y"           "49007"       "."           "GG"          "A,T"        
+ [6] "42.7"        "PASS"        "AA=."        "GT:PL"       "0|1|1:9,9,9"
+[11] "0|1|2:9,9,9"
+> 
+> 	vcf_restartregion( vcffile )
+[1] TRUE
+> 
+> 	vcf_readLineVec( vcffile )
+ [1] "Y"              "49006"          "."              "G"             
+ [5] "A,T"            "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 	vcf_readLineVec( vcffile )
+ [1] "Y"           "49007"       "."           "GG"          "A,T"        
+ [6] "42.7"        "PASS"        "AA=."        "GT:PL"       "0|1|1:9,9,9"
+[11] "0|1|2:9,9,9"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_rule.disable")
+> ### * vcf_rule.disable
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_rule.disable
+> ### Title: Disable and enable processing of a rule
+> ### Aliases: vcf_rule.disable vcf_rule.enable
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_setregion(vcffile, "Y", 1, 100000 )
+[1] TRUE
+> 	vcf_addfilter( vcffile, "POS", "", "INT_CMP_OO",
++ 					as.integer(49005), as.integer(49007), "DROP" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 1 n=(POS       )	sf=           	in range (49005,49007)	SKIP (active)
+---------
+NULL
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"           "49007"       "."           "GG"          "A,T"        
+ [6] "42.7"        "PASS"        "AA=."        "GT:PL"       "0|1|1:9,9,9"
+[11] "0|1|2:9,9,9"
+> 
+> 	vcf_rule.disable( vcffile, 0 )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 1 n=(POS       )	sf=           	in range (49005,49007)	SKIP (disabled)
+---------
+NULL
+> 	vcf_restartregion( vcffile )
+[1] TRUE
+> 	vcf_readLineVecFiltered( vcffile )
+ [1] "Y"              "49006"          "."              "G"             
+ [5] "A,T"            "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_rule.setaction")
+> ### * vcf_rule.setaction
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_rule.setaction
+> ### Title: Sets the kind of action to take when a rule matches (or does not
+> ###   match).
+> ### Aliases: vcf_rule.setaction
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_addfilter( vcffile, "POS", "", "INT_CMP_OO",
++ 					as.integer(49005), as.integer(49007), "DROP" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 1 n=(POS       )	sf=           	in range (49005,49007)	SKIP (active)
+---------
+NULL
+> 	
+> 	vcf_rule.setcolumn( vcffile , 0, "ID" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 2 n=(ID        )	sf=           	in range (49005,49007)	SKIP (active)
+---------
+NULL
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_rule.setcolumn")
+> ### * vcf_rule.setcolumn
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_rule.setcolumn
+> ### Title: Set column a rule should examine.
+> ### Aliases: vcf_rule.setcolumn
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_addfilter( vcffile, "POS", "", "INT_CMP_OO",
++ 					as.integer(49005), as.integer(49007), "DROP" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 1 n=(POS       )	sf=           	in range (49005,49007)	SKIP (active)
+---------
+NULL
+> 	
+> 	vcf_rule.setcolumn( vcffile , 0, "ID" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 2 n=(ID        )	sf=           	in range (49005,49007)	SKIP (active)
+---------
+NULL
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_rule.setcomparison")
+> ### * vcf_rule.setcomparison
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_rule.setcomparison
+> ### Title: Set comparison operation for filtering rule.
+> ### Aliases: vcf_rule.setcomparison
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_addfilter( vcffile, "POS", "", "INT_CMP_OO",
++ 					as.integer(49005), as.integer(49007), "DROP" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 1 n=(POS       )	sf=           	in range (49005,49007)	SKIP (active)
+---------
+NULL
+> 	
+> 	vcf_rule.setcomparison( vcffile , 0, "INT_CMP_CC" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 1 n=(POS       )	sf=           	in range [49005,49007]	SKIP (active)
+---------
+NULL
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_rule.setfield")
+> ### * vcf_rule.setfield
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_rule.setfield
+> ### Title: Set field or key of filtering rule.
+> ### Aliases: vcf_rule.setfield
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 
+> 	#
+> 	#
+> 	vcf_setregion(vcffile, "Y", 50000, 51000 )
+[1] TRUE
+> 	
+> 	#
+> 	# USELESS filter : # filter out SNPs with rule  "DROP if (0.0 < INFO:AA < 0.5)"
+> 	#	AA= ancestral allele, is a floating point number!
+> 	vcf_addfilter( vcffile, "INFO", "AA", "FLT_CMP_OO", 0, 0.5, "DROP" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 7 n=(INFO      )	sf=AA         	in range (0.000000,0.500000)	SKIP (active)
+---------
+NULL
+> 	
+> 	vcf_readLineVecFiltered( vcffile )	# pos 50001
+ [1] "Y"                                   "50001"                              
+ [3] "."                                   "C"                                  
+ [5] "T"                                   "87.9"                               
+ [7] "PASS"                                "AA=G;AF=0.285;ANNO=Nonsyn:CDS:Ybrb9"
+ [9] "GT:PL"                               "1|1|1:0,6,62"                       
+[11] "0|0|0:0,15,113"                     
+> 	vcf_readLineVecFiltered( vcffile )	# pos 50002
+ [1] "Y"            "50002"        "."            "C"            "T"           
+ [6] "87.9"         "PASS"         "AA=G"         "GT:PL"        "0|0:2,6,62"  
+[11] "0/0:0,15,113"
+> 	
+> 	#
+> 	#
+> 	vcf_setregion(vcffile, "Y", 50000, 51000 )
+[1] TRUE
+> 	
+> 	#CORRECT rule:
+> 	# filter out SNP at pos 50001 with INFO:AF=0.285 with rule  "DROP if (0.0 < INFO:AF < 0.5)"
+> 	#
+> 	vcf_rule.setfield( vcffile , 0 , "AF" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 7 n=(INFO      )	sf=AF         	in range (0.000000,0.500000)	SKIP (active)
+---------
+NULL
+> 	
+> 	vcf_readLineVecFiltered( vcffile )	# pos 50002
+ [1] "Y"            "50002"        "."            "C"            "T"           
+ [6] "87.9"         "PASS"         "AA=G"         "GT:PL"        "0|0:2,6,62"  
+[11] "0/0:0,15,113"
+> 	vcf_readLineVecFiltered( vcffile )	# pos 50003
+ [1] "Y"            "50003"        "."            "C"            "T"           
+ [6] "87.9"         "PASS"         "AA=G"         "GT:PL"        "0|.:2,6,62"  
+[11] "1/0:0,15,113"
+> 	
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_rule.setrefvalues")
+> ### * vcf_rule.setrefvalues
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_rule.setrefvalues
+> ### Title: Set reference values for a filtering rule's comparison
+> ###   operation.
+> ### Aliases: vcf_rule.setrefvalues
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 
+> 	#
+> 	#
+> 	vcf_setregion(vcffile, "Y", 50000, 51000 )
+[1] TRUE
+> 	
+> 	#
+> 	# USELESS filter : # filter out SNPs with rule  "DROP if (0.0 < INFO:AF < 0.2)"
+> 	#	pos 50001 has AF=0.285 , for which (0 < 0.285 < 0.2) is true 
+> 	#
+> 	vcf_addfilter( vcffile, "INFO", "AF", "FLT_CMP_OO", 0, 0.2, "DROP" )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 7 n=(INFO      )	sf=AF         	in range (0.000000,0.200000)	SKIP (active)
+---------
+NULL
+> 	
+> 	vcf_readLineVecFiltered( vcffile )	# pos 50001
+ [1] "Y"                                   "50001"                              
+ [3] "."                                   "C"                                  
+ [5] "T"                                   "87.9"                               
+ [7] "PASS"                                "AA=G;AF=0.285;ANNO=Nonsyn:CDS:Ybrb9"
+ [9] "GT:PL"                               "1|1|1:0,6,62"                       
+[11] "0|0|0:0,15,113"                     
+> 	vcf_readLineVecFiltered( vcffile )	# pos 50002
+ [1] "Y"            "50002"        "."            "C"            "T"           
+ [6] "87.9"         "PASS"         "AA=G"         "GT:PL"        "0|0:2,6,62"  
+[11] "0/0:0,15,113"
+> 	
+> 	#
+> 	#
+> 	vcf_setregion(vcffile, "Y", 50000, 51000 )
+[1] TRUE
+> 	
+> 	#CORRECT rule:
+> 	# filter out SNP at pos 50001 with INFO:AF=0.285 with rule  "DROP if (0.2 < INFO:AF < 0.3)"
+> 	#
+> 	vcf_rule.setrefvalues( vcffile , 0 , 0.2, 0.3 )
+[1] TRUE
+> 	vcf_describefilters( vcffile )
+Filtering rules:
+Rule#	If in column	in subfield	check that	and if so,
+---------
+#0	c= 7 n=(INFO      )	sf=AF         	in range (0.200000,0.300000)	SKIP (active)
+---------
+NULL
+> 	
+> 	vcf_readLineVecFiltered( vcffile )	# pos 50002
+ [1] "Y"            "50002"        "."            "C"            "T"           
+ [6] "87.9"         "PASS"         "AA=G"         "GT:PL"        "0|0:2,6,62"  
+[11] "0/0:0,15,113"
+> 	vcf_readLineVecFiltered( vcffile )	# pos 50003
+ [1] "Y"            "50003"        "."            "C"            "T"           
+ [6] "87.9"         "PASS"         "AA=G"         "GT:PL"        "0|.:2,6,62"  
+[11] "1/0:0,15,113"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_selectsamples")
+> ### * vcf_selectsamples
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_selectsamples
+> ### Title: Set or query the active sample selection for a given VCF file or
+> ###   get the entire list of individuals.
+> ### Aliases: vcf_selectsamples vcf_getselectedsamples vcf_getsamples
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	allsamplenames <- vcf_getsamples( vcffile )
+> 	vcf_selectsamples( vcffile , allsamplenames )
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_setregion")
+> ### * vcf_setregion
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_setregion
+> ### Title: Set region from which to return genome variation data.
+> ### Aliases: vcf_setregion
+> 
+> ### ** Examples
+> 
+> 	##
+> 	##	Example:
+> 	##
+> 	vcffile <- vcf_open( system.file( "extdata" , "ex.vcf.gz" , package="WhopGenome" ) )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	
+> 	vcf_setregion(vcffile, "Y", 1, 100000 )
+[1] TRUE
+> 	vcf_readLineVec( vcffile )
+ [1] "Y"              "49006"          "."              "G"             
+ [5] "A,T"            "42.7"           "PASS"           "AA=."          
+ [9] "GT:PL"          "0|1|1:0,9,81"   "0|1|2:0,12,109"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vcf_valid")
+> ### * vcf_valid
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vcf_valid
+> ### Title: Returns whether a VCF file handle is valid and usable.
+> ### Aliases: vcf_valid
+> 
+> ### ** Examples
+> 
+> 	vcffile <- vcf_open( system.file( "extdata", "ex.vcf.gz" , package="WhopGenome") )
+(II) VCF version is 4.1
+(II) VCF File contains 2 samples
+> 	vcf_valid( vcffile )
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("whop.ucsc.query")
+> ### * whop.ucsc.query
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: whop.ucsc.query
+> ### Title: Send a SQL query string to the UCSC Genome Browser SQL server
+> ### Aliases: whop.ucsc.query
+> 
+> ### ** Examples
+> 
+> 
+> ##
+> ##	Example :
+> ##
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.292 0.024 0.753 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

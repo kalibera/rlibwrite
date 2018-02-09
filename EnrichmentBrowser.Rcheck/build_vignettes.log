@@ -1,0 +1,4 @@
+Quitting from lines 617-620 (EnrichmentBrowser.Rnw) 
+Error: processing vignette 'EnrichmentBrowser.Rnw' failed with diagnostics:
+cannot open file '/var/scratchro/tomas/QA/R-74238/lib/EnrichmentBrowser/extdata/hsa00040.xml': Read-only file system
+Execution halted

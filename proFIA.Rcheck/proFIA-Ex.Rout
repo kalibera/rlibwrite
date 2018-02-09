@@ -1,0 +1,929 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "proFIA"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('proFIA')
+Loading required package: xcms
+Loading required package: Biobase
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, append,
+    as.data.frame, basename, cbind, colMeans, colSums, colnames,
+    dirname, do.call, duplicated, eval, evalq, get, grep, grepl,
+    intersect, is.unsorted, lapply, lengths, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, rank, rbind,
+    rowMeans, rowSums, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: BiocParallel
+Loading required package: MSnbase
+Loading required package: mzR
+Loading required package: Rcpp
+Loading required package: ProtGenerics
+
+This is MSnbase version 2.5.6 
+  Visit https://lgatto.github.io/MSnbase/ to get started.
+
+
+Attaching package: ‘MSnbase’
+
+The following object is masked from ‘package:stats’:
+
+    smooth
+
+The following object is masked from ‘package:base’:
+
+    trimws
+
+
+This is xcms version 3.1.0 
+
+
+Attaching package: ‘xcms’
+
+The following object is masked from ‘package:stats’:
+
+    sigma
+
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("acquisitionDirectory")
+> ### * acquisitionDirectory
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: acquisitionDirectory
+> ### Title: Ge the class organization of directory.
+> ### Aliases: acquisitionDirectory
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++     path<-system.file(package="plasFIA","mzML")
++     tabClasses<-acquisitionDirectory(path)
++     tabClasses
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("analyzeAcquisitionFIA")
+> ### * analyzeAcquisitionFIA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: analyzeAcquisitionFIA
+> ### Title: Wrapper function for the full FIA analysis workflow.
+> ### Aliases: analyzeAcquisitionFIA
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++     path<-system.file(package="plasFIA","mzML")
++     
++     #Defining parameters for Orbitrap fusion.
++     ppm<-2
++     dmz <- 0.0005
++     ppm_group<-1
++     dmz_group <- 0.0003
++     paral<-FALSE
++     frac_group<-0.2
++     k<-2
++     maxo<-FALSE
++     vimputation <- "randomForest"
++     ## Not run: plasSet<-analyzeAcquisitionFIA(path,ppm=ppm,dmz=dmz,imputation=vimputation,fracGroup=frac_group,ppmGroup=ppm_group,dmzGroup=dmz_group,k=k,maxo=maxo,parallel=paral)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("determiningInjectionZone")
+> ### * determiningInjectionZone
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: determiningInjectionZone
+> ### Title: First guess of the limit of the injection peak.
+> ### Aliases: determiningInjectionZone
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++   #Getting the path of a file.
++   path_raw <- list.files(system.file(package="plasFIA","mzML"),full.names=TRUE)[2]
++ 
++   #Opening the file with xcms
++   xraw <- xcmsRaw(path_raw)
++ 
++   #Getting a first approximation of injection peak;
++   sp <- determiningInjectionZone(xraw)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("determiningSizePeak.Geom")
+> ### * determiningSizePeak.Geom
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: determiningSizePeak.Geom
+> ### Title: Determine the limits of the injection peak in a FIA acquisition.
+> ### Aliases: determiningSizePeak.Geom determiningSizePeak
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++   #Getting the path of a file.
++   path_raw <- list.files(system.file(package="plasFIA","mzML"),full.names=TRUE)[2]
++ 
++   #Opening the file with xcms
++   xraw <- xcmsRaw(path_raw)
++ 
++   #Getting a first approximation of injection peak;
++   sp <- determiningSizePeak.Geom(xraw)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("estimateNoiseMS")
+> ### * estimateNoiseMS
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: estimateNoiseMS
+> ### Title: Estimate the noise of a mass spectrometer using multiple MS
+> ###   acquisition.
+> ### Aliases: estimateNoiseMS
+> 
+> ### ** Examples
+> 
+> ##Listing the files in plasFIA
+> if(require(plasFIA)){
++   list_mzml <- list.files(system.file(package="plasFIA","mzML"),full.names=TRUE)
++ 
++   ##For speed purpose
++   list_mzml <- list_mzml[1:2]
++   es <- estimateNoiseMS(list_mzml,2,parallel=FALSE)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("exportDataMatrix-proFIAset-method")
+> ### * exportDataMatrix-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: exportDataMatrix,proFIAset-method
+> ### Title: Export data matrix.
+> ### Aliases: exportDataMatrix,proFIAset-method exportDataMatrix
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++     data(plasSet)
++     dm<-exportDataMatrix(plasSet)
++     head(dm)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("exportExpressionSet-proFIAset-method")
+> ### * exportExpressionSet-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: exportExpressionSet,proFIAset-method
+> ### Title: Export proFIAset to ExpressionSet
+> ### Aliases: exportExpressionSet,proFIAset-method exportExpressionSet
+> 
+> ### ** Examples
+> 
+> if(require("plasFIA")&require("Biobase")){
++     data(plasSet)
++     eset<-exportExpressionSet(plasSet)
++     eset
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("exportPeakTable-proFIAset-method")
+> ### * exportPeakTable-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: exportPeakTable,proFIAset-method
+> ### Title: Export proFIAset as a peak table.
+> ### Aliases: exportPeakTable,proFIAset-method exportPeakTable
+> 
+> ### ** Examples
+> 
+> if(require("plasFIA")){
++     data(plasSet)
++ 
++     #Creating the peak table
++     ptable<-exportPeakTable(plasSet)
++     head(ptable)
++ 
++     #Directly in a file
++     ## Not run: ptable<-exportPeakTable(plasSet,filename="peak_table.tsv")
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("exportSampleMetadata-proFIAset-method")
+> ### * exportSampleMetadata-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: exportSampleMetadata,proFIAset-method
+> ### Title: Export samples metadata.
+> ### Aliases: exportSampleMetadata,proFIAset-method exportSampleMetadata
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++    data(plasSet)
++    tsample<-exportSampleMetadata(plasSet)
++    head(tsample)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("exportVariableMetadata-proFIAset-method")
+> ### * exportVariableMetadata-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: exportVariableMetadata,proFIAset-method
+> ### Title: Export variable metadata.
+> ### Aliases: exportVariableMetadata,proFIAset-method exportVariableMetadata
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++   data(plasSet)
++   vtab<-exportVariableMetadata(plasSet)
++   head(vtab)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("findBandsFIA")
+> ### * findBandsFIA
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: findBandsFIA
+> ### Title: Detect band in a FIA acquisition
+> ### Aliases: findBandsFIA
+> 
+> ### ** Examples
+> 
+> #Getting the path of a file.
+> if(require(plasFIA)){
++   path_raw<-list.files(system.file(package="plasFIA","mzML"),full.names=TRUE)[2]
++ 
++   #Opening the file with xcms
++   xraw<-xcmsRaw(path_raw)
++ 
++   #Getting the injection scan
++   gp<-determiningInjectionZone(xraw)
++ 
++   #performing band detection.
++   tbands<-findBandsFIA(xraw,ppm = 2,sizeMin = gp[3]-gp[1],beginning=gp[1],end=gp[2])
++   head(tbands)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("findFIAsignal")
+> ### * findFIAsignal
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: findFIASignal
+> ### Title: Detect peaks in an FIA acquisition.
+> ### Aliases: findFIASignal findPeaks
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++   #Getting the path of a file.
++   path_raw<-list.files(system.file(package="plasFIA","mzML"),full.names=TRUE)[2]
++ 
++   #Opening the file with xcms
++   xraw<-xcmsRaw(path_raw)
++ 
++   ppm<-2
++ 
++   #getting the filtered signals without noise model which is not recommended.
++   tsignal<-findFIASignal(xraw,ppm=ppm,SNT=3)
++ 
++   #Getting the noise model un the plasSet object.
++   data(plasSet)
++   es<-attr(plasSet,"noiseEstimation")
++ 
++   #Getting the signal with a noise model.
++   tsignal<-findFIASignal(xraw,ppm=2,es=es,pvalthresh=0.005)
++   head(tsignal)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("findMzGroup-proFIAset-method")
+> ### * findMzGroup-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: findMzGroup,proFIAset-method
+> ### Title: find a group in a FIA experiment.
+> ### Aliases: findMzGroup,proFIAset-method findMzGroup
+> 
+> ### ** Examples
+> 
+> if(require("plasFIA")){
++ #proFIAset object is loaded
++ data(plasSet)
++ 
++ #The table of spiked molecule is loaded
++ data(plasMols)
++ 
++ #Mass to search and toolerance are defined
++ mass<-plasMols[22,"mass_M+H"]
++ tolppm <- 1
++ 
++ plasSet<- makeDataMatrix(plasSet)
++ 
++ index <- findMzGroup(plasSet,mass,tol=tolppm)
++ 
++ plasMols[22,]
++ #We extract the corresponding group.
++ groupMatrix(plasSet)[index,]
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getInjectionPeak")
+> ### * getInjectionPeak
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getInjectionPeak
+> ### Title: Fit an injection peak to an FIA acquisition.
+> ### Aliases: getInjectionPeak
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++   #Getting the path of a file.
++   path_raw <- list.files(system.file(package="plasFIA","mzML"),full.names=TRUE)[2]
++ 
++   #Opening the file with xcms
++   xraw <- xcmsRaw(path_raw)
++ 
++   #Getting the injection scan
++   gp <- determiningInjectionZone(xraw)
++ 
++   #performing band detection.
++   tbands <- findBandsFIA(xraw,ppm = 2,sizeMin = gp[3]-gp[1],beginning=gp[1],end=gp[2])
++ 
++   #Getting the injection peak
++   vpeak <- getInjectionPeak(xraw,bandlist=tbands,gpeak=gp)
++   plot(vpeak,type="l")
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("group.FIA-proFIAset-method")
+> ### * group.FIA-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: group.FIA,proFIAset-method
+> ### Title: Group the peaks of an FIA acquisition.
+> ### Aliases: group.FIA,proFIAset-method group.FIA
+> 
+> ### ** Examples
+> 
+> if(require("plasFIA")){
++ #proFIAset object is loaded
++ data(plasSet)
++ 
++ #Parameters are defined.
++ ppm_group <- 1
++ dmz_group <- 0.0005
++ frac_group<-0.2
++ 
++ plasSet<-group.FIA(plasSet,ppmGroup=ppm_group,fracGroup=frac_group,dmzGroup=dmz_group)
++ plasSet
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("impute.FIA-proFIAset-method")
+> ### * impute.FIA-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: impute.FIA,proFIAset-method
+> ### Title: Fill missing values using the provided method.
+> ### Aliases: impute.FIA,proFIAset-method impute.FIA
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++     data(plasSet)
++ 
++     ###Reinitializing the data matrix an using KNN
++     plasSet<-makeDataMatrix(plasSet,maxo=FALSE)
++     plasSet<-impute.FIA(plasSet,method="KNN_TN",k=2)
++     
++     ###Reinitializing the data matrix and using randomForest
++     plasSet<-makeDataMatrix(plasSet,maxo=FALSE)
++     plasSet<-impute.FIA(plasSet,method="randomForest")
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("impute.KNN_TN-proFIAset-method")
+> ### * impute.KNN_TN-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: impute.KNN_TN,proFIAset-method
+> ### Title: Fill missing values in the peak table using K-nearest Neighbour
+> ###   for tuncated distributions.
+> ### Aliases: impute.KNN_TN,proFIAset-method impute.KNN_TN
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++     data(plasSet)
++ 
++     ###Reinitializing the data matrix
++     plasSet<-makeDataMatrix(plasSet,maxo=FALSE)
++     plasSet<-impute.KNN_TN(plasSet,2)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("impute.randomForest-proFIAset-method")
+> ### * impute.randomForest-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: impute.randomForest,proFIAset-method
+> ### Title: Fill missing values in the peak table using random forest.
+> ### Aliases: impute.randomForest,proFIAset-method impute.randomForest
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++     data(plasSet)
++     ###Reinitializing the data matrix
++     plasSet<-makeDataMatrix(plasSet,maxo=FALSE)
++     plasSet<-impute.randomForest(plasSet)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("makeDataMatrix-proFIAset-method")
+> ### * makeDataMatrix-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: makeDataMatrix,proFIAset-method
+> ### Title: Construct the data matrix of a proFIAset object.
+> ### Aliases: makeDataMatrix,proFIAset-method makeDataMatrix
+> 
+> ### ** Examples
+> 
+> if(require("plasFIA")){
++ #proFIAset object is loaded
++ data(plasSet)
++ 
++ plasSet<-makeDataMatrix(plasSet)
++ plasSet
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("peaksGroup-proFIAset-method")
+> ### * peaksGroup-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: peaksGroup,proFIAset-method
+> ### Title: Return the peaks corresponding to a group.
+> ### Aliases: peaksGroup,proFIAset-method peaksGroup
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++     data(plasSet)
++     data(plasMols)
++ 
++     #finding the molecules of plasMols
++     vmatch<-findMzGroup(plasSet,mz=plasMols[,"mass_M+H"],tol=5)
++ 
++     mol_peaks<-peaksGroup(plasSet,index=vmatch)
++     head(mol_peaks)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot")
+> ### * plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot,proFIAset,ANY-method
+> ### Title: Plot a summary of an FIA experiment.
+> ### Aliases: plot,proFIAset,ANY-method plot.FIA
+> 
+> ### ** Examples
+> 
+> if(require("plasFIA")){
++    data(plasSet)
++    
++    
++    ####Diagnostic plot after imputation
++    plot(plasSet)
++    
++    ####The same plot by classes.
++    plot(plasSet,type="class")
++    
++    ####Diagnostic plot before imputation
++    plasSet <- makeDataMatrix(plasSet)
++   plot(plasSet)
++ 
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plotFlowgrams-proFIAset-method")
+> ### * plotFlowgrams-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotFlowgrams,proFIAset-method
+> ### Title: Plot raw temporal profiles of the selected group.
+> ### Aliases: plotFlowgrams,proFIAset-method plotFlowgrams
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++     data(plasMols)
++     data(plasSet)
++     plotFlowgrams(plasSet,mz=plasMols[7,"mass_M+H"])
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plotNoise")
+> ### * plotNoise
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotNoise
+> ### Title: Plot the estimated noise from a proFIAset object.
+> ### Aliases: plotNoise
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++   data(plasSet)
++   plotNoise(plasSet)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plotRaw-proFIAset-method")
+> ### * plotRaw-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotRaw,proFIAset-method
+> ### Title: Plotting of raw data
+> ### Aliases: plotRaw,proFIAset-method plotRaw
+> 
+> ### ** Examples
+> 
+> if(require("plasFIA")){
++     data(plasSet)
++ 
++     #Visualising the raw data
++     plotRaw(plasSet,type="raw",ylim=c(215.9,216.2),sample=4)
++ 
++     #Plotting the filtered signals only.
++     plotRaw(plasSet,type="peaks",ylim=c(215.9,216.2),sample=4)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plotSamplePeaks-proFIAset-method")
+> ### * plotSamplePeaks-proFIAset-method
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plotSamplePeaks,proFIAset-method
+> ### Title: Plot the sample peak of a proFIAset object.
+> ### Aliases: plotSamplePeaks,proFIAset-method plotSamplePeaks
+> 
+> ### ** Examples
+> 
+> if(require(plasFIA)){
++     data(plasSet)
++     plotSamplePeaks(plasSet)
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> cleanEx()
+> nameEx("proFIAset")
+> ### * proFIAset
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: proFIAset
+> ### Title: Process FIA experiment.
+> ### Aliases: proFIAset
+> 
+> ### ** Examples
+> 
+> if(require("plasFIA")){
++ 
++ pathplas<-system.file(package="plasFIA","mzML")
++ 
++ #Parameters are defined.
++ ppm<-2
++ 
++ plasSet<-proFIAset(pathplas,ppm=ppm,parallel=FALSE)
++ plasSet
++ 
++ ###An example using parallelism with a snow cluster using BiocParallel package.
++ ## Not run: plasSet<-proFIAset(pathplas,ppm=ppm,parallel=TRUE,BPPARAM=bpparam("SnowParam"))
++ }
+Loading required package: plasFIA
+Warning in gzfile(file, "wb") :
+  cannot open compressed file '/var/scratchro/tomas/QA/R-74238/lib/plasFIA/data/plasSet.rda', probable reason 'Read-only file system'
+Error: package or namespace load failed for ‘plasFIA’:
+ .onLoad failed in loadNamespace() for 'plasFIA', details:
+  call: gzfile(file, "wb")
+  error: cannot open the connection
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  10.604 0.556 25.453 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

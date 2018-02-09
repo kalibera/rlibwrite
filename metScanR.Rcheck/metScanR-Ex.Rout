@@ -1,0 +1,321 @@
+
+R Under development (unstable) (2018-02-08 r74238) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "metScanR"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('metScanR')
+Warning in utils::download.file(extDB, destfile = localDB, quiet = T) :
+  URL https://github.com/cflagg/metScanR/raw/master/data/metScanR_DB.rda: cannot open destfile '/var/scratchro/tomas/QA/R-74238/lib/metScanR/data/metScanR_DB.rda', reason 'Read-only file system'
+Warning in utils::download.file(extDB, destfile = localDB, quiet = T) :
+  download had nonzero exit status
+Warning in utils::download.file(extTermsDB, destfile = localTermsDB, quiet = T) :
+  URL https://github.com/cflagg/metScanR/raw/master/data/metScanR_terms.rda: cannot open destfile '/var/scratchro/tomas/QA/R-74238/lib/metScanR/data/metScanR_terms.rda', reason 'Read-only file system'
+Warning in utils::download.file(extTermsDB, destfile = localTermsDB, quiet = T) :
+  download had nonzero exit status
+Welcome to metScanR! This package takes a few extra seconds to load because it refreshes the local database from an external database upon startup.  Thank you for your patience.
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("getCountry")
+> ### * getCountry
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getCountry
+> ### Title: Filter environmental monitoring stations by country
+> ### Aliases: getCountry
+> ### Keywords: Earth, air air, atmopsheric atmosphere, canopy, chemical,
+> ###   climate, cloud, conductivity, country, data, environment,
+> ###   environmental flux, groundwater, in-situ, lake, metadata phenology,
+> ###   pollution, precipitation, radiation, reservoir, river, salinity,
+> ###   snow, soil, soils, stream, temperature, vapor, water, weather, wind,
+> ###   world,
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D #returns metadata from all environmental sites within the database from the United States
+> ##D   getCountry(country="United States")
+> ##D #returns metadata from all environmental sites within the database from the Italy and Portugal
+> ##D   getCountry(country=c("Italy","Portugal"))
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getDates")
+> ### * getDates
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getDates
+> ### Title: Filter environmental monitoring stations by active date(s)
+> ### Aliases: getDates
+> ### Keywords: Earth, air air, atmopsheric atmosphere, canopy, chemical,
+> ###   climate, cloud, conductivity, country, data, dates, environment,
+> ###   environmental flux, groundwater, in-situ, lake, metadata phenology,
+> ###   pollution, precipitation, radiation, reservoir, river, salinity,
+> ###   snow, soil, soils, stream, temperature, times, vapor, water, weather,
+> ###   wind, world,
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D #return metadata of sites that were active from at least 1940-01-01 through 1970-04-18
+> ##D   getDates(startDate="1940-01-01",endDate = "1970-04-18")
+> ##D #return metadata of sites that were active up through at least 1950-07-08
+> ##D   getDates(endDate = "1950-07-08")
+> ##D #return metadata of sites that were active up through at least 1950-07-08
+> ##D #and have an unknown start date:
+> ##D   getDates(endDate = "1950-07-08", includeUnk=TRUE)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getElevation")
+> ### * getElevation
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getElevation
+> ### Title: Filter environmental monitoring stations by elevation
+> ### Aliases: getElevation
+> ### Keywords: air air, atmopsheric atmosphere, canopy, chemical, climate,
+> ###   cloud, conductivity, data, elevation, environment, environmental
+> ###   flux, groundwater, humidity, in-situ, lake, metadata, meters
+> ###   phenology, pollution, precipitation, radiation, reservoir, river,
+> ###   salinity, snow, soil, soils, stream, temperature, vapor, water,
+> ###   weather, wind,
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D #return metadata of sites that have elevations between 1500 +/- 500 (m) Above Sea Level
+> ##D   getElevation(elevThresh=c(1500,500))
+> ##D #return metadata of sites that have elevations less than or equal to 3500 (m) Above Sea Level
+> ##D   getElevation(elevThresh=3500)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getId")
+> ### * getId
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getId
+> ### Title: Filter environmental monitoring stations by identifier type
+> ### Aliases: getId
+> ### Keywords: COOP, FAA, GHCND, GHCNMLT, ICAO, NCDCSTNID, NEON, NRCS NWSLI,
+> ###   TRANS, WBAN, WMO, air air, atmopsheric atmosphere, canopy, chemical,
+> ###   climate, cloud, conductivity, data, environment, environmental flux,
+> ###   groundwater, humidity, in-situ, lake, metadata, phenology, pollution,
+> ###   precipitation, radiation, reservoir, river, salinity, snow, soil,
+> ###   soils, stream, temperature, vapor, water, weather, wind,
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D #return a list of sites that have an WBAN identifer
+> ##D   getId(id="WBAN")
+> ##D #return a list of sites that have either an FAA, ICAO, or NWSLI identifer
+> ##D   getId(id=c("FAA","ICAO","NWSLI"))
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getNearby")
+> ### * getNearby
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getNearby
+> ### Title: Filter environmental monitoring stations by POI
+> ### Aliases: getNearby
+> ### Keywords: air air, atmopsheric atmosphere, canopy, chemical, climate,
+> ###   cloud, conductivity, data, environment, environmental flux,
+> ###   groundwater, humidity, in-situ, lake, latitude, longitude, metadata
+> ###   phenology, pollution, precipitation, radiation, radius, reservoir,
+> ###   river, salinity, snow, soil, soils, stream, temperature, vapor,
+> ###   water, weather, wind,
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D #returns metadata from all sites within 50 km of NEON site 'CPER'
+> ##D   getNearby(siteID="NEON:CPER", radius=50)
+> ##D #return metadata of sites within 10 km of Lat=41.7821 & Lon = -71.4204 (Cranston, RI, USA)
+> ##D   getNearby(lat=41.7821, lon = -71.4204, radius=10)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getNetwork")
+> ### * getNetwork
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getNetwork
+> ### Title: Filter environmental monitoring stations by network
+> ### Aliases: getNetwork
+> ### Keywords: AL ASOS, AWOS, BOR, COCORAHS, COOP, MPRC, MSNT, NEON, SCAN,
+> ###   SNOW, SNTL, SNTLT, UPPERAIT, USCRN, USGS, USRCRN air air, atmopsheric
+> ###   atmosphere, canopy, chemical, climate, cloud, conductivity, data,
+> ###   environment, environmental flux, groundwater, humidity, in-situ,
+> ###   lake, metadata, phenology, pollution, precipitation, radiation,
+> ###   reservoir, river, salinity, snow, soil, soils, stream, temperature,
+> ###   vapor, water, weather, wind,
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D #returns metadata from all SCAN sites within the database
+> ##D   getNetwork(network="SCAN")
+> ##D #returns metadata from ASOS, COOP, USCRN, and NEON sites within the database
+> ##D   getNetwork(network=c("ASOS","COOP","USCRN","NEON"))
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getStation")
+> ### * getStation
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getStation
+> ### Title: return metadata for selected envionmental station(s)
+> ### Aliases: getStation
+> ### Keywords: air air, atmopsheric atmosphere, canopy, chemical, climate,
+> ###   cloud, conductivity, data, environment, environmental flux,
+> ###   groundwater, humidity, in-situ, lake, metadata phenology, pollution,
+> ###   precipitation, radiation, reservoir, river, salinity, snow, soil,
+> ###   soils, stream, temperature, vapor, water, weather, wind,
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D #return metadata for NEON's CPER site
+> ##D   getStation(siteID="NEON:CPER")
+> ##D #return metadata for a list of sites
+> ##D   getStation(siteID=c("NEON:CPER","COOP:140509", "NWSLI:LCON1"))
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getVars")
+> ### * getVars
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getVars
+> ### Title: Filter environmental monitoring stations by reported elements
+> ### Aliases: getVars
+> ### Keywords: air air, atmopsheric atmosphere, canopy, chemical, climate,
+> ###   cloud, conductivity, data, environment, environmental flux,
+> ###   groundwater, humidity, in-situ, lake, metadata phenology, pollution,
+> ###   precipitation, radiation, reservoir, river, salinity, snow, soil,
+> ###   soils, stream, temperature, vapor, water, weather, wind,
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D #return a list of sites that collect humidity data
+> ##D   getVars(vars="humidity")
+> ##D #return a list of sites that collect soil temperature and/or wind data
+> ##D   getVars(vars=c("soil temperature","wind"))
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mapSiteFinder")
+> ### * mapSiteFinder
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mapSiteFinder
+> ### Title: Map environmental monitoring stations
+> ### Aliases: mapSiteFinder
+> ### Keywords: atmopsheric atmosphere, climate, data, environment,
+> ###   environmental in-situ, mapping maps, meteorological, meteorology,
+> ###   weather,
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D #map environmental monitoring stations located in Italy
+> ##D   mapSiteFinder(getCountry(country="Italy"))
+> ##D #map environmental monitoring stations within 50 km of Boulder, CO, USA
+> ##D   mapSiteFinder(getNearby(lat=40.0149,lon=-105.2705,radius=50))
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("siteFinder")
+> ### * siteFinder
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: siteFinder
+> ### Title: Filter environmental monitoring stations (wrapper)
+> ### Aliases: siteFinder
+> ### Keywords: atmopsheric atmosphere, climate, data, environment,
+> ###   environmental in-situ, meteorological meteorology, weather,
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D #Return metadata of sites within 50 km of NEON's HARV active from 1965-10-20 to 1986-09-02
+> ##D   siteFinder(siteID="NEON:HARV",startDate="1965-10-20",
+> ##D   endDate="1986-09-02",radius=50)
+> ##D 
+> ##D #Return metadata of SCAN, SNTL, and ASOS sites active from at least 2000-01-05 onward
+> ##D   siteFinder(network=c("SCAN","SNTL","ASOS"),startDate="2000-01-05")
+> ##D 
+> ##D #Return metadata of sites in Brazil with elevations of 1500 +/- 250 (m) Above Sea Level
+> ##D   siteFinder(elevThresh=c(1500,250),country="Brazil")
+> ## End(Not run)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  20.636 0.332 39.473 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

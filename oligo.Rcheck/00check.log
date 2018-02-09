@@ -1,0 +1,199 @@
+* using log directory ‘/ssd/tomas/QA/R-74238/check/oligo.Rcheck’
+* using R Under development (unstable) (2018-02-08 r74238)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘oligo/DESCRIPTION’ ... OK
+* this is package ‘oligo’ version ‘1.43.0’
+* checking package namespace information ... OK
+* checking package dependencies ... NOTE
+Package which this enhances but not available for checking: ‘doMPI’
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘oligo’ can be installed ... WARNING
+Found the following significant warnings:
+  ParserGzXYS.c:18:17: warning: passing argument 1 of ‘gzeof’ from incompatible pointer type [-Wincompatible-pointer-types]
+  ParserGzXYS.c:19:12: warning: passing argument 1 of ‘gzgets’ from incompatible pointer type [-Wincompatible-pointer-types]
+  ParserGzXYS.c:46:6: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
+  ParserGzXYS.c:50:10: warning: passing argument 1 of ‘gzgets’ from incompatible pointer type [-Wincompatible-pointer-types]
+  ParserGzXYS.c:51:11: warning: passing argument 1 of ‘gzclose’ from incompatible pointer type [-Wincompatible-pointer-types]
+  ParserGzXYS.c:134:6: warning: assignment from incompatible pointer type [-Wincompatible-pointer-types]
+  ParserGzXYS.c:138:11: warning: passing argument 1 of ‘gzclose’ from incompatible pointer type [-Wincompatible-pointer-types]
+  Warning: multiple methods tables found for ‘coverage2’
+See ‘/ssd/tomas/QA/R-74238/check/oligo.Rcheck/00install.out’ for details.
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... NOTE
+Packages listed in more than one of Depends, Imports, Suggests, Enhances:
+  ‘biomaRt’ ‘AnnotationDbi’ ‘GenomeGraphs’ ‘RCurl’ ‘ff’
+A package should be listed in only one of these fields.
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... NOTE
+Warning: no function found corresponding to methods exports from ‘oligo’ for: ‘show’
+
+A namespace must be able to be loaded with just the base namespace
+loaded: otherwise if the namespace gets loaded by a saved object, the
+session will be unable to start.
+
+Probably some imports need to be declared in the NAMESPACE file.
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... NOTE
+Unexported object imported by a ':::' call: ‘Biobase:::annotatedDataFrameFromMatrix’
+  See the note in ?`:::` about the use of this operator.
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... NOTE
+Foreign function calls to a different package:
+  .Call("ReadHeader", ..., PACKAGE = "affyio")
+  .Call("read_abatch", ..., PACKAGE = "affyio")
+See chapter ‘System and foreign language interfaces’ in the ‘Writing R
+Extensions’ manual.
+* checking R code for possible problems ... NOTE
+image,FeatureSet: warning in matrix(NA, nr = geom[1], nc = geom[2]):
+  partial argument match of 'nr' to 'nrow'
+image,FeatureSet: warning in matrix(NA, nr = geom[1], nc = geom[2]):
+  partial argument match of 'nc' to 'ncol'
+NUSE: no visible global function definition for ‘abline’
+RLE: no visible global function definition for ‘abline’
+basicMvApairsPlot: no visible binding for global variable
+  ‘smoothScatter’
+basicMvApairsPlot: no visible global function definition for ‘frame’
+basicMvApairsPlot: no visible global function definition for ‘text’
+basicMvApairsPlot: no visible global function definition for ‘IQR’
+basicMvApairsPlot: no visible global function definition for ‘mtext’
+basicMvAplot: no visible binding for global variable ‘smoothScatter’
+basicMvAplot: no visible global function definition for ‘IQR’
+basicMvAplot: no visible global function definition for ‘loess’
+basicMvAplot: no visible global function definition for ‘approx’
+basicMvAplot: no visible global function definition for ‘abline’
+basicMvAplot: no visible global function definition for ‘text’
+fitAffySnpMixture: no visible global function definition for
+  ‘aggregate’
+getRefDABG: no visible global function definition for ‘data’
+invariantsetV: no visible global function definition for
+  ‘smooth.spline’
+invariantsetV: no visible global function definition for ‘approx’
+loessNormV: no visible global function definition for ‘loess’
+loessNormV: no visible global function definition for ‘predict’
+maplot: no visible binding for global variable ‘smoothScatter’
+qsplineNorm: no visible global function definition for ‘smooth.spline’
+qsplineNorm: no visible global function definition for ‘splinefun’
+MAplot,ExpressionSet: no visible binding for global variable
+  ‘smoothScatter’
+MAplot,FeatureSet: no visible binding for global variable
+  ‘smoothScatter’
+MAplot,TilingFeatureSet: no visible binding for global variable
+  ‘smoothScatter’
+MAplot,TilingFeatureSet: no visible global function definition for
+  ‘rnorm’
+MAplot,matrix: no visible binding for global variable ‘smoothScatter’
+backgroundCorrect,matrix: no visible binding for global variable
+  ‘intensities’
+pmFragmentLength,AffySNPPDInfo: no visible global function definition
+  for ‘complete.cases’
+pmindex,GenericPDInfo: no visible binding for global variable
+  ‘man_fsetid’
+Undefined global functions or variables:
+  IQR abline aggregate approx complete.cases data frame intensities
+  loess man_fsetid mtext predict rnorm smooth.spline smoothScatter
+  splinefun text
+Consider adding
+  importFrom("graphics", "abline", "frame", "mtext", "smoothScatter",
+             "text")
+  importFrom("stats", "IQR", "aggregate", "approx", "complete.cases",
+             "loess", "predict", "rnorm", "smooth.spline", "splinefun")
+  importFrom("utils", "data")
+to your NAMESPACE file.
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... WARNING
+Codoc mismatches from documentation object 'boxplot':
+\S4method{boxplot}{FeatureSet}
+  Code: function(x, which = c("pm", "mm", "bg", "both", "all"), transfo
+                 = log2, nsample = 10000, target = "mps1", ...)
+  Docs: function(x, which = c("pm", "mm", "bg", "both", "all"), transfo
+                 = log2, nsample = 10000, ...)
+  Argument names in code not in docs:
+    target
+  Mismatches in argument names:
+    Position: 5 Code: target Docs: ...
+
+Codoc mismatches from documentation object 'hist':
+\S4method{hist}{FeatureSet}
+  Code: function(x, transfo = log2, which = c("pm", "mm", "bg", "both",
+                 "all"), nsample = 10000, target = "mps1", ...)
+  Docs: function(x, transfo = log2, which = c("pm", "mm", "bg", "both",
+                 "all"), nsample = 10000, ...)
+  Argument names in code not in docs:
+    target
+  Mismatches in argument names:
+    Position: 5 Code: target Docs: ...
+
+S4 class codoc mismatches from documentation object 'oligoPLM-class':
+Slots for class 'oligoPLM'
+  Code: annotation chip.coefs description geometry manufacturer method
+        narrays nprobes nprobesets phenoData probe.coefs protocolData
+        residualSE residuals se.chip.coefs se.probe.coefs weights
+  Docs: annotation chip.coefs geometry manufacturer method narrays
+        nprobes nprobesets probe.coefs residualSE residuals
+        se.chip.coefs se.probe.coefs weights
+
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking line endings in shell scripts ... OK
+* checking line endings in C/C++/Fortran sources/headers ... OK
+* checking line endings in Makefiles ... OK
+* checking compilation flags in Makevars ... OK
+* checking for GNU extensions in Makefiles ... OK
+* checking for portable use of $(BLAS_LIBS) and $(LAPACK_LIBS) ... WARNING
+  apparently using $(BLAS_LIBS) without following $(FLIBS) in ‘src/Makevars’
+* checking include directives in Makefiles ... OK
+* checking compiled code ... NOTE
+Note: information on .o files is not available
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... WARNING
+Files in the 'vignettes' directory newer than all files in 'inst/doc':
+  ‘Makefile’
+* checking examples ... OK
+* checking for unstated dependencies in ‘tests’ ... OK
+* checking tests ... ERROR
+  Running ‘doRUnit.R’
+Running the tests in ‘tests/doRUnit.R’ failed.
+Last 13 lines of output:
+  Number of test functions: 2 
+  Number of errors: 0 
+  Number of failures: 0 
+  
+   
+  1 Test Suite : 
+  oligo unit testing - 2 test functions, 0 errors, 0 failures
+  Error in file(file, ifelse(append, "a", "w")) : 
+    cannot open the connection
+  Calls: printTextProtocol -> cat -> file
+  In addition: Warning messages:
+  1: multiple methods tables found for 'coverage2' 
+  2: In file(file, ifelse(append, "a", "w")) :
+    cannot open file '/var/scratchro/tomas/QA/R-74238/lib/oligo/unitTests/reportSummary.txt': Read-only file system
+  Execution halted
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... NONE
+* checking re-building of vignette outputs ... OK
+* checking PDF version of manual ... OK
+* DONE
+Status: 1 ERROR, 4 WARNINGs, 7 NOTEs
